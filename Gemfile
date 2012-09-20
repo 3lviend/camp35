@@ -51,3 +51,4 @@ gem "devise", ">= 2.1.2"
 gem "cancan", ">= 1.6.8"
 gem "rolify", ">= 3.2.0"
 gem "simple_form", ">= 2.0.2"
+gem "therubyracer", ">= 0.10.2", :group => :assets, :platform => :ruby
