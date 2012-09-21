@@ -3,12 +3,16 @@
 %table
   %thead
     %th Day
-    %th Working time
+    %th Time
     %th
   %tbody
     - @days.each do |day|
       %tr
-        %td 12/12/2012
-        %td 8h 15min
+        %td
+          - if day.date.to_date == Date.today
+            Today
+          - else
+            = "#{day.date.to_date.to_s} (#{t('date.day_names')[day.date.wday]})"
+        %td= "#{day.time.hour}h #{day.time.min} min"
         %td
           %a{href: "/"} Edit

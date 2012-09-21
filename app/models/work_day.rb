@@ -5,6 +5,7 @@ class WorkDay
 
   # DB [WorkDay]
   def self.by_user_and_weeks_ago(user, weeks_from_now = 0)
+    weeks_from_now = weeks_from_now.nil? ? 0 : weeks_from_now.to_i
     sql = <<-eos
       SELECT SUM(duration) as time, date_performed 
       FROM work_entries 
@@ -12,7 +13,7 @@ class WorkDay
         ON work_entry_id = work_entries.id 
       WHERE 
         role_id = #{user.system_role_id} AND 
-        (EXTRACT (WEEK FROM NOW())+52*EXTRACT(YEAR FROM NOW())) - (EXTRACT (WEEK FROM date_performed)+52*EXTRACT(YEAR FROM date_performed)) = #{weeks_from_now} 
+        (EXTRACT (WEEK FROM NOW())+52*EXTRACT(YEAR FROM NOW())) - (EXTRACT (WEEK FROM date_performed)+52*EXTRACT(YEAR FROM date_performed)) = #{weeks_from_now || 0} 
       GROUP BY 
         date_performed
     eos
@@ -40,7 +41,7 @@ class WorkDay
         wd
       end
     end
-    days.reject { |d| d.date > DateTime.now }
+    days.reject { |d| d.date > DateTime.now }.sort_by(&:date).reverse
   end
 
   def to_s
