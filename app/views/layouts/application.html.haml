@@ -11,9 +11,19 @@
   %body
     #container.container
       %header
-        = render 'layouts/navigation'
-        = render 'layouts/messages'
-      #main{:role => "main"}
-        = yield
+        .row
+          .eight.columns
+            = render 'layouts/navigation'
+          .four.columns
+            /something here
+        .row
+          = render 'layouts/messages'
+        #main{:role => "main"}
+          .row
+            .eight.columns
+              = yield
+            .four.columns
+              = yield :side
       %footer
+        .row
     / ! end of #container

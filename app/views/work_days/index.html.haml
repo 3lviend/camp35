@@ -1,0 +1,14 @@
+%h1 Your work days
+
+%table
+  %thead
+    %th Day
+    %th Working time
+    %th
+  %tbody
+    - @days.each do |day|
+      %tr
+        %td 12/12/2012
+        %td 8h 15min
+        %td
+          %a{href: "/"} Edit
