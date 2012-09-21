@@ -16,3 +16,8 @@
         %td= "#{day.time.hour}h #{day.time.min} min"
         %td
           %a{href: "/"} Edit
+
+%div.pagination
+  = link_to "Previous week", week_work_days_path(params[:weeks_from_now].nil? ? 1 : params[:weeks_from_now].to_i + 1)
+  - if !params[:weeks_from_now].nil? && params[:weeks_from_now] != 0
+    = link_to "Next week", week_work_days_path(params[:weeks_from_now].to_i - 1)    
