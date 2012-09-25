@@ -17,6 +17,9 @@ class WorkEntriesController < ApplicationController
   end
 
   def destroy
+    @work_entry = WorkEntry.find params[:id]
+    @work_entry.destroy
+    redirect_to show_work_day_entries_path(@day.day, @day.month, @day.year)
   end
 
   def create
@@ -31,6 +34,8 @@ class WorkEntriesController < ApplicationController
       redirect_to show_work_day_entries_path(@day.day, @day.month, @day.year)
     else
       flash[:errors] = @work_entry.errors.full_messages
+      fetch_work_charts
+      render :new
     end
   end
 

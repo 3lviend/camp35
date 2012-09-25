@@ -8,6 +8,7 @@ class WorkEntry < ActiveRecord::Base
   attr_accessible :work_chart_id, :date_performed, :work_entry_fees_attributes, :description, :work_entry_durations_attributes, :created_by, :modified_by
 
   before_save :sanitize_entry
+  validates_presence_of :work_chart
 
   # TODO: optimize because this is painfully 
   def work_chart_label
