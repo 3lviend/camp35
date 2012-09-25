@@ -5,6 +5,7 @@ class WorkChart < ActiveRecord::Base
   attr_accessor :position
 
   has_many :work_chart_kind_sets
+  has_many :work_chart_kinds
   belongs_to :work_chart_status, :foreign_key => :status, :primary_key => :status
   has_many :work_entries
 

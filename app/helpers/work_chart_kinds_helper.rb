@@ -1,0 +1,2 @@
+module WorkChartKindsHelper
+end
