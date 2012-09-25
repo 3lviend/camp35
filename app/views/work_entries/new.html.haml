@@ -1,0 +1,15 @@
+%h1= "New entry for #{@day.to_date == Date.today ? 'today' : @day.to_date.to_formatted_s(:long_ordinal)}"
+
+= simple_form_for @work_entry do |f|
+  = f.association :work_chart, :collection => @work_charts, :label_method => :full_label
+  = f.input :date_performed, :as => :hidden, :input_html => { :value => @day }
+  = f.simple_fields_for :work_entry_fees do |fee|
+    = fee.input :fee
+    = fee.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
+    = fee.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
+  = f.simple_fields_for :work_entry_durations do |d|
+    = d.input :duration, :as => :interval
+    = d.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
+    = d.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
+  = f.input :description
+  = f.button :submit
