@@ -1,10 +1,19 @@
 class WorkEntriesController < ApplicationController
   before_filter :get_day
+  before_filter :fetch_work_charts, :only => [:new, :edit]
 
   def edit
+    @work_entry = WorkEntry.find params[:id]
   end
 
   def update
+    @work_entry = WorkEntry.find params[:id]
+    if @work_entry.update_attributes(params[:work_entry])
+      redirect_to show_work_day_entries_path(@day.day, @day.month, @day.year)
+    else
+      flash[:errors] = @work_entry.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy
@@ -30,11 +39,14 @@ class WorkEntriesController < ApplicationController
     @work_entry.work_entry_fees.build
     @work_entry.work_entry_durations.build
     @work_entry.date_performed = @day
-    @work_charts = WorkChart.all_with_labels
   end
 
   private
   def get_day
     @day = "#{params[:day]}/#{params[:month]}/#{params[:year]}".to_datetime
+  end
+
+  def fetch_work_charts
+    @work_charts = WorkChart.all_with_labels
   end
 end

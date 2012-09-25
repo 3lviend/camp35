@@ -7,7 +7,7 @@ update_kinds = (work_chart_id) ->
     # here we have an array of objects in data
     $(".kind_code_select").html("")
     for kind in data
-      $(".kind_code_select").append "<option code='#{kind.code}'>#{kind.display_label}</option>"
+      $(".kind_code_select").append "<option value='#{kind.code}'>#{kind.display_label}</option>"
 
 $ ->
   # whenever work_entry_work_chart_id gets changed we need to

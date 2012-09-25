@@ -18,4 +18,4 @@
           - total = entry.total_duration
           = "#{total.hour}h #{total.min}min"
         %td= BlueCloth.new(entry.description).to_html.html_safe
-        %td= link_to "Edit", root_path
+        %td= link_to "Edit", edit_work_entry_path(@day.day, @day.month, @day.year, entry.id)

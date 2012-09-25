@@ -1,2 +1,3 @@
-%h1 WorkEntries#edit
-%p Find me in app/views/work_entries/edit.html.haml
+%h1= "Edit entry for #{@day.to_date == Date.today ? 'today' : @day.to_date.to_formatted_s(:long_ordinal)}"
+
+= render partial: "form"
