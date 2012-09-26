@@ -11,4 +11,5 @@
     = d.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
     = d.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
   = f.input :description
-  = f.button :submit
+  = button_tag(type: 'submit', class: "button") do
+    = "Save"

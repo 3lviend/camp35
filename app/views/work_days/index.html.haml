@@ -1,20 +1,23 @@
-%h1 Your work days
+- content_for :header do
+  %h1 Your work days
+  %h4 Navigate through your work days at End Point
 
-%table
+%table{:cellspacing => 0}
   %thead
-    %th Day
+    %th{:colspan => 2} Day
     %th Time
     %th
   %tbody
     - @days.each do |day|
       %tr
+        %td= t('date.day_names')[day.date.wday]
         %td
           - if day.date.to_date == Date.today
             Today
           - else
-            = "#{day.date.to_date.to_s} (#{t('date.day_names')[day.date.wday]})"
+            = "#{day.date.to_date.to_s}"
         %td= "#{day.time.hour}h #{day.time.min}min"
-        %td= link_to "Edit", show_work_day_entries_path(day.date.day, day.date.month, day.date.year)
+        %td= link_to "Edit", show_work_day_entries_path(day.date.day, day.date.month, day.date.year), :class => "button small "
 
 %div.pagination
   = link_to "Previous week", week_work_days_path(params[:weeks_from_now].nil? ? 1 : params[:weeks_from_now].to_i + 1)

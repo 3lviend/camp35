@@ -13,4 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require application_forms
 //= require_tree .
+

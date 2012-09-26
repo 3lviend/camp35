@@ -36,3 +36,130 @@ ul.nav li {
   background-color: #FCC;
   border: solid 1px #C66;
 }
+
+@font-face {
+    font-family: 'OpenSansRegular';
+    src: url('/assets/OpenSans-Regular-webfont.eot');
+    src: url('/assets/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/OpenSans-Regular-webfont.woff') format('woff'),
+         url('/assets/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('/assets/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'OpenSansBold';
+    src: url('/assets/OpenSans-Bold-webfont.eot');
+    src: url('/assets/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/OpenSans-Bold-webfont.woff') format('woff'),
+         url('/assets/OpenSans-Bold-webfont.ttf') format('truetype'),
+         url('/assets/OpenSans-Bold-webfont.svg#OpenSansBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'OpenSansExtrabold';
+    src: url('/assets/OpenSans-ExtraBold-webfont.eot');
+    src: url('/assets/OpenSans-ExtraBold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/OpenSans-ExtraBold-webfont.woff') format('woff'),
+         url('/assets/OpenSans-ExtraBold-webfont.ttf') format('truetype'),
+         url('/assets/OpenSans-ExtraBold-webfont.svg#OpenSansExtrabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'OpenSansLight';
+    src: url('/assets/OpenSans-Light-webfont.eot');
+    src: url('/assets/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/OpenSans-Light-webfont.woff') format('woff'),
+         url('/assets/OpenSans-Light-webfont.ttf') format('truetype'),
+         url('/assets/OpenSans-Light-webfont.svg#OpenSansLight') format('svg');
+    font-weight: normal;  
+    font-style: normal;   
+
+}
+
+.top-bar{
+  li.name b{
+    font-family: "OpenSansLight";
+  }
+}
+
+header.row{
+  margin-top: 40px;
+  border-bottom: 1px dotted #BBBBBB;
+  margin-bottom: 20px;
+}
+
+h1{
+  font-family: "OpenSansRegular" !important;
+  font-weight: normal !important;
+}
+
+thead{
+  font-family: "OpenSansLight" !important;
+  font-weight: normal !important;
+}
+
+h4{
+  font-family: "OpenSansLight" !important;
+  font-weight: normal !important;
+  margin-left: 10px !important;
+  margin-top: -15px !important;
+}
+
+.eight {
+  border-right: 1px dotted #BBBBBB !important;
+}
+
+.four {
+  margin-left: 1% !important;
+  width: 32% !important;
+}
+
+.button.small{
+  width: 60px;
+}
+
+.button.small.alert{
+  margin-left: -4px;
+}
+
+table {
+  width: 100%;
+  border: none !important;
+  
+  tbody{
+    tr{
+      td:last-child{
+        text-align: right;
+        min-width: 120px;
+      }
+    }
+  }
+}
+
+.button{
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2) inset !important;
+}
+
+form{
+  div.input{
+    clear: both;
+    label{
+      width: 30%;
+      float: left;
+    }
+    input, select, textarea{
+      width: 60%;
+      float: right;
+      margin-bottom: 20px;
+    }
+  }
+}

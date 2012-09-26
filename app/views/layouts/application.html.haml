@@ -10,20 +10,16 @@
         = yield(:head)
   %body
     #container.container
-      %header
+      %div.fixed= render 'layouts/navigation'
+      .row
+        = render 'layouts/messages'
+      %header.row= yield :header
+      %section{:role => "main"}
         .row
           .eight.columns
-            = render 'layouts/navigation'
-          .four.columns
-            /something here
-        .row
-          = render 'layouts/messages'
-        #main{:role => "main"}
-          .row
-            .eight.columns
-              = yield
-            .four.columns
-              = yield :side
+            = yield
+          .four.columns.panel
+            = "TODO: put something useful here.." # yield :side
       %footer
         .row
     / ! end of #container

@@ -1,17 +1,23 @@
-= link_to "Timesheetapp", root_path, :class => 'brand'
-%ul.nav
-  - if user_signed_in?
-    %li
-      = link_to 'Logout', destroy_user_session_path, :method=>'delete'
-  - else
-    %li
-      = link_to 'Login', new_user_session_path
-  - if user_signed_in?
-    /%li
-    /= link_to 'Edit account', edit_user_registration_path
-    - if current_user.has_role? :admin
-      %li
-        = link_to 'Admin', rails_admin_path
-  /- else
-  /  %li
-  /    = link_to 'Sign up', new_user_registration_path
+%nav.top-bar
+  %ul
+    %li.name
+      %a{:href => root_path}
+        %b> Timesheet
+        %span<
+          App
+    %li.toggle-topbar= link_to "", "#"
+  %section
+    %ul.left
+    %ul.right
+      %li= link_to "Time entry", root_path
+      - if current_user and current_user.has_role? :admin
+        %li.divider
+        %li= link_to 'Admin', rails_admin_path
+      - if user_signed_in?
+        %li.divider
+        %li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
+      - else
+        %li.divider
+        %li= link_to 'Login', new_user_session_path
+      - if user_signed_in?
+        / something here..
