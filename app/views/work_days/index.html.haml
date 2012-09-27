@@ -4,20 +4,13 @@
 
 %table{:cellspacing => 0}
   %thead
-    %th{:colspan => 2} Day
+    %th Day
     %th Time
-    %th
   %tbody
     - @days.each do |day|
       %tr
-        %td= t('date.day_names')[day.date.wday]
-        %td
-          - if day.date.to_date == Date.today
-            Today
-          - else
-            = "#{day.date.to_date.to_s}"
+        %td= link_to (day.date.to_date == Date.today ? "Today" : day.date.to_date.to_s) + ", " + t('date.day_names')[day.date.wday], show_work_day_entries_path(day.date.day, day.date.month, day.date.year)
         %td= "#{day.time.hour}h #{day.time.min}m"
-        %td= link_to "Go to day", show_work_day_entries_path(day.date.day, day.date.month, day.date.year)
 
 %div.pagination
   = link_to "Previous week", week_work_days_path(params[:weeks_from_now].nil? ? 1 : params[:weeks_from_now].to_i + 1)
