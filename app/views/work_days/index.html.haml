@@ -16,7 +16,7 @@
             Today
           - else
             = "#{day.date.to_date.to_s}"
-        %td= "#{day.time.hour}h #{day.time.min}min"
+        %td= "#{day.time.hour}h #{day.time.min}m"
         %td= link_to "Go to day", show_work_day_entries_path(day.date.day, day.date.month, day.date.year)
 
 %div.pagination

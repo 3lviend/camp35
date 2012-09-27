@@ -1,7 +1,7 @@
 - content_for :header do
   %h1= "Your entries for #{@day.to_date == Date.today ? 'today' : @day.to_date.to_formatted_s(:long_ordinal)}"
   - total_duration = @entries.map(&:total_duration).inject(Time.parse("00:00:00")) { |d,s| s += d.hour.hours; s += d.min.minutes; s  }
-  %h4= "Total of #{total_duration.hour}h #{total_duration.min}min"
+  %h4= "Total of #{total_duration.hour}h #{total_duration.min}m"
 
 %table{ :cellspacing => 0}
   %thead
@@ -25,7 +25,7 @@
           %b= entry.work_chart_label_parts.last
         %td
           - total = entry.total_duration
-          = "#{total.hour}h #{total.min}min"
+          = "#{total.hour}h #{total.min}m"
         %td= BlueCloth.new(entry.description).to_html.html_safe
         %td
           = link_to "Edit",   edit_work_entry_path(@day.day, @day.month, @day.year, entry.id)
