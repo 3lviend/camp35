@@ -9,7 +9,7 @@ class WorkEntriesController < ApplicationController
   def update
     @work_entry = WorkEntry.find params[:id]
     if @work_entry.update_attributes(params[:work_entry])
-      redirect_to show_work_day_entries_path(@day.day, @day.month, @day.year)
+      redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
     else
       flash[:errors] = @work_entry.errors.full_messages
       render :edit
@@ -19,7 +19,7 @@ class WorkEntriesController < ApplicationController
   def destroy
     @work_entry = WorkEntry.find params[:id]
     @work_entry.destroy
-    redirect_to show_work_day_entries_path(@day.day, @day.month, @day.year)
+    redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
   end
 
   def create
@@ -31,7 +31,7 @@ class WorkEntriesController < ApplicationController
     @work_entry.work_entry_durations.last.created_by = @work_entry.work_entry_durations.last.modified_by = current_user.email
     @work_entry.work_entry_durations.last.kind_code = "billable_standard"
     if @work_entry.save
-      redirect_to show_work_day_entries_path(@day.day, @day.month, @day.year)
+      redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
     else
       flash[:errors] = @work_entry.errors.full_messages
       fetch_work_charts
@@ -48,7 +48,7 @@ class WorkEntriesController < ApplicationController
 
   private
   def get_day
-    @day = "#{params[:day]}/#{params[:month]}/#{params[:year]}".to_datetime
+    @day = "#{params[:year]}-#{params[:month]}-#{params[:day]}".to_datetime
   end
 
   def fetch_work_charts

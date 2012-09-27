@@ -9,7 +9,7 @@
   %tbody
     - @days.each do |day|
       %tr
-        %td= link_to (day.date.to_date == Date.today ? "Today" : day.date.to_date.to_s) + ", " + t('date.day_names')[day.date.wday], show_work_day_entries_path(day.date.day, day.date.month, day.date.year)
+        %td= link_to (day.date.to_date == Date.today ? "Today" : day.date.to_date.to_s) + ", " + t('date.day_names')[day.date.wday], show_work_day_entries_path(day.date.year, day.date.month, day.date.day)
         %td= "#{day.time.hour}h #{day.time.min}m"
 
 %div.pagination
@@ -21,4 +21,4 @@
 
 - content_for :side do
   - today = DateTime.now
-  = link_to "Go to today", show_work_day_entries_path(today.day, today.month, today.year), :class => "button"
+  = link_to "Go to today", show_work_day_entries_path(today.year, today.month, today.day), :class => "button"

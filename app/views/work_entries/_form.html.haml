@@ -1,4 +1,4 @@
-= simple_form_for @work_entry, :url => (@work_entry.new_record? ? work_entries_path(@day.day, @day.month, @day.year) : work_entry_path(@day.day, @day.month, @day.year, @work_entry.id)), :method => @work_entry.new_record? ? :post : :put do |f|
+= simple_form_for @work_entry, :url => (@work_entry.new_record? ? work_entries_path(@day.year, @day.month, @day.day) : work_entry_path(@day.year, @day.month, @day.day, @work_entry.id)), :method => @work_entry.new_record? ? :post : :put do |f|
   = f.association :work_chart, :collection => @work_charts, :label_method => :full_label
   = f.input :date_performed, :as => :hidden, :input_html => { :value => @day }
   = f.simple_fields_for :work_entry_fees do |fee|

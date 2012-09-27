@@ -28,9 +28,9 @@
           = "#{total.hour}h #{total.min}m"
         %td= BlueCloth.new(entry.description).to_html.html_safe
         %td
-          = link_to "Edit",   edit_work_entry_path(@day.day, @day.month, @day.year, entry.id)
+          = link_to "Edit",   edit_work_entry_path(@day.year, @day.month, @day.day, entry.id)
           %br
-          = link_to "Delete", work_entry_path(@day.day, @day.month, @day.year, entry.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?", :class => "remove"
+          = link_to "Delete", work_entry_path(@day.year, @day.month, @day.day, entry.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?", :class => "remove"
 .actions
 
 - content_for :side do
