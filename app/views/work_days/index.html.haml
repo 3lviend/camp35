@@ -17,7 +17,7 @@
           - else
             = "#{day.date.to_date.to_s}"
         %td= "#{day.time.hour}h #{day.time.min}min"
-        %td= link_to "Edit", show_work_day_entries_path(day.date.day, day.date.month, day.date.year), :class => "button small "
+        %td= link_to "Go to day", show_work_day_entries_path(day.date.day, day.date.month, day.date.year)
 
 %div.pagination
   = link_to "Previous week", week_work_days_path(params[:weeks_from_now].nil? ? 1 : params[:weeks_from_now].to_i + 1)
@@ -25,3 +25,7 @@
     = link_to "Next week", week_work_days_path(params[:weeks_from_now].to_i - 1)    
   - if !params[:weeks_from_now].nil? && params[:weeks_from_now] != 0
     = link_to "This week", root_path
+
+- content_for :side do
+  - today = DateTime.now
+  = link_to "Go to today", show_work_day_entries_path(today.day, today.month, today.year), :class => "button"

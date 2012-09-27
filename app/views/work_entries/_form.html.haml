@@ -11,5 +11,7 @@
     = d.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
     = d.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
   = f.input :description
-  = button_tag(type: 'submit', class: "button") do
+
+- content_for :side do
+  = button_tag(type: 'submit', class: "button", :onclick => "$('form').submit();") do
     = "Save"

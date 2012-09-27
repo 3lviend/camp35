@@ -8,7 +8,9 @@
         = javascript_include_tag "application"
         = csrf_meta_tags
         = yield(:head)
-  %body
+  - is_week = @work_days.nil?
+  - @day = DateTime.now unless @day
+  %body{:"data-is-week" => "#{'1' if is_week}", :"data-today" => @day}
     #container.container
       %div.fixed= render 'layouts/navigation'
       .row
@@ -16,10 +18,11 @@
       %header.row= yield :header
       %section{:role => "main"}
         .row
+          %div#calendar-widget.one.columns
           .eight.columns
             = yield
-          .four.columns.panel
-            = "TODO: put something useful here.." # yield :side
+          .three.columns.panel
+            =  yield :side
       %footer
         .row
     / ! end of #container

@@ -9,10 +9,10 @@
   %section
     %ul.left
     %ul.right
-      %li= link_to "Time entry", root_path
+      %li.active= link_to "Time entry", root_path
       - if current_user and current_user.has_role? :admin
         %li.divider
-        %li= link_to 'Admin', rails_admin_path
+        %li= link_to 'Admin', rails_admin_path, :onclick => "window.location.href = '/admin'"
       - if user_signed_in?
         %li.divider
         %li= link_to 'Logout', destroy_user_session_path, :method=>'delete'

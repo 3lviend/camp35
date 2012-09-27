@@ -12,7 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require turbolinks
+//= require autogrow
 //= require foundation
+//= require d3
+//= require common
 //= require application_forms
+//= require calendar
 //= require_tree .
 
+$(function(){
+  $(document).foundationTopBar();
+  $("textarea").autogrow();
+});
