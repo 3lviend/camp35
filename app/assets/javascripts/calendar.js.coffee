@@ -30,22 +30,40 @@ setupCalendar = ->
   calendar.append("line")
     .attr("x1", 11)
     .attr("x2", 11)
-    .attr("y1", 0)
+    .attr("y1", 40)
     .attr("y2", 1000)
     .attr("stroke", "#2BA6CB")
 
   calendar.append("line")
     .attr("x1", 35)
     .attr("x2", 35)
-    .attr("y1", 0)
+    .attr("y1", 40)
     .attr("y2", 1000)
     .attr("stroke", "#2BA6CB")
+
+  calendar.append("text")
+    .attr("x", 8)
+    .attr("y", 20)
+    .attr("fill", "#2BA6CB")
+    .text("Y")
+
+  calendar.append("text")
+    .attr("x", 32)
+    .attr("y", 20)
+    .attr("fill", "#2BA6CB")
+    .text("M")
+
+  calendar.append("text")
+    .attr("x", 57)
+    .attr("y", 20)
+    .attr("fill", "#2BA6CB")
+    .text("D")
 
   if !is_week
     calendar.append("line")
       .attr("x1", 59)
       .attr("x2", 59)
-      .attr("y1", 0)
+      .attr("y1", 40)
       .attr("y2", 1000)
       .attr("stroke", "#2BA6CB")
 
@@ -54,7 +72,7 @@ setupCalendar = ->
   .enter().append("circle")
     .attr("class", "year")
     .attr("cx", 11)
-    .attr("cy", (d) -> 30*years.indexOf(d) + 20)
+    .attr("cy", (d) -> 30*years.indexOf(d) + 40)
     .attr("r", 10)
     .attr("fill", (d) ->  if d == today.getFullYear()
          "#2BA6CB" 
@@ -68,7 +86,7 @@ setupCalendar = ->
   .enter().append("text")
     .attr("class", "year")
     .attr("x", 2.5)
-    .attr("y", (d) -> 30*years.indexOf(d) + 25)
+    .attr("y", (d) -> 30*years.indexOf(d) + 45)
     .attr("fill", (d) ->  if d == today.getFullYear()
          "#fff" 
        else
@@ -81,7 +99,7 @@ setupCalendar = ->
   .enter().append("circle")
     .attr("class", "month")
     .attr("cx", 35)
-    .attr("cy", (d) -> 30*months.indexOf(d) + 20)
+    .attr("cy", (d) -> 30*months.indexOf(d) + 40)
     .attr("r", 10)
     .attr("stroke", "#2BA6CB")
     .attr("fill", "#fff")
@@ -96,7 +114,7 @@ setupCalendar = ->
   .enter().append("text")
     .attr("class", "month")
     .attr("x", 26.5)
-    .attr("y", (d) -> 30*months.indexOf(d) + 25)
+    .attr("y", (d) -> 30*months.indexOf(d) + 45)
     .attr("fill", "#2BA6CB")
     .attr("fill", (d) ->  if d - 1 == today.getMonth()
          "#fff" 
@@ -114,7 +132,7 @@ setupCalendar = ->
     .enter().append("circle")
       .attr("class", "day")
       .attr("cx", 59)
-      .attr("cy", (d) -> 30*days.indexOf(d) + 20)
+      .attr("cy", (d) -> 30*days.indexOf(d) + 40)
       .attr("r", 10)
       .attr("stroke", "#2BA6CB")
       .attr("fill", "#fff")
@@ -129,7 +147,7 @@ setupCalendar = ->
     .enter().append("text")
       .attr("class", "day")
       .attr("x", 50.5)
-      .attr("y", (d) -> 30*days.indexOf(d) + 25)
+      .attr("y", (d) -> 30*days.indexOf(d) + 45)
       .attr("fill", "#2BA6CB")
       .attr("fill", (d) ->  if d  == today.getUTCDate()
            "#fff" 
