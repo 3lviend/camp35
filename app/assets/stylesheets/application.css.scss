@@ -119,7 +119,7 @@ h4{
 }
 
 .three {
-  width: 23.5% !important;
+  width: 22.8% !important;
 }
 
 .button.small{
@@ -170,9 +170,13 @@ circle, text{
 }
 
 #calendar-widget{
-  margin-top: -20px;
   padding: 0px;
   width: 9%;
+  border-right: 1px dotted #bbb;
+  padding: 8px;
+  svg{
+    margin-top: -20px;
+  }
 }
 
 .remove {
