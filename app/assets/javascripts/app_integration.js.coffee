@@ -2,7 +2,7 @@
 
 setupElements = ->
   $(document).foundationTopBar()
-  $("textarea").autogrow()
+  $("textarea").autoGrow()
   $("#spinner").stop()
 
 $ ->
