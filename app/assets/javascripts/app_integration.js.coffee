@@ -15,4 +15,5 @@ $ ->
       radius: 8
       width: 3
       shadow: true
+      zIndex: 9e9
     

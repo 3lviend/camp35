@@ -9,6 +9,10 @@ update_kinds = (work_chart_id) ->
     for kind in data
       $(".kind_code_select").append "<option value='#{kind.code}'>#{kind.display_label}</option>"
 
+setupKinds = ->
+  work_chart_id = $("#work_entry_work_chart_id").val()
+  update_kinds(work_chart_id) if work_chart_id
+
 $ ->
   # whenever work_entry_work_chart_id gets changed we need to
   # to update select with duration kinds
@@ -16,5 +20,6 @@ $ ->
     work_chart_id = $(e.currentTarget).val()
     update_kinds(work_chart_id)
   # also - make sure we get a proper kind at load
-  work_chart_id = $("#work_entry_work_chart_id").val()
-  update_kinds(work_chart_id)
+  setupKinds()
+  $(document).bind "page:change", ->
+    setupKinds()
