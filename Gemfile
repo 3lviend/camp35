@@ -5,6 +5,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem "d3-rails"
+  gem 'spinjs-rails'
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"

@@ -3,13 +3,16 @@
 setupElements = ->
   $(document).foundationTopBar()
   $("textarea").autogrow()
-#  $i(".remove").click (e) ->
- #   console.info e
-  #  message = $(e.currentTarget).attr("data-confirm")
-   # if confirm(message)
-      
-    #return false
+  $("#spinner").stop()
 
 $ ->
   setupElements()
   $(document).bind("page:change", setupElements)
+  $(document).bind "page:fetch", ->
+    $("#spinner").spin
+      color: "#fff"
+      top: 3
+      radius: 8
+      width: 3
+      shadow: true
+    

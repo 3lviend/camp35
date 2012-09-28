@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require autogrow
+//= require jquery.spin
 //= require app_integration
 //= require foundation
 //= require d3
