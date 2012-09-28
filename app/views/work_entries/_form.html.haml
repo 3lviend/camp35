@@ -10,7 +10,7 @@
     = d.input :kind_code, :as => :select, :collection => [], :input_html => { :class => "kind_code_select" }
     = d.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
     = d.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
-  = f.input :description
+  = f.input :description, :input_html => { :rows => 1 }
 
 - content_for :side do
   = button_tag(type: 'submit', class: "button", :onclick => "$('form').submit();") do
