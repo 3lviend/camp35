@@ -2,6 +2,10 @@ class WorkEntriesController < ApplicationController
   before_filter :get_day
   before_filter :fetch_work_charts, :only => [:new, :edit]
 
+  def show
+    redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
+  end
+
   def edit
     @work_entry = WorkEntry.find params[:id]
   end

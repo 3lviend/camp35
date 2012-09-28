@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require autogrow
+//= require app_integration
 //= require foundation
 //= require d3
 //= require common
@@ -22,6 +23,4 @@
 //= require_tree .
 
 $(function(){
-  $(document).foundationTopBar();
-  $("textarea").autogrow();
 });
