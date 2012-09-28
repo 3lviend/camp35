@@ -4,6 +4,8 @@ setupElements = ->
   $(document).foundationTopBar()
   $("textarea").autoGrow()
   $("#spinner").stop()
+  $(".calendar").datepicker
+    dateFormat: "yy/mm/dd"
 
 $ ->
   setupElements()
