@@ -22,6 +22,7 @@ setupElements = ->
   $("textarea").autoGrow()
   $(".calendar").datepicker
     dateFormat: "yy/mm/dd"
+  $("input.interval").interval()
   window.startSpinner = startSpinner
   window.stopSpinner = stopSpinner
   stopSpinner()
