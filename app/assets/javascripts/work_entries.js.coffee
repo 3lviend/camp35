@@ -13,6 +13,14 @@ setupKinds = ->
   work_chart_id = $("#work_entry_work_chart_id").val()
   update_kinds(work_chart_id) if work_chart_id
 
+setupWorkCharts = ->
+  if $("#work_entry_work_chart_id").length
+    window.startSpinner()
+    $.getJSON "/work_charts.json", (data) ->
+      $("#work_entry_work_chart_id").optionTree(data) 
+      window.stopSpinner()
+               
+
 $ ->
   # whenever work_entry_work_chart_id gets changed we need to
   # to update select with duration kinds
@@ -21,5 +29,7 @@ $ ->
     update_kinds(work_chart_id)
   # also - make sure we get a proper kind at load
   setupKinds()
+  setupWorkCharts()
   $(document).bind "page:change", ->
     setupKinds()
+    setupWorkCharts()

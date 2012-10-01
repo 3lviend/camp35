@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
+//= require optiontree
 //= require turbolinks
 //= require autogrow
 //= require jquery.spin

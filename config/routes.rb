@@ -17,5 +17,6 @@ TimesheetApp::Application.routes.draw do
   resources :work_entries, :path => "/work_day_entries/:year/:month/:day/work_entries"
   resources :work_chart_kinds, :path => "/work_charts/:work_chart_id/work_chart_kinds"
   resources :work_chart_duration_kinds, :path => "/work_charts/:work_chart_id/duration_kinds"
+  resources :work_charts
   devise_for :users
 end
