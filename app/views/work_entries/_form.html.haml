@@ -2,7 +2,7 @@
   = f.input :work_chart_id
   = f.input :date_performed, :as => :string, :input_html => { :value => "#{@day.year}/#{@day.month}/#{@day.day}", :class => "calendar" }
   = f.simple_fields_for :work_entry_fees do |fee|
-    = fee.input :fee
+    = fee.input :fee, :as => :currency
     = fee.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
     = fee.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
   = f.simple_fields_for :work_entry_durations do |d|

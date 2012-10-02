@@ -157,10 +157,13 @@ form{
       width: 30%;
       float: left;
     }
-    input, select, textarea{
+    input, select, textarea, .complex-input{
       width: 60%;
       float: right;
       margin-bottom: 20px;
+    }
+    .complex-input{
+      input { width: 100%; }
     }
   }
 }
