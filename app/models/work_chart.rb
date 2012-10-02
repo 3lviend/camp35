@@ -10,12 +10,10 @@ class WorkChart < ActiveRecord::Base
   has_many :work_entries
 
   def self.all_with_labels
-    # naive implementation
+    # naive implementation - should be refactored!
     all = WorkChart.where("parent_id IS NOT NULL")
-    result = {}
     root = all.where(parent_id: 1).first
-    result[root.display_label] = children_for(root, all) # {}
-    result
+    children_for(root, all)
   end
 
   # WorkChart -> [WorkChart] -> {}

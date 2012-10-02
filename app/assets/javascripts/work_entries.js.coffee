@@ -17,7 +17,8 @@ setupWorkCharts = ->
   if $("#work_entry_work_chart_id").length
     window.startSpinner()
     $.getJSON "/work_charts.json", (data) ->
-      $("#work_entry_work_chart_id").optionTree(data) 
+      $("#work_entry_work_chart_id").optionTree data,
+        preselect: [$("#work_entry_work_chart_id").val()] 
       window.stopSpinner()
                
 
