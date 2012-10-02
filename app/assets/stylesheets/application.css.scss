@@ -11,6 +11,7 @@
  *= require_self
  *= require foundation_and_overrides
  *= require jquery.ui.all
+ *= require spinner
  *= require_tree .
 */
 .brand {
@@ -165,9 +166,24 @@ form{
     .complex-input{
       input { width: 100%; }
     }
+    input.interval{
+      margin-right: 0px !important;
+      width: 100% !important;
+    }
+    .ui-spinner{
+      position: absolute;
+      right: -15px;
+      z-index: 9;
+    }
+    .ui-spinner-button{
+      height: 16px !important;
+    }
   }
 }
 
+.ui-datepicker-div{
+  z-index: 9;
+}
 
 circle, text{
   cursor: pointer;

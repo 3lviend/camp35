@@ -22,7 +22,22 @@ setupElements = ->
   $("textarea").autoGrow()
   $(".calendar").datepicker
     dateFormat: "yy/mm/dd"
-  $("input.interval").interval()
+  $(".spinner.hours").spinner
+    min: 0
+    max: 24
+    step: 1
+  $(".spinner.minutes").spinner
+    min: -15
+    max: 60
+    step: 15
+  # this is naive - should be refactored some day
+  $(".spinner.minutes").change (e) ->
+    if $(e.currentTarget).val() == "60"
+      $(e.currentTarget).val("0")
+      $(".spinner.hours").spinner("increment")
+    else if $(e.currentTarget).val() == "-15"
+      $(e.currentTarget).val("45")
+      $(".spinner.hours").spinner("decrement")
   window.startSpinner = startSpinner
   window.stopSpinner = stopSpinner
   stopSpinner()

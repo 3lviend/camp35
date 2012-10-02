@@ -17,6 +17,7 @@
 //= require turbolinks
 //= require autogrow
 //= require jquery.spin
+//= require spinner
 //= require app_integration
 //= require foundation
 //= require d3

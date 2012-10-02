@@ -21,6 +21,22 @@ class WorkEntryDuration < ActiveRecord::Base
     self.duration = "#{vals[0]}:#{vals[1]}:00"
   end
 
+  def duration_hours
+    duration.split(":").first
+  end
+
+  def duration_hours=(h)
+    duration = "#{h}:#{duration_minutes}:00"
+  end
+
+  def duration_minutes=(m)
+    duration = "#{duration_hours}:#{m}:00"
+  end
+ 
+  def duration_minutes
+    duration.split(":")[1]
+  end
+
   private
   def sanitize_duration
     self.date_created = DateTime.now unless self.date_created

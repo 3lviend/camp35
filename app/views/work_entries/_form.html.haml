@@ -6,7 +6,7 @@
     = fee.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
     = fee.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
   = f.simple_fields_for :work_entry_durations do |d|
-    = d.input :duration_string, :as => :interval
+    = d.input :duration, :as => :interval
     = d.input :kind_code, :as => :select, :collection => [], :input_html => { :class => "kind_code_select" }
     = d.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
     = d.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
