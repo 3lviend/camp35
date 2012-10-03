@@ -13,12 +13,25 @@ setupKinds = ->
   work_chart_id = $("#work_entry_work_chart_id").val()
   update_kinds(work_chart_id) if work_chart_id
 
+# Tree WorkChart -> Maybe Int -> [String]
+get_chart_path = (data, _id, parents) ->
+  return [] unless _id
+  id = parseInt _id
+  for branch of data
+    if typeof(data[branch]) == "number"
+      if parseInt(data[branch]) == id
+        return parents.concat([branch])
+    else
+      path = get_chart_path data[branch], id, parents.concat([branch])
+      return parents.concat(path) if path.length - parents.length > 1
+  return parents.concat([])
+
 setupWorkCharts = ->
   if $("#work_entry_work_chart_id").length
     window.startSpinner()
     $.getJSON "/work_charts.json", (data) ->
       $("#work_entry_work_chart_id").optionTree data,
-        preselect: [$("#work_entry_work_chart_id").val()] 
+        preselect: { "work_entry[work_chart_id]": get_chart_path(data, $("#work_entry_work_chart_id").val(), []) } 
       window.stopSpinner()
                
 

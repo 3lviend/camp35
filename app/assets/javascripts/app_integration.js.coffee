@@ -38,6 +38,7 @@ setupElements = ->
     else if $(e.currentTarget).val() == "-15"
       $(e.currentTarget).val("45")
       $(".spinner.hours").spinner("decrement")
+  $(document).foundationButtons()
   window.startSpinner = startSpinner
   window.stopSpinner = stopSpinner
   stopSpinner()

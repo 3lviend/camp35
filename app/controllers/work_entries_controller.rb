@@ -1,5 +1,6 @@
 class WorkEntriesController < ApplicationController
   before_filter :get_day
+  before_filter :fetch_quicks, :only => [:new, :edit]
 
   def show
     redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
@@ -52,5 +53,9 @@ class WorkEntriesController < ApplicationController
   private
   def get_day
     @day = "#{params[:year]}-#{params[:month]}-#{params[:day]}".to_datetime
+  end
+
+  def fetch_quicks
+    @quicks = WorkChart.frequently_used(current_user)
   end
 end

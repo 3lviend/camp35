@@ -1,3 +1,6 @@
+# This class should be refactored.
+# Existaing methods are to be treated as proofs of concepts.
+# They work but do it very slowly.
 class WorkChart < ActiveRecord::Base
   set_table_name :work_chart
 
@@ -8,6 +11,55 @@ class WorkChart < ActiveRecord::Base
   has_many :work_chart_kinds
   belongs_to :work_chart_status, :foreign_key => :status, :primary_key => :status
   has_many :work_entries
+
+  # 20 most recent and 20 most popular
+  # over the last three months
+  def self.frequently_used(user)
+    # this code is intentionally not optimal
+    # TODO: refactor!
+    frequent_sql = <<-eos
+      SELECT work_chart_id, count(*) AS chart_count 
+      FROM work_entries 
+      WHERE 
+        date_performed > date('#{3.month.ago.to_formatted_s(:db)}') AND 
+        role_id = #{user.system_role_id}
+      GROUP BY work_chart_id 
+      ORDER BY chart_count DESC 
+      LIMIT 20;
+    eos
+    last_sql = <<-eos
+      SELECT work_chart_id, MAX(date_performed) AS last_date 
+      FROM work_entries 
+      WHERE 
+        role_id = #{user.system_role_id}
+      GROUP BY work_chart_id 
+      ORDER BY last_date DESC 
+      LIMIT 20;
+    eos
+    frequent = WorkChart.find_by_sql(frequent_sql).map(&:work_chart_id)
+    last     = WorkChart.find_by_sql(last_sql).map(&:work_chart_id)
+    ids = (frequent + last).uniq
+    WorkChart.find ids.map(&:to_i)
+  end
+
+  def labels
+    unless @labels
+      sql = <<-eos
+        SELECT "work_chart"."display_label" 
+        FROM work_chart 
+        INNER JOIN 
+          (SELECT CAST(regexp_split_to_table(branch, '~') as integer) AS b 
+           FROM work_chart_tree_view 
+           WHERE id = #{id}) as bs 
+        ON "work_chart"."id" = "bs"."b" 
+        WHERE 
+          "work_chart"."parent_id" IS NOT NULL
+        ORDER BY "bs"."b"
+      eos
+      @labels = WorkChart.connection.execute(sql).to_a.map {|c| c["display_label"]}
+    end
+    @labels
+  end
 
   def self.all_with_labels
     # naive implementation - should be refactored!

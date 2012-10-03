@@ -10,25 +10,8 @@ class WorkEntry < ActiveRecord::Base
   before_save :sanitize_entry
   validates_presence_of :work_chart
 
-  # TODO: optimize because this is painfully 
   def work_chart_label_parts
-    if @work_chart_entry
-      return @work_chart_entry
-    else
-      sql = <<-eos
-        SELECT "work_chart"."display_label" 
-        FROM work_chart 
-        INNER JOIN 
-          (SELECT CAST(regexp_split_to_table(branch, '~') as integer) AS b 
-           FROM work_chart_tree_view 
-           WHERE id = #{self.work_chart_id}) as bs 
-        ON "work_chart"."id" = "bs"."b" 
-        WHERE "work_chart"."parent_id" 
-        IS NOT NULL order by "bs"."b"
-      eos
-      @work_chart_entry = WorkEntry.connection.execute(sql).to_a.map {|c| c["display_label"]}
-      @work_chart_entry
-    end
+    work_chart.labels
   end
 
   def total_duration
