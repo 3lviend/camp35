@@ -26,13 +26,28 @@ get_chart_path = (data, _id, parents) ->
       return parents.concat(path) if path.length - parents.length > 1
   return parents.concat([])
 
-setupWorkCharts = ->
-  if $("#work_entry_work_chart_id").length
-    window.startSpinner()
-    $.getJSON "/work_charts.json", (data) ->
+setupRegularWidget = (data) ->
       $("#work_entry_work_chart_id").optionTree data,
         preselect: { "work_entry[work_chart_id]": get_chart_path(data, $("#work_entry_work_chart_id").val(), []) } 
       window.stopSpinner()
+
+setupRegularWorkCharts = ->
+  if window.work_charts
+    setupRegularWidget window.work_charts
+  else
+    window.startSpinner()
+    $.getJSON "/work_charts.json", (data) ->
+      window.work_charts = data
+      setupRegularWidget data
+
+setupWorkCharts = ->
+  if $("#work_entry_work_chart_id").length
+    setupRegularWorkCharts()
+  $(".quick-pick").click (e) ->
+    id = $(e.currentTarget).attr("data-id")
+    $("#work_entry_work_chart_id").val(id)
+    setupRegularWorkCharts()
+    
                
 
 $ ->

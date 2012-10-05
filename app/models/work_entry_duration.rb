@@ -5,41 +5,28 @@ class WorkEntryDuration < ActiveRecord::Base
 
   attr_accessible :duration_hours, :duration_minutes, :created_by, :modified_by, :kind_code
 
-  before_save :sanitize_duration
-
-  def duration_string
-    if duration
-      vals = duration.split(":")
-      "#{vals[0]}h #{vals[1]}m"
-    else
-      "00:00:00"
-    end
-  end
-
-  def duration_string=(s)
-    vals = s.gsub(/[hm]/, "").split(" ")
-    self.duration = "#{vals[0]}:#{vals[1]}:00"
-  end
+  after_initialize :sanitize_duration
 
   def duration_hours
-    duration.split(":").first
+    duration.nil? ? "00" : duration.split(":").first 
   end
 
   def duration_hours=(h)
-    duration = "#{h}:#{duration_minutes}:00"
+    self.duration = "#{'%02d' % h}:#{duration_minutes}:00"
   end
 
   def duration_minutes=(m)
-    duration = "#{duration_hours}:#{m}:00"
+    self.duration = "#{duration_hours}:#{'%02d' % m}:00"
   end
  
   def duration_minutes
-    duration.split(":")[1]
+    duration.nil? ? "00" : duration.split(":")[1]
   end
 
   private
   def sanitize_duration
     self.date_created = DateTime.now unless self.date_created
+    self.duration = "00:00:00" unless self.duration
   end
   
 end
