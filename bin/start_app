@@ -1,0 +1,4 @@
+#!/bin/sh
+cd "`dirname $0`/.." || exit 1
+~/.rbenv/shims/unicorn_rails -E development -c config/unicorn.conf.rb -D config.ru
+

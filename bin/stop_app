@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "`dirname $0`/.." || exit 1
+pid=`cat var/run/unicorn.pid 2>/dev/null` && kill $pid 
+pid=`cat kodiak/var/run/unicorn.pid 2>/dev/null` && kill $pid 
+
