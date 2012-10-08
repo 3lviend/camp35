@@ -7,6 +7,7 @@ group :assets do
   gem "d3-rails"
   gem 'spinjs-rails'
   gem 'jquery-ui-rails'
+  gem 'chosen-rails'
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"

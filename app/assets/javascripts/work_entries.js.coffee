@@ -26,10 +26,26 @@ get_chart_path = (data, _id, parents) ->
       return parents.concat(path) if path.length - parents.length > 1
   return parents.concat([])
 
+setupChosen = ->
+  $(".chzn-container").remove()
+  $(".chzn-done").removeClass("chzn-done")
+  $("select").chosen().change (e) ->
+    $(window).oneTime 200,  ->
+      setupChosen()
+      # now if last added select has value of undefined
+      # focus it's search field
+      last_select = $(".work_chart_selector select").last()[0]
+      if last_select && last_select != e.currentTarget
+        $(last_select).next('.chzn-container').trigger('mousedown')
+      
+
 setupRegularWidget = (data) ->
       $("#work_entry_work_chart_id").optionTree data,
         preselect: { "work_entry[work_chart_id]": get_chart_path(data, $("#work_entry_work_chart_id").val(), []) } 
+        choose: ""
       window.stopSpinner()
+      setupChosen()
+
 
 setupRegularWorkCharts = ->
   if window.work_charts
