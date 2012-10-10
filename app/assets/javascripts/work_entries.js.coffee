@@ -105,10 +105,10 @@ setupIntervals = ->
  
   $(".button.add").click (e) ->
     new_el_html = $($(".durations .single-duration").last()).clone().wrap('<div>').parent().html()
-    reg = /\[\d\]/
+    reg = /]\[\d\]/
     index = reg.exec(new_el_html)[0]
     index = parseInt(index.split("[")[1])
-    new_el_html = new_el_html.replace(new RegExp("\[#{index}\]", "g"), "#{index+1}").replace(new RegExp("_#{index}_", "g"), "_#{index+1}_")
+    new_el_html = new_el_html.replace(new RegExp("\\[" + index, "g"), "[" + (index + 1)).replace(new RegExp("_#{index}_", "g"), "_#{index+1}_")
     console.log new_el_html
     $(".durations").append(new_el_html)
     $(".durations .chzn-container").remove()
