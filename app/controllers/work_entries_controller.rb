@@ -8,6 +8,7 @@ class WorkEntriesController < ApplicationController
 
   def edit
     @work_entry = WorkEntry.find params[:id]
+    @work_entry.work_entry_fees.build if @work_entry.work_entry_fees.count == 0
   end
 
   def update
@@ -38,7 +39,7 @@ class WorkEntriesController < ApplicationController
       redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
     else
       flash[:errors] = @work_entry.errors.full_messages
-      fetch_work_charts
+      fetch_quicks
       render :new
     end
   end

@@ -27,9 +27,9 @@ get_chart_path = (data, _id, parents) ->
   return parents.concat([])
 
 setupChosen = ->
-  $(".chzn-container").remove()
-  $(".chzn-done").removeClass("chzn-done")
-  $("select").chosen().change (e) ->
+  $(".work_chart_selector .chzn-container").remove()
+  $(".work_chart_selector .chzn-done").removeClass("chzn-done")
+  $(".work_chart_selector select").chosen().change (e) ->
     $(window).oneTime 200,  ->
       setupChosen()
       # now if last added select has value of undefined
@@ -37,6 +37,7 @@ setupChosen = ->
       last_select = $(".work_chart_selector select").last()[0]
       if last_select && last_select != e.currentTarget
         $(last_select).next('.chzn-container').trigger('mousedown')
+  $("select").chosen()
       
 
 setupRegularWidget = (data) ->
@@ -64,7 +65,39 @@ setupWorkCharts = ->
     $("#work_entry_work_chart_id").val(id)
     setupRegularWorkCharts()
     
-               
+setupIntervals = ->
+  $(".hour-button").live "click", (e) ->
+    hour = $(e.currentTarget).attr("data-hour")
+    $($(e.currentTarget).parents(".interval").find("select")[0]).val(hour).trigger("liszt:updated")
+    $(e.currentTarget).parents(".interval").find(".hour-button").removeClass("selected")
+    $(e.currentTarget).addClass("selected")
+    false
+
+  $(".minute-button").live "click", (e) ->
+    minute = $(e.currentTarget).attr("data-minute")
+    $($(e.currentTarget).parents(".interval").find("select")[1]).val(minute).trigger("liszt:updated")
+    $(e.currentTarget).parents(".interval").find(".minute-button").removeClass("selected")
+    $(e.currentTarget).addClass("selected")
+    false
+
+  $("div.interval").each (i, div) ->
+    val = parseInt($($(div).find("select")[0]).val())
+    $("a[data-hour=#{val}]", div).click()
+    val = parseInt($($(div).find("select")[1]).val())
+    $("a[data-minute=#{val}]", div).click()
+ 
+  $(".button.add").click (e) ->
+    new_el_html = $($(".durations .single-duration").last()).clone().wrap('<div>').parent().html()
+    reg = /\[\d\]/
+    index = reg.exec(new_el_html)[0]
+    index = parseInt(index.split("[")[1])
+    new_el_html = new_el_html.replace(new RegExp("\[#{index}\]", "g"), "#{index+1}").replace(new RegExp("_#{index}_", "g"), "_#{index+1}_")
+    console.log new_el_html
+    $(".durations").append(new_el_html)
+    $(".durations .chzn-container").remove()
+    $(".durations .chzn-done").removeClass("chzn-done")
+    $(".durations select").chosen()
+    false
 
 $ ->
   # whenever work_entry_work_chart_id gets changed we need to
@@ -75,6 +108,8 @@ $ ->
   # also - make sure we get a proper kind at load
   setupKinds()
   setupWorkCharts()
+  setupIntervals()
   $(document).bind "page:change", ->
     setupKinds()
     setupWorkCharts()
+    setupIntervals()

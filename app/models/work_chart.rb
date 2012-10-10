@@ -17,55 +17,76 @@ class WorkChart < ActiveRecord::Base
   def self.frequently_used(user)
     # this code is intentionally not optimal
     # TODO: refactor!
-    frequent_sql = <<-eos
-      SELECT work_chart_id, count(*) AS chart_count 
-      FROM work_entries 
-      WHERE 
-        date_performed > date('#{3.month.ago.to_formatted_s(:db)}') AND 
-        role_id = #{user.system_role_id}
-      GROUP BY work_chart_id 
-      ORDER BY chart_count DESC 
-      LIMIT 20;
-    eos
-    last_sql = <<-eos
-      SELECT work_chart_id, MAX(date_performed) AS last_date 
-      FROM work_entries 
-      WHERE 
-        role_id = #{user.system_role_id}
-      GROUP BY work_chart_id 
-      ORDER BY last_date DESC 
-      LIMIT 20;
-    eos
-    frequent = WorkChart.find_by_sql(frequent_sql).map(&:work_chart_id)
-    last     = WorkChart.find_by_sql(last_sql).map(&:work_chart_id)
-    ids = (frequent + last).uniq
-    WorkChart.find ids.map(&:to_i)
+    if Rails.cache.exist? :frequent_charts
+      Rails.cache.read :frequent_charts
+    else
+      frequent_sql = <<-eos
+        SELECT work_chart_id, count(*) AS chart_count 
+        FROM work_entries 
+        WHERE 
+          date_performed > date('#{3.month.ago.to_formatted_s(:db)}') AND 
+          role_id = #{user.system_role_id}
+        GROUP BY work_chart_id 
+        ORDER BY chart_count DESC 
+        LIMIT 20;
+      eos
+      last_sql = <<-eos
+        SELECT work_chart_id, MAX(date_performed) AS last_date 
+        FROM work_entries 
+        WHERE 
+          role_id = #{user.system_role_id}
+        GROUP BY work_chart_id 
+        ORDER BY last_date DESC 
+        LIMIT 20;
+      eos
+      frequent = WorkChart.find_by_sql(frequent_sql).map(&:work_chart_id)
+      last     = WorkChart.find_by_sql(last_sql).map(&:work_chart_id)
+      ids = (frequent + last).uniq
+      charts = WorkChart.find ids.map(&:to_i)
+      # TODO: implement sweeper!
+      Rails.cache.write :frequent_charts, charts, :expires_in => 2.days
+      charts
+    end
   end
 
   def labels
-    unless @labels
-      sql = <<-eos
-        SELECT "work_chart"."display_label" 
-        FROM work_chart 
-        INNER JOIN 
-          (SELECT CAST(regexp_split_to_table(branch, '~') as integer) AS b 
-           FROM work_chart_tree_view 
-           WHERE id = #{id}) as bs 
-        ON "work_chart"."id" = "bs"."b" 
-        WHERE 
-          "work_chart"."parent_id" IS NOT NULL
-        ORDER BY "bs"."b"
-      eos
-      @labels = WorkChart.connection.execute(sql).to_a.map {|c| c["display_label"]}
+    symbol = "chart_labels_#{self.id}".to_sym
+    if Rails.cache.exist? symbol
+      Rails.cache.read symbol
+    else
+      unless @labels
+        sql = <<-eos
+          SELECT "work_chart"."display_label" 
+          FROM work_chart 
+          INNER JOIN 
+            (SELECT CAST(regexp_split_to_table(branch, '~') as integer) AS b 
+             FROM work_chart_tree_view 
+             WHERE id = #{id}) as bs 
+          ON "work_chart"."id" = "bs"."b" 
+          WHERE 
+            "work_chart"."parent_id" IS NOT NULL
+          ORDER BY "bs"."b"
+        eos
+        @labels = WorkChart.connection.execute(sql).to_a.map {|c| c["display_label"]}
+      end
+      # TODO: implement sweeper!
+      Rails.cache.write symbol, @labels, :expires_in => 2.days
+      @labels
     end
-    @labels
   end
 
   def self.all_with_labels
     # naive implementation - should be refactored!
-    all = WorkChart.where("parent_id IS NOT NULL")
-    root = all.where(parent_id: 1).first
-    children_for(root, all)
+    if Rails.cache.exist? :charts
+      Rails.cache.read :charts
+    else
+      all = WorkChart.where("parent_id IS NOT NULL")
+      root = all.where(parent_id: 1).first
+      charts = children_for(root, all)
+      # TODO: implement sweeper!
+      Rails.cache.write :charts, charts, :expires_in => 2.days
+      charts
+    end
   end
 
   # WorkChart -> [WorkChart] -> {}

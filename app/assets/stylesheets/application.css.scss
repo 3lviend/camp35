@@ -168,13 +168,13 @@ form{
   div.input{
     clear: both;
     label{
-      width: 30%;
+      width: 20%;
       float: left;
     }
     input, select, textarea, .complex-input{
-      width: 60%;
+      width: 70%;
       float: right;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     .complex-input{
       input, select, .dropdown { width: 100%; height: 32px; padding: 6px;  }
@@ -226,7 +226,7 @@ circle, text{
   border-right: 1px dotted #bbb;
   padding: 8px;
   svg{
-    margin-top: -20px;
+    margin-top: -10px;
   }
 }
 
@@ -243,7 +243,7 @@ circle, text{
 .interval-widget{
   a{
     position: absolute;
-    right: 20px;
+    right: 10px;
   }
 
   .minus{
@@ -256,7 +256,7 @@ circle, text{
     border: none !important;
   }
   .complex-input{
-    margin-bottom: 20px !important;
+    margin-bottom: 10px !important;
   }
 }
 
@@ -293,7 +293,7 @@ circle, text{
 .chzn-container{
   float: right;
   width: 60% !important;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .work_chart_selector{
@@ -312,7 +312,82 @@ circle, text{
   }
 }
 
-.chzn-container:nth-child(3) .chzn-single{
+.chzn-container:nth-child(3) {
+  width: 98% !important;
+  margin-right: 2%;
+}
+
+.chzn-container:nth-child(3) .chzn-single, .single-select .chzn-single{
   border-top: 1px solid #AAA !important;
 }
 
+.durations{
+  label{
+    display: none;
+  }
+  .input{
+    clear: none;
+    float: right;
+    width: 183px;
+    .complex-input{
+      width: 100% !important;
+    }
+    .chzn-container{
+      width: 100% !important;
+    }
+    .chzn-drop{
+      width: 183px !important;
+    }
+  }
+  .select {
+    width: 123px;
+  }
+  .button.remove {
+    background: #C60F13 !important;
+    border: 1px solid #7F0A0C !important;
+    float: right;
+    font-size: 10px;
+    padding: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-top: 6px;
+    margin-left: 10px;
+  }
+}
+
+
+.hours-minutes{
+  width: 500px !important;
+  margin-left: -125px !important;
+  clear: both;
+  top: -10px;
+  margin-bottom: 10px !important;
+
+  .button{
+    padding: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 10px;
+    background: #bbb !important;
+    border: 1px solid #aaa !important;
+    text-shadow: #fff 0px -1px 0px !important;
+    color: #111 !important;
+  }
+  .button.selected{
+    background: #eee !important;
+  }
+}
+
+.actions{
+  .button.add{
+    margin-bottom: 10px;
+    font-size: 10px;
+    padding: 6px !important;
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+  }
+}
+
+.single-duration{
+  clear: both;
+}

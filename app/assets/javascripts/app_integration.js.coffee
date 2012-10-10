@@ -22,15 +22,15 @@ setupElements = ->
   $("textarea").autoGrow()
   $(".calendar").datepicker
     dateFormat: "yy/mm/dd"
-  $(".spinner.hours").spinner
-    min: 0
-    max: 24
-    step: 1
-  $(".spinner.minutes").spinner
-    min: -15
-    max: 60
-    step: 15
-  # this is naive - should be refactored some day
+#  $(".spinner.hours").spinner
+#    min: 0
+#    max: 24
+#    step: 1
+#  $(".spinner.minutes").spinner
+#    min: -15
+#    max: 60
+#    step: 15
+#  # this is naive - should be refactored some day
   $(".spinner.minutes").change (e) ->
     if $(e.currentTarget).val() == "60"
       $(e.currentTarget).val("0")

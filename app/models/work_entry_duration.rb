@@ -8,7 +8,7 @@ class WorkEntryDuration < ActiveRecord::Base
   after_initialize :sanitize_duration
 
   def duration_hours
-    duration.nil? ? "00" : duration.split(":").first 
+    self.duration.nil? ? "0" : self.duration.split(":").first.to_i.to_s
   end
 
   def duration_hours=(h)
@@ -20,7 +20,7 @@ class WorkEntryDuration < ActiveRecord::Base
   end
  
   def duration_minutes
-    duration.nil? ? "00" : duration.split(":")[1]
+    self.duration.nil? ? "0" : self.duration.split(":")[1].to_i.to_s
   end
 
   private
