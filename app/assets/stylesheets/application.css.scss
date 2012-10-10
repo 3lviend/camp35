@@ -230,6 +230,9 @@ circle, text{
   }
 }
 
+.single-duration .remove{opacity: 1; cursor: pointer; }
+.single-duration:nth-child(3) .remove{ opacity: 0.3; cursor: default; }
+
 .remove {
   color: red;
 }
@@ -328,7 +331,7 @@ circle, text{
   .input{
     clear: none;
     float: right;
-    width: 183px;
+    width: 170px !important;
     .complex-input{
       width: 100% !important;
     }
@@ -347,9 +350,9 @@ circle, text{
     border: 1px solid #7F0A0C !important;
     float: right;
     font-size: 10px;
-    padding: 4px;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding: 6px;
+    padding-left: 9px;
+    padding-right: 9px;
     margin-top: 6px;
     margin-left: 10px;
   }
@@ -358,7 +361,7 @@ circle, text{
 
 .hours-minutes{
   width: 500px !important;
-  margin-left: -125px !important;
+  margin-left: -166px !important;
   clear: both;
   top: -10px;
   margin-bottom: 10px !important;
@@ -379,6 +382,7 @@ circle, text{
 }
 
 .actions{
+  position: absolute;
   .button.add{
     margin-bottom: 10px;
     font-size: 10px;

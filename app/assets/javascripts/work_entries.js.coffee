@@ -5,19 +5,20 @@
 set_kinds_visibility = () ->
     data = $(".kind_code_select option")
     if data.length < 2
-      $(".kind_code_select").parents("div.input").css("visibility", "hidden")
+      $(".kind_code_select").parents("div.input").find("select").attr("disabled", "disabled").trigger("liszt:updated")
     else 
-      $(".kind_code_select").parents("div.input").css("visibility", "visible")
+      $(".kind_code_select").parents("div.input").find("select").removeAttr("disabled").trigger("liszt:updated")
 
 update_kinds = (work_chart_id) ->
   $.getJSON "/work_charts/#{work_chart_id}/duration_kinds.json", (data) ->
     # here we have an array of objects in data
-    value = $(".kind_code_select").val()
-    $(".kind_code_select").html("")
-    for kind in data
-      $(".kind_code_select").append "<option value='#{kind.code}'>#{kind.display_label}</option>"
-    $(".kind_code_select").val(value)
-    $(".kind_code_select").trigger("liszt:updated")
+    $(".kind_code_select").each (i, select) ->
+      value = $(select).val()
+      $(select).html("")
+      for kind in data
+        $(select).append "<option value='#{kind.code}'>#{kind.display_label}</option>"
+      $(select).val(value)
+      $(select).trigger("liszt:updated")
     set_kinds_visibility()
 
 setupKinds = ->
@@ -96,6 +97,11 @@ setupIntervals = ->
     $(e.currentTarget).parents(".interval").find(".minute-button").removeClass("selected")
     $(e.currentTarget).addClass("selected")
     false
+
+  $(".single-duration .remove").live "click", (e) ->
+     if $(e.currentTarget).css("opacity") == "1"
+       $(e.currentTarget).parents(".single-duration").hide().find(".destroy").val(1)
+     false
 
   $("div.interval").each (i, div) ->
     val = parseInt($($(div).find("select")[0]).val())

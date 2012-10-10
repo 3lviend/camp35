@@ -7,15 +7,18 @@
     = fee.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
   %fieldset.durations
     %legend Durations
+    %div.actions
+      = link_to "+", "#", :class => "button add"
+    - index = 0
     = f.simple_fields_for :work_entry_durations do |d|
       %div.single-duration
-        = link_to "remove", "#", :class => "button alert remove"
+        = link_to "-", "#", :class => "button alert remove"
         = d.input :duration, :as => :interval, :label => ""
-        = d.input :kind_code, :as => :select, :collection => WorkChartKind.where(work_chart_id: @work_entry.work_chart_id).map(&:duration_kind) ,:input_html => { :class => "kind_code_select", :"data-placeholder" => "Select kind" }
+        = d.input :kind_code, :as => :select, :collection => WorkChartKind.where(work_chart_id: @work_entry.work_chart_id).map(&:duration_kind), :input_html => { :class => "kind_code_select", :"data-placeholder" => "Select kind" }
         = d.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
         = d.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
-    %div.actions
-      = link_to "add", "#", :class => "button add"
+        %input{type: "hidden", class: "destroy", name: "work_entry[work_entry_durations_attributes][#{index}][_destroy]", value: 0} 
+        - index += 1
   = f.input :description, :input_html => { :rows => 1 }
   %div.panel.input
     = button_tag(type: 'submit', class: "button", :onclick => "$('form').submit();") do

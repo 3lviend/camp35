@@ -12,7 +12,7 @@ class WorkEntriesController < ApplicationController
   end
 
   def update
-    @work_entry = WorkEntry.find params[:id]
+    @work_entry = WorkEntry.includes(:work_entry_durations).find params[:id]
     if @work_entry.update_attributes(params[:work_entry])
       redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
     else
