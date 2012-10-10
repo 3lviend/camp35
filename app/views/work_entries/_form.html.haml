@@ -11,7 +11,7 @@
       %div.single-duration
         = link_to "remove", "#", :class => "button alert remove"
         = d.input :duration, :as => :interval, :label => ""
-        = d.input :kind_code, :as => :select, :collection => [], :input_html => { :class => "kind_code_select", :"data-placeholder" => "Select kind" }
+        = d.input :kind_code, :as => :select, :collection => WorkChartKind.where(work_chart_id: @work_entry.work_chart_id).map(&:duration_kind) ,:input_html => { :class => "kind_code_select", :"data-placeholder" => "Select kind" }
         = d.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }
         = d.input :modified_by, :as => :hidden, :input_html => { :value => current_user.email }
     %div.actions

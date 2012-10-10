@@ -2,16 +2,33 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+set_kinds_visibility = () ->
+    data = $(".kind_code_select option")
+    if data.length < 2
+      $(".kind_code_select").parents("div.input").css("visibility", "hidden")
+    else 
+      $(".kind_code_select").parents("div.input").css("visibility", "visible")
+
 update_kinds = (work_chart_id) ->
   $.getJSON "/work_charts/#{work_chart_id}/duration_kinds.json", (data) ->
     # here we have an array of objects in data
+    value = $(".kind_code_select").val()
     $(".kind_code_select").html("")
     for kind in data
       $(".kind_code_select").append "<option value='#{kind.code}'>#{kind.display_label}</option>"
+    $(".kind_code_select").val(value)
+    $(".kind_code_select").trigger("liszt:updated")
+    set_kinds_visibility()
 
 setupKinds = ->
+  # whenever work_entry_work_chart_id gets changed we need to
+  # to update select with duration kinds
+  $("#work_entry_work_chart_id").change (e) ->
+    work_chart_id = $(e.currentTarget).val()
+    update_kinds(work_chart_id)
   work_chart_id = $("#work_entry_work_chart_id").val()
   update_kinds(work_chart_id) if work_chart_id
+  set_kinds_visibility()
 
 # Tree WorkChart -> Maybe Int -> [String]
 get_chart_path = (data, _id, parents) ->
@@ -100,12 +117,6 @@ setupIntervals = ->
     false
 
 $ ->
-  # whenever work_entry_work_chart_id gets changed we need to
-  # to update select with duration kinds
-  $("#work_entry_work_chart_id").change (e) ->
-    work_chart_id = $(e.currentTarget).val()
-    update_kinds(work_chart_id)
-  # also - make sure we get a proper kind at load
   setupKinds()
   setupWorkCharts()
   setupIntervals()
