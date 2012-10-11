@@ -63,6 +63,7 @@ setupRegularWidget = (data) ->
         preselect: { "work_entry[work_chart_id]": get_chart_path(data, $("#work_entry_work_chart_id").val(), []) } 
         choose: ""
       window.stopSpinner()
+      $(".work_chart_selector select").prepend("<option></option>").val(null)
       setupChosen()
 
 
