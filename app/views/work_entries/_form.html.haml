@@ -21,5 +21,12 @@
         - index += 1
   = f.input :description, :input_html => { :rows => 1 }
   %div.panel.input
-    = button_tag(type: 'submit', class: "button", :onclick => "$('form').submit();") do
-      = "Save"
+    .four.columns
+      - if @work_entry.new_record?
+        = link_to "Cancel", show_work_day_entries_path(@day.year, @day.month, @day.day), :class => "button alert"
+      - else
+        = link_to "Delete", work_entry_path(@day.year, @day.month, @day.day, @work_entry.id), :class => "button alert", :method => :delete, :confirm => "Are you sure?"
+    .eight.columns
+      = button_tag(type: 'submit', class: "button", :onclick => "$('form').submit();") do
+        = "Save"
+    .clearfix

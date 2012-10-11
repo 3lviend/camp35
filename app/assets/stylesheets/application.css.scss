@@ -218,6 +218,9 @@ form{
 box-shadow: #666 0px 0px 20px;
 }
 
+.clearfix{ clear: both; }
+
+
 circle, text{
   cursor: pointer;
 }
@@ -401,4 +404,18 @@ circle, text{
 
 .single-duration{
   clear: both;
+}
+
+.button.alert{
+border: 1px solid #7F0A0C !important;
+
+background: #c60f13 !important; /* Old browsers */
+background: -moz-linear-gradient(top, #c60f13 0%, #990c0e 100%) !important;; /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c60f13), color-stop(100%,#990c0e)) !important;; /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #c60f13 0%,#990c0e 100%) !important;; /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #c60f13 0%,#990c0e 100%) !important;; /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #c60f13 0%,#990c0e 100%) !important;; /* IE10+ */
+background: linear-gradient(to bottom, #c60f13 0%,#990c0e 100%) !important;; /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c60f13', endColorstr='#990c0e',GradientType=0 ) !important;; /* IE6-9 */
+
 }
