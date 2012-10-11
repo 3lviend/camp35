@@ -82,7 +82,15 @@ setupWorkCharts = ->
     id = $(e.currentTarget).attr("data-id")
     $("#work_entry_work_chart_id").val(id)
     setupRegularWorkCharts()
-    
+
+set_add_duration_visibility = ->
+  valueCount = $($(".durations .single-duration .select select").first()).find("option").length
+  selectCount = $(".durations .single-duration:visible").length
+  if selectCount >= valueCount
+    $(".durations .add").addClass("disabled")
+  else
+    $(".durations .add").removeClass("disabled")
+
 setupIntervals = ->
   $(".hour-button").live "click", (e) ->
     hour = $(e.currentTarget).attr("data-hour")
@@ -101,6 +109,7 @@ setupIntervals = ->
   $(".single-duration .remove").live "click", (e) ->
      if $(e.currentTarget).css("opacity") == "1"
        $(e.currentTarget).parents(".single-duration").hide().find(".destroy").val(1)
+     set_add_duration_visibility()
      false
 
   $("div.interval").each (i, div) ->
@@ -110,16 +119,25 @@ setupIntervals = ->
     $("a[data-minute=#{val}]", div).click()
  
   $(".button.add").click (e) ->
+    return false if $(e.currentTarget).css("opacity") != "1"
     new_el_html = $($(".durations .single-duration").last()).clone().wrap('<div>').parent().html()
     reg = /]\[\d\]/
     index = reg.exec(new_el_html)[0]
     index = parseInt(index.split("[")[1])
     new_el_html = new_el_html.replace(new RegExp("\\[" + index, "g"), "[" + (index + 1)).replace(new RegExp("_#{index}_", "g"), "_#{index+1}_")
-    console.log new_el_html
-    $(".durations").append(new_el_html)
+    el = $(new_el_html)
+    $(".durations").append(el)
+    el.show()
     $(".durations .chzn-container").remove()
     $(".durations .chzn-done").removeClass("chzn-done")
+    values = $(".durations .single-duration:visible .select select").map (i, e) -> $(e).val() 
+    $($(".durations .single-duration:visible").last()).find(".select select option").each (i, e) ->
+      if not ( $(e).attr("value") in values )
+        $(e).attr("selected", "selected")
+      else
+        $(e).attr("selected")
     $(".durations select").chosen()
+    set_add_duration_visibility()
     false
 
 $ ->

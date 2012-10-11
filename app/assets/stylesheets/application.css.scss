@@ -230,6 +230,11 @@ circle, text{
   }
 }
 
+.button.disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
 .single-duration .remove{opacity: 1; cursor: pointer; }
 .single-duration:nth-child(3) .remove{ opacity: 0.3; cursor: default; }
 
