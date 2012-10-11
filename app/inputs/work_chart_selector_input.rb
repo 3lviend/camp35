@@ -2,6 +2,9 @@ class WorkChartSelectorInput < SimpleForm::Inputs::Base
   def input
     template = <<-eos
       <div class="row collapse complex-input">
+        <div class="twelve mobile-four columns">
+           <input type="text" placeholder="Type to search through work charts" />
+        </div>
         <div class="eight mobile-three columns">
           #{@builder.text_field("#{attribute_name}".to_sym, input_html_options)}
         </div>
