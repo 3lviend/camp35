@@ -212,8 +212,10 @@ form{
   }
 }
 
-.ui-datepicker-div{
-  z-index: 9;
+
+.ui-datepicker{
+  z-index: 9999 !important;
+box-shadow: #666 0px 0px 20px;
 }
 
 circle, text{

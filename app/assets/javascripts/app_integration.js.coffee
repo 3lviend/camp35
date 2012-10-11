@@ -21,7 +21,7 @@ setupElements = ->
   $(document).foundationTopBar()
   $("textarea").autoGrow()
   $(".calendar").datepicker
-    dateFormat: "yy/mm/dd"
+    dateFormat: "yy-mm-dd"
 #  $(".spinner.hours").spinner
 #    min: 0
 #    max: 24

@@ -1,6 +1,6 @@
 = simple_form_for @work_entry, :url => (@work_entry.new_record? ? work_entries_path(@day.year, @day.month, @day.day) : work_entry_path(@day.year, @day.month, @day.day, @work_entry.id)), :method => @work_entry.new_record? ? :post : :put do |f|
   = f.input :work_chart_id, :as => :work_chart_selector, :quicks => @quicks
-  = f.input :date_performed, :as => :string, :input_html => { :value => "#{@day.year}/#{@day.month}/#{@day.day}", :class => "calendar" }
+  = f.input :date_performed, :as => :string, :input_html => { :value => "#{@day.year}-#{@day.month}-#{@day.day}", :class => "calendar" }
   = f.simple_fields_for :work_entry_fees do |fee|
     = fee.input :fee, :as => :currency
     = fee.input :created_by, :as => :hidden, :input_html => { :value => current_user.email }

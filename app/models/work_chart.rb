@@ -80,7 +80,7 @@ class WorkChart < ActiveRecord::Base
     if Rails.cache.exist? :charts
       Rails.cache.read :charts
     else
-      all = WorkChart.where("parent_id IS NOT NULL")
+      all = WorkChart.where("parent_id IS NOT NULL AND status = 'active'")
       root = all.where(parent_id: 1).first
       charts = children_for(root, all)
       # TODO: implement sweeper!
