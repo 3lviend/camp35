@@ -1,0 +1,14 @@
+<input type="hidden" name="work_entry[work_chart_id]" value="<%= entry.work_chart_id %>" >
+
+<% $.each(charts, function(i, _charts) { %>
+
+  <% if(_charts.length > 0) { %>
+    <select data-level="<%= i %>" name="work_entry[work_chart_id]_" >
+      <option></option>
+      <% $.each(_charts, function(j, chart){ %>
+        <option <% if(chart.selected == true) { %>selected='selected'<% } %> value="<%= chart.id %>"><%= chart.display_label %></option>
+      <% }); %>
+    </select>
+  <% } %>
+
+<% }); %>

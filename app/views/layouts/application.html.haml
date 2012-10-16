@@ -13,13 +13,11 @@
   %body{:"data-is-week" => "#{'1' if is_week}", :"data-today" => @day}
     #container.container
       %div.fixed= render 'layouts/navigation'
-      .row
-        = render 'layouts/messages'
       %header.row= yield :header
       %section{:role => "main"}
         .row
           %div#calendar-widget.one.columns
-          .seven.columns
+          #main.seven.columns
             = yield
           .four.columns
             =  yield :side

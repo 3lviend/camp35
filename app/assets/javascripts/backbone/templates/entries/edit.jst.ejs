@@ -1,0 +1,94 @@
+<form accept-charset="UTF-8" action="" class="simple_form edit_work_entry" method="post">
+  <div class="input work_chart_selector optional">
+    <label class="work_chart_selector optional control-label" for="work_entry_work_chart_id">Work chart</label>      
+    <div class="row collapse complex-input">
+      <div class="twelve mobile-four columns">
+         <input type="text" placeholder="Type to search through work charts">
+      </div>
+      <div class="chart-selects eight mobile-three columns">
+         <input type="hidden" name="work_entry[work_chart_id]" value="<%= work_chart_id %>" >
+         <select name="work_entry[work_chart_id]_" >
+         </select>
+      </div>
+      <div class="four mobile-three columns">
+        <div href="#" class="small button dropdown">
+            Quick pick
+            <ul class="no-hover" style="top: 31px; ">
+            </ul>
+          </div>
+      </div>
+    </div>
+    <div class="input string optional">
+      <label class="string optional control-label" for="work_entry_date_performed">Date performed</label>
+      <input class="string optional calendar" id="work_entry_date_performed" 
+             name="work_entry[date_performed]" size="50" type="text" 
+             value="<%= date_performed %>">
+    </div>
+    <div class="input currency optional"><label class="currency optional control-label" for="work_entry_work_entry_fees_attributes_0_fee">Fee</label>      <div class="row collapse complex-input">
+        <div class="two mobile-one columns">
+          <span class="prefix">$</span>
+        </div>
+        <div class="ten mobile-three columns">
+          <input class="currency optional" id="work_entry_work_entry_fees_attributes_0_fee" 
+                 name="work_entry[work_entry_fees_attributes][0][fee]" size="30" 
+                 type="text" value="<% if(work_entry_fees.length > 0) {%><%= work_entry_fees[0].fee %><% } %>" >
+        </div>
+      </div>
+
+     <fieldset class="durations">
+       <legend>Durations</legend>
+       <div class="actions">
+         <a href="#" class="button add">+</a>
+       </div>
+       <div class="single-duration">
+         <a href="#" class="button alert remove">-</a>
+       </div>
+       <div class="input interval optional"><label class="interval optional control-label" for="work_entry_work_entry_durations_attributes_0_duration">Duration</label>      <div class="row collapse complex-input single-select">
+        <div class="five mobile-three columns">
+        </div>
+        <div class="one mobile-one columns">
+          <span class="postfix">h</span>
+        </div>
+        <div class="five mobile-three columns single-select">
+          
+        </div>
+        <div class="one mobile-one columns">
+          <span class="postfix">m</span>
+        </div>
+      </div>
+      <div class="row collapse hours-minutes">
+                <a href="#" data-hour="0" class="button hour-button selected">0</a>
+        <a href="#" data-hour="1" class="button hour-button">1</a>
+        <a href="#" data-hour="2" class="button hour-button">2</a>
+        <a href="#" data-hour="3" class="button hour-button">3</a>
+        <a href="#" data-hour="4" class="button hour-button">4</a>
+        <a href="#" data-hour="5" class="button hour-button">5</a>
+        <a href="#" data-hour="6" class="button hour-button">6</a>
+        <a href="#" data-hour="7" class="button hour-button">7</a>
+        <a href="#" data-hour="8" class="button hour-button">8</a>
+ <span>&nbsp;</span>         <a href="#" data-minute="0" class="button minute-button selected">0</a>
+        <a href="#" data-minute="15" class="button minute-button">15</a>
+        <a href="#" data-minute="30" class="button minute-button">30</a>
+        <a href="#" data-minute="45" class="button minute-button">45</a>
+      </div>
+</div>
+      <div class="input select optional"><label class="select optional control-label" for="work_entry_work_entry_durations_attributes_0_kind_code">Kind code</label><select class="select optional kind_code_select chzn-done" data-placeholder="Select kind" id="work_entry_work_entry_durations_attributes_0_kind_code" name="work_entry[work_entry_durations_attributes][0][kind_code]" disabled="disabled" style="display: none; "><option value=""></option>
+</select><div id="work_entry_work_entry_durations_attributes_0_kind_code_chzn" class="chzn-container chzn-container-single chzn-disabled" style="width: 123px;"><a href="javascript:void(0)" class="chzn-single chzn-default"><span>Select kind</span><div><b></b></div></a><div class="chzn-drop" style="left: -9000px; width: 121px; top: 32px; "><div class="chzn-search"><input type="text" autocomplete="off" style="width: 86px; " disabled="" tabindex="-1"></div><ul class="chzn-results"></ul></div></div></div>
+     </fieldset>
+
+     <div class="input text optional">
+       <label class="text optional control-label" for="work_entry_description">Description</label>
+       <textarea class="text optional" cols="40" id="work_entry_description" 
+                 name="work_entry[description]" rows="3" ><%= description %></textarea>
+     </div>
+</div>
+  <div class="panel input">
+<div class="four columns">
+<a href="/work_day_entries/2012/10/10/work_entries/162925" class="button alert" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Delete</a>
+</div>
+<div class="eight columns">
+<button class="button" onclick="$('form').submit();" type="submit">Save
+</button></div>
+<div class="clearfix"></div>
+</div>
+</form>

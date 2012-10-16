@@ -12,16 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
-//= require foundation
-//= require autogrow
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/timesheet_app
+//= require_tree .
 
-window.router = new TimesheetApp.Routers.MainRouter();
-Backbone.history.start();
-$(document).foundationTopBar()
-$(document).foundationButtons()

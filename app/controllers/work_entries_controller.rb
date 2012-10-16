@@ -1,9 +1,9 @@
 class WorkEntriesController < ApplicationController
-  before_filter :get_day
-  before_filter :fetch_quicks, :only => [:new, :edit]
+  respond_to :json
 
   def show
-    redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
+    @work_entry = WorkEntry.includes(:work_entry_fees).find(params[:id])
+    respond_with(@work_entry.to_json(:include => [:work_entry_fees, :work_entry_durations]))
   end
 
   def edit

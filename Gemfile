@@ -8,6 +8,8 @@ group :assets do
   gem 'spinjs-rails'
   gem 'jquery-ui-rails'
   gem 'chosen-rails'
+  gem "rails-backbone"
+  gem 'underscore-rails'
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"
