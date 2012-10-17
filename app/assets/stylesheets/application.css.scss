@@ -419,3 +419,49 @@ background: linear-gradient(to bottom, #c60f13 0%,#990c0e 100%) !important;; /* 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c60f13', endColorstr='#990c0e',GradientType=0 ) !important;; /* IE6-9 */
 
 }
+
+div.no-hover.shown {
+  display: block;
+}
+
+div.no-hover {
+  background: white;
+  color: #444;
+  width: 500px;
+  margin-left: -390px;
+  z-index: 99999;
+  position: absolute;
+  box-shadow: #666 0px 0px 20px;
+   display: none; 
+  
+  .frequent, .recent {
+    float: left;
+    width: 50%;
+    text-align: left;
+    padding: 5px;
+    text-shadow: none !important;
+
+    span {
+      border-bottom: 1px dotted #BBB;
+      margin-bottom: 10px;
+      line-height: 2em;
+      display: block;
+    }
+  
+    ul {
+      margin: 0px !important;
+      li {
+        list-style-type: none;
+        padding: 0px;
+        padding-left: 10px;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        font-weight: normal;
+      }
+
+      li:hover {
+        background: #2BA6CB + #bbb;
+      }
+    }
+  }
+}

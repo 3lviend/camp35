@@ -12,6 +12,53 @@ class WorkChart < ActiveRecord::Base
   belongs_to :work_chart_status, :foreign_key => :status, :primary_key => :status
   has_many :work_entries
 
+  def self.frequent_for(user, limit)
+    frequent_sql = <<-eos
+        SELECT work_chart_id, count(*) AS chart_count 
+        FROM work_entries 
+        WHERE 
+          role_id = #{user.system_role_id}
+        GROUP BY work_chart_id 
+        ORDER BY chart_count DESC 
+        LIMIT #{limit};
+    eos
+    charts_with_labels_sql = WorkChart.WITH_LABELS_SQL
+
+    ids = WorkChart.find_by_sql(frequent_sql).map(&:work_chart_id)
+    WorkChart.find_by_sql [charts_with_labels_sql, ids, ids]
+  end
+
+  def self.recent_for(user, limit)
+    recent_sql = <<-eos
+        SELECT work_chart_id, MAX(date_performed) AS last_date 
+        FROM work_entries 
+        WHERE 
+          role_id = #{user.system_role_id}
+        GROUP BY work_chart_id 
+        ORDER BY last_date DESC 
+        LIMIT #{limit};
+    eos
+    charts_with_labels_sql = WorkChart.WITH_LABELS_SQL
+
+    ids = WorkChart.find_by_sql(recent_sql).map(&:work_chart_id)
+    WorkChart.find_by_sql [charts_with_labels_sql, ids, ids]
+  end
+
+  def self.WITH_LABELS_SQL
+    <<-sql
+      SELECT array(SELECT "work_chart"."display_label"
+      FROM work_chart
+      INNER JOIN
+        (SELECT CAST(regexp_split_to_table(branch, '~') as integer) AS b
+         FROM work_chart_tree_view
+         WHERE id IN (?)) as bs
+      ON "work_chart"."id" = "bs"."b"
+      WHERE
+        "work_chart"."parent_id" IS NOT NULL
+      ORDER BY "bs"."b") as labels, "work_chart".* FROM work_chart WHERE "work_chart"."id" IN (?)
+    sql
+  end
+
   # 20 most recent and 20 most popular
   # over the last three months
   def self.frequently_used(user)
