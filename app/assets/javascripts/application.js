@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
+//= require timers
 //= require foundation
 //= require autogrow
 //= require underscore

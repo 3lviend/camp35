@@ -13,6 +13,11 @@ TimesheetApp::Application.routes.draw do
     collection do
       get 'frequent'
       get 'recent'
+      get 'search'
+    end
+
+    member do
+      get 'duration_kinds'
     end
   end
 

@@ -12,6 +12,28 @@ class WorkChart < ActiveRecord::Base
   belongs_to :work_chart_status, :foreign_key => :status, :primary_key => :status
   has_many :work_entries
 
+  def self.search_for(phrase)
+    
+  end
+
+  def duration_kinds
+    if @duration_kinds
+      @duration_kinds
+    else
+      query = <<-sql
+        SELECT duration_kinds.*
+        FROM duration_kinds INNER JOIN work_chart_kinds ON work_chart_kinds.kind_code = duration_kinds.code
+        INNER JOIN
+          (SELECT CAST(regexp_split_to_table(branch, '~') as integer) AS b
+           FROM work_chart_tree_view
+           WHERE id = ?) as bs
+        ON work_chart_kinds.work_chart_id = bs.b
+        ORDER BY bs.b
+      sql
+      @duration_kinds = DurationKind.find_by_sql [query, self.id]
+    end
+  end
+
   def self.frequent_for(user, limit)
     frequent_sql = <<-eos
         SELECT work_chart_id, count(*) AS chart_count 

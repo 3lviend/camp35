@@ -353,7 +353,8 @@ circle, text{
     }
   }
   .select {
-    width: 123px;
+    width: 127px;
+    margin-right: 5px;
   }
   .button.remove {
     background: #C60F13 !important;
@@ -371,7 +372,7 @@ circle, text{
 
 .hours-minutes{
   width: 500px !important;
-  margin-left: -166px !important;
+  margin-left: -136px !important;
   clear: both;
   top: -10px;
   margin-bottom: 10px !important;
@@ -385,6 +386,7 @@ circle, text{
     border: 1px solid #aaa !important;
     text-shadow: #fff 0px -1px 0px !important;
     color: #111 !important;
+    margin-right: -5px;
   }
   .button.selected{
     background: #eee !important;
@@ -462,6 +464,32 @@ div.no-hover {
       li:hover {
         background: #2BA6CB + #bbb;
       }
+    }
+  }
+}
+
+.search-results {
+  background: white;
+  z-index: 99999;
+  position: absolute;
+  box-shadow: #666 0px 0px 20px;
+  margin-top: 30px;
+  width: 350px;
+  display: none;
+  padding: 10px;
+  ul {
+    margin: 0px !important;
+    li {
+      list-style-type: none;
+      padding: 0px;
+      padding-left: 10px;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      font-weight: normal;
+    }
+
+    li:hover {
+      background: #2BA6CB + #bbb;
     }
   }
 }

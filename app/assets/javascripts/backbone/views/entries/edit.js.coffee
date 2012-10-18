@@ -3,6 +3,7 @@ TimesheetApp.Views.Entries ||= {}
 class TimesheetApp.Views.Entries.EditView extends Backbone.View
   template: JST["backbone/templates/entries/edit"]
   selects_template: JST["backbone/templates/entries/_selects"]
+  durations_template: JST["backbone/templates/entries/_durations"]
 
   initialize: () ->
     @model.bind "change", @render
@@ -15,6 +16,21 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     @recents = new TimesheetApp.Collections.WorkChartsCollection()
     @recents.url = "/work_charts/recent.json"
     @recents.on "reset", @render_recents
+    @searches = new TimesheetApp.Collections.WorkChartsCollection()
+    @searches.on "reset", @render_searches
+    @duration_kinds = new TimesheetApp.Collections.DurationKindsCollection()
+    @duration_kinds.on "reset", @render_durations
+    @selected_chart = new TimesheetApp.Models.WorkChart()
+    @selected_chart.on "change", =>
+      @rebuild_charts_array_for(@selected_chart)
+      @duration_kinds.url = "/work_charts/#{@selected_chart.get('id')}/duration_kinds.json"
+      @duration_kinds.fetch()
+
+  render_searches: =>
+    lis = @searches.map (chart) ->
+      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
+    $(".search-results ul").html(lis.join("\n"))
+    $(".search-results ul li").click @handle_quick_pick_option
 
   render_frequents: =>
     lis = @frequents.map (chart) ->
@@ -27,6 +43,26 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
     $(".recent ul").html(lis.join("\n"))
     $(".recent ul li").click @handle_quick_pick_option
+
+  render_durations: =>
+    data =
+      work_entry:      @model.toJSON()
+      duration_kinds:  @duration_kinds.toJSON()
+    $(".durations").html @durations_template(data)
+    $(".durations .hour-button").click (e) =>
+      btn = $(e.currentTarget)
+      hour = btn.attr("data-hour")
+      $(".durations .hour-button").removeClass("selected")
+      btn.addClass("selected")
+      $(".durations .hour-select option").attr("selected", "")
+      $(".durations .hour-select option[value=#{hour}]").attr("selected", "selected")
+    $(".durations .minute-button").click (e) =>
+      btn = $(e.currentTarget)
+      minutes = btn.attr("data-minute")
+      $(".durations .minute-button").removeClass("selected")
+      btn.addClass("selected")
+      $(".durations .minutes-select option").attr("selected", "")
+      $(".durations .minutes-select option[value=#{minutes}]").attr("selected", "selected")
 
   handle_quick_pick_option: (e) =>
     chart_id = $(e.currentTarget).attr("data-id")
@@ -60,6 +96,11 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     _rebuild_array chart
 
   render_charts: =>
+    last_selected = _.last(_.filter(@charts, (arr) -> arr.length > 0)).find (chart) =>
+      chart.get("selected") == true
+    if last_selected
+      @selected_chart.set("id", last_selected.get("id"), silent: true)
+      @selected_chart.fetch()
     data =
       charts: @charts.map (charts) ->
         charts.toJSON()
@@ -74,7 +115,6 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       @charts[level].each (c) ->
         c.set("selected", false)
       chart.set("selected", true)
-      console.info chart
       @charts[num] = new TimesheetApp.Collections.WorkChartsCollection()
       @charts[num].on "reset", @render_charts
       @charts[num].fetch
@@ -99,4 +139,17 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       e.stopPropagation()
     @frequents.fetch()
     @recents.fetch()
+    $("input.charts-search", @el).focus (e) =>
+      $(".search-results", @el).show()
+    $("input.charts-search", @el).blur => $(".search-results", @el).hide()
+    $("input.charts-search", @el).keyup (e) =>
+      $("input.charts-search", @el).stopTime("search")
+      $("input.charts-search", @el).oneTime 500, "search", =>
+        @searches.fetch
+          data:
+            $.param
+              phrase: $("input.charts-search", @el).val()
+    @render_durations()
+    @selected_chart.set("id", @model.get("work_chart_id"), silent: true)
+    @selected_chart.fetch()
     return this
