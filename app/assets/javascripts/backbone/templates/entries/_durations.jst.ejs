@@ -1,11 +1,12 @@
   <legend>Durations</legend>
        <div class="actions">
-         <a href="#" class="button add">+</a>
-       </div>
-       <div class="single-duration">
-         <a href="#" class="button alert remove">-</a>
+         <a href="#" class="button add <% if(duration_kinds.length <= work_entry.work_entry_durations.length) { %> disabled  <% } %> ">+</a>
        </div>
        <% $.each(work_entry.work_entry_durations, function(i, duration) { %>
+       <div class="single-duration">
+         <a href="#" class="button alert remove <% if(i == 0 ) { %> disabled  <% } %> ">-</a>
+       <% hours = parseInt(duration.duration.split(":")[0]); %>
+       <% minutes = parseInt(duration.duration.split(":")[1]); %>
        <div class="input interval optional">
            <label class="interval optional control-label" 
                   for="work_entry_work_entry_durations_attributes_0_duration">Duration</label>      
@@ -13,7 +14,7 @@
            <div class="five mobile-three columns">
              <select class="hour-select" name="durations[0][hours]">
                <% $.each(new Array(25), function(i, v) { %>
-                 <option value="<%= i %>"><%= i %></option>
+                 <option <% if(i == hours){ %> <%= "selected='selected'" %> <% }; %> value="<%= i %>"><%= i %></option>
                <% }); %>
              </select>
            </div>
@@ -23,7 +24,7 @@
            <div class="five mobile-three columns single-select">
              <select class="minutes-select" name="durations[0][minutes]">
                <% $.each(new Array(4), function(i, v) { %>
-                 <option value="<%= i*15 %>"><%= i*15 %></option>
+                 <option <% if(i == minutes){ %> <%= "selected='selected'" %> <% }; %> value="<%= i*15 %>"><%= i*15 %></option>
                <% }); %>
              </select>
            </div>
@@ -32,29 +33,32 @@
            </div>
          </div>
          <div class="row collapse hours-minutes">
-           <a href="#" data-hour="0" class="button hour-button selected">0</a>
-           <a href="#" data-hour="1" class="button hour-button">1</a>
-           <a href="#" data-hour="2" class="button hour-button">2</a>
-           <a href="#" data-hour="3" class="button hour-button">3</a>
-           <a href="#" data-hour="4" class="button hour-button">4</a>
-           <a href="#" data-hour="5" class="button hour-button">5</a>
-           <a href="#" data-hour="6" class="button hour-button">6</a>
-           <a href="#" data-hour="7" class="button hour-button">7</a>
-           <a href="#" data-hour="8" class="button hour-button">8</a>
+           <% $.each(new Array(9), function(i, v) { %>
+             <a href="#" data-hour="<%= i %>" 
+                class="button hour-button <% if(i == hours){ %> <%= "selected" %> <% }; %>">
+                <%= i %>
+            </a>
+           <% }); %>
            <span>&nbsp;</span>         
-           <a href="#" data-minute="0" class="button minute-button selected">0</a>
-           <a href="#" data-minute="15" class="button minute-button">15</a>
-           <a href="#" data-minute="30" class="button minute-button">30</a>
-           <a href="#" data-minute="45" class="button minute-button">45</a>
+           <% $.each(new Array(4), function(i, v) { %>
+             <a href="#" data-minute="<%= i*15 %>" 
+                class="button minute-button <% if(i*15 == minutes){ %> <%= "selected" %> <% }; %>">
+                <%= i*15 %>
+            </a>
+           <% }); %>
          </div>
        </div>
        <div class="input select optional">
-         <select class="select optional kind_code_select" data-placeholder="Select kind" 
+         <select class="select optional kind_code_select" data-index="<%= i %>" data-placeholder="Select kind" 
             id="work_entry_work_entry_durations_attributes_0_kind_code" 
             name="work_entry[work_entry_durations_attributes][0][kind_code]">
-            <% $.each(duration_kinds, function(i, kind) { %>
-              <option value="<%= kind.code %>"><%= kind.display_label %></option>
+            <% kinds = _.reject(duration_kinds, function(d){ return _.contains(_.pluck(work_entry.work_entry_durations, 'kind_code'), d.code); }); %>
+            <% thisEl = _.find(duration_kinds, function(d){ return d.code == duration.kind_code; }); %>
+            <% if(thisEl !== undefined){ kinds.push(thisEl); } %>
+            <% $.each(kinds, function(i, kind) { %>
+              <option <% if(kind.code == duration.kind_code) { %> selected='selected' <% } %> value="<%= kind.code %>"><%= kind.display_label %></option>
             <% }); %>
          </select>
+       </div>
        </div>
      <% }); %>

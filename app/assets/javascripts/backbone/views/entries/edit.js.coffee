@@ -56,6 +56,14 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       btn.addClass("selected")
       $(".durations .hour-select option").attr("selected", "")
       $(".durations .hour-select option[value=#{hour}]").attr("selected", "selected")
+    $(".durations .hour-select").change (e) =>
+      hour = $(e.currentTarget).val()
+      $(".durations .hour-button").removeClass("selected")
+      $(".durations .hour-button[data-hour=#{hour}]").addClass("selected")
+    $(".durations .minutes-select").change (e) =>
+      minutes = $(e.currentTarget).val()
+      $(".durations .minute-button").removeClass("selected")
+      $(".durations .minute-button[data-minute=#{minutes}]").addClass("selected")
     $(".durations .minute-button").click (e) =>
       btn = $(e.currentTarget)
       minutes = btn.attr("data-minute")
@@ -63,6 +71,33 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       btn.addClass("selected")
       $(".durations .minutes-select option").attr("selected", "")
       $(".durations .minutes-select option[value=#{minutes}]").attr("selected", "selected")
+    $(".durations .button.add:not(.disabled)").click =>
+      durations = @model.get("work_entry_durations")
+      last_duration = _.last(durations)
+      new_duration = last_duration.constructor()
+      new_duration.duration = "00:00:00"
+      new_duration.modified_by = last_duration.modified_by
+      new_duration.kind_code = _.first(@duration_kinds.filter( (k) => 
+        return not _.include(_.pluck(durations, "kind_code"), k.get("code")) )
+      ).get("code")
+      durations.push(new_duration)
+      @model.set("work_entry_durations", durations, silent: true)
+      @render_durations()
+      false
+    $(".durations .button.remove:not(:disabled)").click (e) =>
+      durations = @model.get("work_entry_durations")
+      code = $(e.currentTarget).parents(".single-duration").find(".kind_code_select").val()
+      durations = _.filter(durations, (d) -> d.kind_code != code)
+      @model.set("work_entry_durations", durations, silent: true)
+      @render_durations()
+      false
+    $(".durations .kind_code_select").change (e) =>
+      durations = @model.get("work_entry_durations")
+      index = parseInt $(e.currentTarget).attr("data-index")
+      durations[index].kind_code = $(e.currentTarget).val()
+      @model.set("work_entry_durations", durations, silent: true)
+      @render_durations()
+      false
 
   handle_quick_pick_option: (e) =>
     chart_id = $(e.currentTarget).attr("data-id")
