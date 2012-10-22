@@ -19,12 +19,43 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     @searches = new TimesheetApp.Collections.WorkChartsCollection()
     @searches.on "reset", @render_searches
     @duration_kinds = new TimesheetApp.Collections.DurationKindsCollection()
-    @duration_kinds.on "reset", @render_durations
+    @duration_kinds.on "reset", =>
+      @render_durations()
+      durations = @model.get("work_entry_durations")
+      kinds = @duration_kinds.pluck("code")
+      if @duration_kinds.size() < durations.length
+        to_wipe = _.filter durations, (d) => not _.contains(kinds, d.kind_code)
+        durations = _.difference durations, to_wipe
+        [hours, minutes] = durations[0].duration.split(";")
+        hours_to_add = _.map to_wipe, (d) ->
+          parseInt d.duration.split(":")[0]
+        minutes_to_add = _.map to_wipe, (d) ->
+          parseInt d.duration.split(":")[1]
+        new_hours = (parseInt hours) + _.reduce(hours_to_add, ((s, i) -> s + i), 0)
+        new_minutes = (parseInt minutes) + _.reduce(minutes_to_add, ((s, i) -> s + i), 0)
+        durations[0].duration = "#{new_hours}:#{new_minutes}:00"
+        @model.set("work_entry_durations", durations, silent: true)
+        @render_durations()
+
     @selected_chart = new TimesheetApp.Models.WorkChart()
     @selected_chart.on "change", =>
       @rebuild_charts_array_for(@selected_chart)
       @duration_kinds.url = "/work_charts/#{@selected_chart.get('id')}/duration_kinds.json"
       @duration_kinds.fetch()
+
+  set_duration_hour: (index, hour) =>
+    durations = @model.get("work_entry_durations")
+    d = durations[index].duration
+    [_hour, minute] = d.split(":")
+    durations[index].duration = "#{hour}:#{minute}:00"
+    @model.set("work_entry_durations", durations, silent: true)
+
+  set_duration_minutes: (index, minute) =>
+    durations = @model.get("work_entry_durations")
+    d = durations[index].duration
+    [hour, _minute] = d.split(":")
+    durations[index].duration = "#{hour}:#{minute}:00"
+    @model.set("work_entry_durations", durations, silent: true)
 
   render_searches: =>
     lis = @searches.map (chart) ->
@@ -51,27 +82,39 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".durations").html @durations_template(data)
     $(".durations .hour-button").click (e) =>
       btn = $(e.currentTarget)
+      div = $(e.currentTarget).parents(".single-duration")
       hour = btn.attr("data-hour")
-      $(".durations .hour-button").removeClass("selected")
+      $(" .hour-button", div).removeClass("selected")
       btn.addClass("selected")
-      $(".durations .hour-select option").attr("selected", "")
-      $(".durations .hour-select option[value=#{hour}]").attr("selected", "selected")
-    $(".durations .hour-select").change (e) =>
+      $(" .hour-select option", div).attr("selected", "")
+      $(" .hour-select option[value=#{hour}]", div).attr("selected", "selected")
+      index = parseInt $(e.currentTarget).attr("data-index")
+      @set_duration_hour(index, hour)
+    $(" .hour-select").change (e) =>
       hour = $(e.currentTarget).val()
-      $(".durations .hour-button").removeClass("selected")
-      $(".durations .hour-button[data-hour=#{hour}]").addClass("selected")
-    $(".durations .minutes-select").change (e) =>
+      div = $(e.currentTarget).parents(".single-duration")
+      $(" .hour-button", div).removeClass("selected")
+      $(" .hour-button[data-hour=#{hour}]", div).addClass("selected")
+      index = parseInt $(e.currentTarget).attr("data-index")
+      @set_duration_hour(index, hour)
+    $(" .minutes-select").change (e) =>
       minutes = $(e.currentTarget).val()
-      $(".durations .minute-button").removeClass("selected")
-      $(".durations .minute-button[data-minute=#{minutes}]").addClass("selected")
-    $(".durations .minute-button").click (e) =>
+      div = $(e.currentTarget).parents(".single-duration")
+      $(" .minute-button", div).removeClass("selected")
+      $(" .minute-button[data-minute=#{minutes}]", div).addClass("selected")
+      index = parseInt $(e.currentTarget).attr("data-index")
+      @set_duration_minutes(index, minutes)
+    $(" .minute-button").click (e) =>
       btn = $(e.currentTarget)
+      div = $(e.currentTarget).parents(".single-duration")
       minutes = btn.attr("data-minute")
-      $(".durations .minute-button").removeClass("selected")
+      $(" .minute-button", div).removeClass("selected")
       btn.addClass("selected")
-      $(".durations .minutes-select option").attr("selected", "")
-      $(".durations .minutes-select option[value=#{minutes}]").attr("selected", "selected")
-    $(".durations .button.add:not(.disabled)").click =>
+      $(" .minutes-select option", div).attr("selected", "")
+      $(" .minutes-select option[value=#{minutes}]", div).attr("selected", "selected")
+      index = parseInt $(e.currentTarget).attr("data-index")
+      @set_duration_minutes(index, minutes)
+    $(" .button.add:not(.disabled)").click =>
       durations = @model.get("work_entry_durations")
       last_duration = _.last(durations)
       new_duration = last_duration.constructor()
