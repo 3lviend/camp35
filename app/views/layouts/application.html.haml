@@ -15,12 +15,9 @@
       %div.fixed= render 'layouts/navigation'
       %header.row= yield :header
       %section{:role => "main"}
+      %section
         .row
-          %div#calendar-widget.one.columns
           #main.seven.columns
-            = yield
-          .four.columns
-            =  yield :side
       %footer
         .row
     / ! end of #container

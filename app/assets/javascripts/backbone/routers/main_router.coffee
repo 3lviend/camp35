@@ -4,7 +4,8 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     'entries/:id': 'edit_entry'
 
   home: ->
-    console.log "Backbone started!"
+    @view = new TimesheetApp.Views.Home.IndexView()
+    $(window).oneTime 100, () => @view.render()
 
   edit_entry: (id) ->
     entry = new TimesheetApp.Models.WorkEntry(id: id)

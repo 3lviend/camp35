@@ -140,7 +140,6 @@ table {
   tbody{
     tr{
       td:last-child{
-        text-align: right;
       }
     }
   }
@@ -496,5 +495,75 @@ div.no-hover {
     li:hover {
       background: #2BA6CB + #bbb;
     }
+  }
+}
+
+#calendar {
+
+    .header {
+     
+       .picker {
+
+          a, select { 
+            float: left;
+            height: 30px;
+            line-height: 30px;
+            margin: 0px;
+            margin-right: -1px;
+          }
+
+          a {
+            font-size: 0.6em;
+            padding: 0px 10px 0px;
+            width: 45px;
+          }
+
+          a.new {
+            float: right;
+            margin: 0px;
+            width: 100px;
+          }
+
+          select.month { width: 100px; }
+
+          select {
+             width: auto;
+          }
+
+       }
+
+    }
+
+    .table {
+      border: 1px solid #bbb;
+      table {
+        thead {
+          th { width: 14.28%; }
+        }
+        border: none !important;
+        tbody {
+          td {
+            height: 60px;
+            font-size: 0.7em;
+          }
+        }
+      }
+    }
+
+}
+
+.totals {
+  margin-top: 30px;
+
+  table {
+    margin-left: -125px;
+    position: relative;
+  }
+
+  td {
+    margin: 0px;
+    line-height: 42px;
+    height: 42px;
+    width: 33%;
   }
 }
