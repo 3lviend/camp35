@@ -1,6 +1,6 @@
 class TimesheetApp.Routers.MainRouter extends Backbone.Router
   routes :
-    '': 'home'
+    'calendar': 'home'
     'entries/:id': 'edit_entry'
 
   home: ->

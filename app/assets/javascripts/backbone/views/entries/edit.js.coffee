@@ -90,6 +90,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       $(" .hour-select option[value=#{hour}]", div).attr("selected", "selected")
       index = parseInt $(e.currentTarget).attr("data-index")
       @set_duration_hour(index, hour)
+      false
     $(" .hour-select").change (e) =>
       hour = $(e.currentTarget).val()
       div = $(e.currentTarget).parents(".single-duration")
@@ -97,6 +98,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       $(" .hour-button[data-hour=#{hour}]", div).addClass("selected")
       index = parseInt $(e.currentTarget).attr("data-index")
       @set_duration_hour(index, hour)
+      false
     $(" .minutes-select").change (e) =>
       minutes = $(e.currentTarget).val()
       div = $(e.currentTarget).parents(".single-duration")
@@ -114,6 +116,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       $(" .minutes-select option[value=#{minutes}]", div).attr("selected", "selected")
       index = parseInt $(e.currentTarget).attr("data-index")
       @set_duration_minutes(index, minutes)
+      false
     $(" .button.add:not(.disabled)").click =>
       durations = @model.get("work_entry_durations")
       last_duration = _.last(durations)
@@ -201,6 +204,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
             parent_id: val
 
   render: =>
+    $("section[role=main]").html("")
     $(@el).html(@template(@model.toJSON()))
     $("textarea", @el).autoGrow()
     $(".calendar", @el).datepicker

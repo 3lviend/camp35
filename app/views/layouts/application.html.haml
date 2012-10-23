@@ -15,6 +15,11 @@
       %div.fixed= render 'layouts/navigation'
       %header.row= yield :header
       %section{:role => "main"}
+        .row
+          .one.columns
+          .seven.columns
+            = yield
+          .four.columns
       %section
         .row
           #main.seven.columns
