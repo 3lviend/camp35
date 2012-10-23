@@ -17,6 +17,8 @@
 //= require foundation
 //= require autogrow
 //= require underscore
+//= require knockout
+//= require moment
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink

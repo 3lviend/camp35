@@ -10,6 +10,8 @@ group :assets do
   gem 'chosen-rails'
   gem "rails-backbone"
   gem 'underscore-rails'
+  gem 'knockoutjs-rails'
+  gem 'momentjs-rails'
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"
@@ -30,4 +32,6 @@ gem "simple_form", ">= 2.0.2"
 gem "therubyracer", ">= 0.10.2", :group => :assets, :platform => :ruby
 gem 'rails_admin'
 gem 'bluecloth'  
-gem 'turbolinks'
+gem 'rabl'
+gem 'yajl-ruby'
+#gem 'turbolinks'

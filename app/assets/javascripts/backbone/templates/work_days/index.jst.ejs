@@ -1,0 +1,21 @@
+  <table cellspacing="0">
+    <thead>
+      <tr><th>Day</th>
+        <th>Time</th>
+    </tr></thead>
+    <tbody data-bind="template: {name: 'day_template', foreach: collection}">
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <a data-bind="attr: {href: previous_href()}">Previous week</a>
+    <a data-bind="attr: {href: next_href()}">Next week</a>
+    <a href="/#work_days/0">This week</a>
+  </div>
+
+  <script id="day_template" type="text/x-jquery-tmpl">
+    <tr>
+      <td><a data-bind="attr: {href: data_url()}, text: date_string()">Today, Tuesday</a></td>
+      <td data-bind="text: time_string()">0h 0m</td>
+    </tr>
+  </script>
