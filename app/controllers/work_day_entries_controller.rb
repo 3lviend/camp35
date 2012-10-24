@@ -1,5 +1,6 @@
 class WorkDayEntriesController < ApplicationController
   before_filter :ensure_logged_in
+  respond_to :json
 
   def show
     @day = "#{params[:year]}-#{params[:month]}-#{params[:day]}".to_datetime

@@ -28,7 +28,7 @@
           = "#{total.hour}h #{total.min}m"
         %td= BlueCloth.new(entry.description).to_html.html_safe
         %td
-          = link_to "Edit",   edit_work_entry_path(@day.year, @day.month, @day.day, entry.id)
+          = link_to "Edit", "#"  #edit_work_entry_path(@day.year, @day.month, @day.day, entry.id)
           %br
 .actions
   = link_to "New entry", new_work_entry_path, :class => "button"

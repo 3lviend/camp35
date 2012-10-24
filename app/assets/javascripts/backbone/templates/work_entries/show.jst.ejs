@@ -1,0 +1,38 @@
+<table cellspacing="0">
+  <thead>
+    <tr><th>Work chart</th>
+      <th>Time</th>
+      <th>Description</th>
+      <th></th>
+  </tr></thead>
+  <tbody data-bind="template: {name: 'entry_template', foreach: collection}">
+  </tbody>
+</table>
+  <div class="actions">
+    <a data-bind="attr: {href: new_url()}" class="button">New entry</a>
+  </div>
+
+<script id="middle_label_template" type="text/x-jquery-tmpl">
+  <br>
+  → <span data-bind="text: $data"></span>
+</script>
+
+<script id="entry_template" type="text/x-jquery-tmpl">
+  <tr>
+    <td>
+      <span data-bind="text: top_label()"></span>
+      <span data-bind="template: {name: 'middle_label_template', foreach: middle_labels()}">
+      </span>
+      <br>
+      →
+      <b data-bind="text: last_label()"></b>
+    </td>
+    <td data-bind="text: time_string()">
+    </td>
+    <td data-bind="text: get('description')"></td>
+    <td>
+      <a data-bind="attr: {href: front_url()}">Edit</a>
+      <br>
+    </td>
+  </tr>
+</script>
