@@ -12,6 +12,7 @@ group :assets do
   gem 'underscore-rails'
   gem 'knockoutjs-rails'
   gem 'momentjs-rails'
+  gem "humane-rails"
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"

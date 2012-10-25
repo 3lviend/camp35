@@ -1,6 +1,5 @@
 class TimesheetApp.Models.WorkEntry extends Backbone.Model
   defaults:
-    date_created: new Date()
     work_chart_id: -1
     work_entry_fees: []
     description: ""

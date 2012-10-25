@@ -33,10 +33,9 @@ class WorkEntriesController < ApplicationController
     @work_entry.role_id = current_user.system_role_id
     @work_entry.status_code = "unconfirmed"
     @work_entry.date_created = DateTime.now
-    @work_entry.work_entry_durations.last.created_by = @work_entry.work_entry_durations.last.modified_by = current_user.email
-    @work_entry.work_entry_durations.last.kind_code = "billable_standard"
+    @work_entry.work_entry_durations.each { |d| d.created_by = d.modified_by =  current_user.email }
     if @work_entry.save
-      redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
+      redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
     else
       flash[:errors] = @work_entry.errors.full_messages
       fetch_quicks

@@ -5,9 +5,38 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
   selects_template: JST["backbone/templates/entries/_selects"]
   durations_template: JST["backbone/templates/entries/_durations"]
 
+  persist: =>
+    @model.set "work_chart_id", @selected_chart.get("id"), silent: true
+    @model.set "date_performed", $("#work_entry_date_performed").val(), silent: true
+    @model.set "description", $("#work_entry_description").val(), silent: true
+    durations = $(".single-duration").map (i, s) =>
+      kind_code: $(".kind_code_select", s).val()
+      duration_hours: $(".hour-select", s).val()
+      duration_minutes: $(".minutes-select", s).val()
+    @model.set "work_entry_durations", durations.toArray(), silent: true
+
+    date = moment(@model.get("date_performed"))
+
+    data = @model.toJSON()
+    data.work_entry_durations_attributes = data.work_entry_durations
+    delete data.work_entry_durations
+
+    $.ajax
+      url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries"
+      type: "POST"
+      data:
+        work_entry: data
+      success: =>
+        humane.log "Entry saved. redirecting..."
+        @back()
+      error: (xhr, status, err)  =>
+        humane.log err
+    false
+      
+  back: =>
+    Backbone.history.navigate Backbone.history.fragment.replace("/new", ""), true
+
   initialize: () ->
-    #@model.bind "change",  =>
-    #  @render()
     @charts = []
     @charts[0] = new TimesheetApp.Collections.WorkChartsCollection()
     @charts[0].on "reset", @render_charts
@@ -234,9 +263,9 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
     @render_durations()
     @selected_chart.set("id", @model.get("work_chart_id"), silent: true)
     $("a.alert", @el).click (e) =>
-      Backbone.history.navigate Backbone.history.fragment.replace("/new", ""), true
+      @back()
       false
     $("button[type=submit]", @el).click (e) =>
-      console.info "YYY"
+      @persist()
       e.preventDefault()
     return this
