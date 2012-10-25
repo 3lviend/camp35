@@ -1,12 +1,24 @@
 class TimesheetApp.Routers.MainRouter extends Backbone.Router
   routes :
+    '': 'root'
     'calendar': 'home'
     'entries/:id': 'edit_entry'
+    'entries/:year/:month/:day/new': 'new_entry'
     'work_days/:weeks_from_now': 'work_days'
     'entries/:year/:month/:day': 'work_day'
 
+  root: ->
+    if window.location.pathname != "/users/sign_in"
+      window.location.href = "/#work_days/0"
+
   home: ->
     view = new TimesheetApp.Views.Home.IndexView()
+    $(window).oneTime 100, () => @view.render()
+
+  new_entry: (year, month, day) ->
+    day = moment([year, month-1, day]).format("YYYY-MM-DD")
+    entry = new TimesheetApp.Models.WorkEntry(date_performed: day)
+    @view = new TimesheetApp.Views.Entries.NewView(model: entry)
     $(window).oneTime 100, () => @view.render()
 
   edit_entry: (id) ->

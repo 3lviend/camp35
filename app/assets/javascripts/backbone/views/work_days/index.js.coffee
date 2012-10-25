@@ -13,7 +13,7 @@ class TimesheetApp.Views.WorkDays.IndexView extends Backbone.View
       ko.applyBindings(@view)
 
   render: =>
-    $("section[role=main] .row").html(@template())
+    $("#main").html(@template())
 
 class TimesheetApp.Views.WorkDays.IndexViewModel
   collection: ko.observableArray()

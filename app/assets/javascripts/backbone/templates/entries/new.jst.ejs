@@ -1,0 +1,85 @@
+<form accept-charset="UTF-8" action="" class="simple_form edit_work_entry" method="post">
+  <div class="input work_chart_selector optional">
+    <label class="work_chart_selector optional control-label" for="work_entry_work_chart_id">Work chart</label>      
+    <div class="row collapse complex-input">
+      <div class="twelve mobile-four columns">
+         <input class="charts-search" type="text" placeholder="Type to search through work charts">
+         <div class="search-results">
+           <ul>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+             <li data-id="1234">Something / Something / Something</li>
+           </ul>
+         </div>
+      </div>
+      <div class="chart-selects eight mobile-three columns">
+         <input type="hidden" name="work_entry[work_chart_id]" value="<%= work_chart_id %>" >
+         <select name="work_entry[work_chart_id]_" >
+         </select>
+      </div>
+      <div class="four mobile-three columns">
+        <div class="small button dropdown">
+          Quick pick
+          <div class="no-hover" style="top: 31px; ">
+            <div class="frequent">
+              <span>Frequent</span>
+              <ul>
+              </ul>
+            </div>
+            <div class="recent">
+              <span>Recent</span>
+              <ul>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="input string optional">
+      <label class="string optional control-label" for="work_entry_date_performed">Date performed</label>
+      <input class="string optional calendar" id="work_entry_date_performed" 
+             name="work_entry[date_performed]" size="50" type="text" 
+             value="<%= date_performed %>">
+    </div>
+    <div class="input currency optional">
+      <label class="currency optional control-label" 
+             for="work_entry_work_entry_fees_attributes_0_fee">
+             Fee
+      </label>      
+      <div class="row collapse complex-input">
+        <div class="two mobile-one columns">
+          <span class="prefix">$</span>
+        </div>
+        <div class="ten mobile-three columns">
+          <input class="currency optional" id="work_entry_work_entry_fees_attributes_0_fee" 
+                 name="work_entry[work_entry_fees_attributes][0][fee]" size="30" 
+                 type="text" value="<% if(work_entry_fees.length > 0) {%><%= work_entry_fees[0].fee %><% } %>" >
+        </div>
+      </div>
+
+     <fieldset class="durations">
+     
+     </fieldset>
+
+     <div class="input text optional">
+       <label class="text optional control-label" for="work_entry_description">Description</label>
+       <textarea class="text optional" cols="40" id="work_entry_description" 
+                 name="work_entry[description]" rows="3" ><%= description %></textarea>
+     </div>
+</div>
+  <div class="panel input">
+<div class="four columns">
+  <a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" >Cancel</a>
+</div>
+<div class="eight columns">
+<button class="button" type="submit">Save
+</button></div>
+<div class="clearfix"></div>
+</div>
+</form>

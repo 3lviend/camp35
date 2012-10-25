@@ -1,6 +1,12 @@
 class TimesheetApp.Models.WorkEntry extends Backbone.Model
   defaults:
     date_created: new Date()
+    work_chart_id: -1
+    work_entry_fees: []
+    description: ""
+    work_entry_durations: [
+      duration: "00:00:00"
+    ]
   url: =>
     "/work_entries/#{@id}.json"
   top_label: =>

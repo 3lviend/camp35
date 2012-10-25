@@ -15,6 +15,11 @@
  *= require spinner
  *= require_tree .
 */
+
+body {
+  background: whiteSmoke !important;
+}
+
 .brand {
   float: left;
   padding-right: 8px;
@@ -89,6 +94,7 @@ ul.nav li {
 }
 
 .top-bar{
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8) !important;
   li.name b{
     font-family: "OpenSansLight";
   }
@@ -167,6 +173,7 @@ form{
   div.input{
     clear: both;
     label{
+      line-height: 32px;
       width: 20%;
       float: left;
     }
