@@ -5,6 +5,41 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
   selects_template: JST["backbone/templates/entries/_selects"]
   durations_template: JST["backbone/templates/entries/_durations"]
 
+  back: =>
+    date = moment(@model.get("date_performed"))
+    Backbone.history.navigate "entries/#{date.year()}/#{date.month() + 1}/#{date.date()}", true
+
+  persist: =>
+    @model.set "work_chart_id", @selected_chart.get("id"), silent: true
+    @model.set "date_performed", $("#work_entry_date_performed").val(), silent: true
+    @model.set "description", $("#work_entry_description").val(), silent: true
+    durations = $(".single-duration").map (i, s) =>
+      kind_code: $(".kind_code_select", s).val()
+      duration_hours: $(".hour-select", s).val()
+      duration_minutes: $(".minutes-select", s).val()
+      created_by: @model.get('work_entry_durations')[0].created_by
+      modified_by: @model.get('work_entry_durations')[0].created_by
+      id: @model.get('work_entry_durations')[i].id
+    @model.set "work_entry_durations", durations.toArray(), silent: true
+
+    date = moment(@model.get("date_performed"))
+
+    data = @model.toJSON()
+    data.work_entry_durations_attributes = data.work_entry_durations
+    delete data.work_entry_durations
+
+    $.ajax
+      url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries/#{@model.get('id')}"
+      type: "PUT"
+      data:
+        work_entry: data
+      success: =>
+        humane.log "Entry saved. redirecting..."
+        @back()
+      error: (xhr, status, err)  =>
+        humane.log err
+    false
+ 
   initialize: () ->
     @model.bind "change", @render
     @charts = []
@@ -234,4 +269,9 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     @render_durations()
     @selected_chart.set("id", @model.get("work_chart_id"), silent: true)
     @selected_chart.fetch()
+    $("a.alert", @el).click (e) =>
+      false
+    $("button[type=submit]", @el).click (e) =>
+      @persist()
+      e.preventDefault()
     return this

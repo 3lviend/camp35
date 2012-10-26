@@ -33,6 +33,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     days.fetch()
 
   work_day: (year, month, day) ->
+    console.info "Work day"
     entries = new TimesheetApp.Collections.WorkEntriesCollection()
     view = new TimesheetApp.Views.WorkEntries.IndexView(collection: entries, year: year, month: month, day: day)
     entries.url = "/work_day_entries/#{year}/#{month}/#{day}.json"

@@ -3,7 +3,7 @@ class WorkEntriesController < ApplicationController
 
   def show
     @work_entry = WorkEntry.includes(:work_entry_fees).find(params[:id])
-    respond_with(@work_entry.to_json(:include => [:work_entry_fees, :work_entry_durations]))
+    respond_with(@work_entry)
   end
 
   def edit
@@ -13,8 +13,14 @@ class WorkEntriesController < ApplicationController
 
   def update
     @work_entry = WorkEntry.includes(:work_entry_durations).find params[:id]
-    if @work_entry.update_attributes(params[:work_entry])
-      redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
+    #@work_entry.work_entry_durations = []
+    #throw @work_entry.work_entry_durations
+    @work_entry.assign_attributes(params[:work_entry])
+    #@work_entry.work_entry_durations.reject! { |d| !d.id.nil? }
+    @work_entry.work_entry_durations.each {|d| d.work_entry_id = @work_entry.id}
+    #throw @work_entry.work_entry_durations
+    if @work_entry.save
+      redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
     else
       flash[:errors] = @work_entry.errors.full_messages
       render :edit
