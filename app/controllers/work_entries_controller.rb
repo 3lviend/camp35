@@ -13,12 +13,10 @@ class WorkEntriesController < ApplicationController
 
   def update
     @work_entry = WorkEntry.includes(:work_entry_durations).find params[:id]
-    #@work_entry.work_entry_durations = []
-    #throw @work_entry.work_entry_durations
     @work_entry.assign_attributes(params[:work_entry])
-    #@work_entry.work_entry_durations.reject! { |d| !d.id.nil? }
     @work_entry.work_entry_durations.each {|d| d.work_entry_id = @work_entry.id}
-    #throw @work_entry.work_entry_durations
+    kinds = params[:work_entry][:work_entry_durations_attributes].values.map {|d| d[:kind_code]}
+    @work_entry.work_entry_durations.select {|d| not kinds.include?(d.kind_code)}.each(&:delete)
     if @work_entry.save
       redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
     else
