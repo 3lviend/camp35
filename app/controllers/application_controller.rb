@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_logged_in
     unless current_user
-       redirect_to new_user_session_path
+       render :nothing => true, :status => 401
     end
   end
 

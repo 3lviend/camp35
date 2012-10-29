@@ -1,11 +1,22 @@
 class TimesheetApp.Routers.MainRouter extends Backbone.Router
   routes :
     '': 'root'
+    'login': 'login'
     'calendar': 'home'
     'entries/:id': 'edit_entry'
     'entries/:year/:month/:day/new': 'new_entry'
     'work_days/:weeks_from_now': 'work_days'
     'entries/:year/:month/:day': 'work_day'
+
+  before:
+    '^((?!login).)*$': ->
+        console.info "not login route"
+    'login': ->
+        console.info "login route"
+
+  login: ->
+    view = new TimesheetApp.Views.Authentication.LoginView()
+    $(window).oneTime 100, () => view.render()
 
   root: ->
     if window.location.pathname != "/users/sign_in"
@@ -13,7 +24,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
 
   home: ->
     view = new TimesheetApp.Views.Home.IndexView()
-    $(window).oneTime 100, () => @view.render()
+    $(window).oneTime 100, () => view.render()
 
   new_entry: (year, month, day) ->
     day = moment([year, month-1, day]).format("YYYY-MM-DD")
@@ -42,3 +53,10 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     entries.url = "/work_day_entries/#{year}/#{month}/#{day}.json"
     entries.fetch()
 
+
+$.ajaxSetup
+  statusCode:
+    401: ->
+      window.location.replace "/#login"
+    403: ->
+      window.location.replace "/#denied"

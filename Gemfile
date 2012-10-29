@@ -13,6 +13,7 @@ group :assets do
   gem 'knockoutjs-rails'
   gem 'momentjs-rails'
   gem "humane-rails"
+  gem 'jquery-cookie-rails'
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"

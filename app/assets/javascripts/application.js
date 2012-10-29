@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
+//= require jquery.cookie
 //= require timers
 //= require foundation
 //= require autogrow
@@ -21,6 +22,7 @@
 //= require moment
 //= require humane
 //= require backbone
+//= require backbone_filters
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/timesheet_app
@@ -29,3 +31,4 @@ window.router = new TimesheetApp.Routers.MainRouter();
 Backbone.history.start();
 $(document).foundationTopBar()
 $(document).foundationButtons()
+
