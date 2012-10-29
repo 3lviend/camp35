@@ -18,8 +18,11 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
   new_entry: (year, month, day) ->
     day = moment([year, month-1, day]).format("YYYY-MM-DD")
     entry = new TimesheetApp.Models.WorkEntry(date_performed: day)
-    @view = new TimesheetApp.Views.Entries.NewView(model: entry)
-    $(window).oneTime 100, () => @view.render()
+    entry.set("work_entry_durations", [
+      duration: "00:00:00"
+    ])
+    view = new TimesheetApp.Views.Entries.NewView(model: entry)
+    $(window).oneTime 100, () => view.render()
 
   edit_entry: (id) ->
     entry = new TimesheetApp.Models.WorkEntry(id: id)

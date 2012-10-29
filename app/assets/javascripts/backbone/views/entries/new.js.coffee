@@ -36,7 +36,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
   back: =>
     Backbone.history.navigate Backbone.history.fragment.replace("/new", ""), true
 
-  initialize: () ->
+  initialize: () =>
     @charts = []
     @charts[0] = new TimesheetApp.Collections.WorkChartsCollection()
     @charts[0].on "reset", @render_charts
