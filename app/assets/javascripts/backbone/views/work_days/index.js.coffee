@@ -14,6 +14,7 @@ class TimesheetApp.Views.WorkDays.IndexView extends Backbone.View
 
   render: =>
     $("#main").html(@template())
+    $("header.row").html("<h1>Work days</h1><h4>Navigate through you work days at End Point</h4>")
 
 class TimesheetApp.Views.WorkDays.IndexViewModel
   collection: ko.observableArray()

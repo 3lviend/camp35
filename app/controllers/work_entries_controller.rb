@@ -28,7 +28,7 @@ class WorkEntriesController < ApplicationController
   def destroy
     @work_entry = WorkEntry.find params[:id]
     @work_entry.destroy
-    redirect_to show_work_day_entries_path(@day.year, @day.month, @day.day)
+    redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
   end
 
   def create

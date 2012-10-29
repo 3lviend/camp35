@@ -16,13 +16,14 @@
       %header.row= yield :header
       %section{:role => "main"}
         .row
-          .one.columns
-          .seven.columns
+          .two.columns
+          .eight.columns
             = yield
-          .four.columns
+          .two.columns
       %section
         .row
-          #main.seven.columns
+          #main.eight.columns
+          .four.columns
       %footer
         .row
     / ! end of #container

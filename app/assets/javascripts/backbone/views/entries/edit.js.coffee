@@ -5,6 +5,20 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
   selects_template: JST["backbone/templates/entries/_selects"]
   durations_template: JST["backbone/templates/entries/_durations"]
 
+  delete: =>
+    if confirm "Are you sure you want to delete this entry?"
+      date = moment(@model.get("date_performed"))
+      $.ajax
+        url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries/#{@model.get('id')}"
+        type: "DELETE"
+        success: =>
+          humane.log "Entry deleted. redirecting..."
+          @back()
+        error: (xhr, status, err)  =>
+          humane.log err
+    false
+
+
   back: =>
     date = moment(@model.get("date_performed"))
     Backbone.history.navigate "entries/#{date.year()}/#{date.month() + 1}/#{date.date()}", true
@@ -245,7 +259,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".calendar", @el).datepicker
       dateFormat: "yy-mm-dd"
     $("#main").html(@el)
-    $("header").html("<h1>Edit entries for #{@model.get('date_performed')}</h1>")
+    $("header").html("<h1>Edit entries for #{moment(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:
         $.param
@@ -270,6 +284,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     @selected_chart.set("id", @model.get("work_chart_id"), silent: true)
     @selected_chart.fetch()
     $("a.alert", @el).click (e) =>
+      @delete()
       false
     $("button[type=submit]", @el).click (e) =>
       @persist()

@@ -1,15 +1,17 @@
 %nav.top-bar
   %ul
     %li.name
-      %a{:href => root_path}
+      %a{:href => "/#"}
         %b> Timesheet
         %span<
           App
+    %li.divider
+    %li 
+      %a{:href => "/#work_days/0"} Today
     %li.toggle-topbar= link_to "", "#"
   %section
     %ul.left
     %ul.right
-      %li.active= link_to "Time entry", root_path
       - if current_user and current_user.has_role? :admin
         %li.divider
         %li= link_to 'Admin', rails_admin_path, :onclick => "window.location.href = '/admin'"

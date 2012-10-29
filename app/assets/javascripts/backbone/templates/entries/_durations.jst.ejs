@@ -24,7 +24,7 @@
            <div class="five mobile-three columns single-select">
              <select data-index="<%= i %>" class="minutes-select" name="durations[0][minutes]">
                <% $.each(new Array(4), function(j, v) { %>
-                 <option <% if(j == minutes){ %> <%= "selected='selected'" %> <% }; %> value="<%= j*15 %>"><%= j*15 %></option>
+                 <option <% if(15*j == minutes){ %> <%= "selected='selected'" %> <% }; %> value="<%= j*15 %>"><%= j*15 %></option>
                <% }); %>
              </select>
            </div>
