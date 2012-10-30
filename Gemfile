@@ -14,6 +14,7 @@ group :assets do
   gem 'momentjs-rails'
   gem "humane-rails"
   gem 'jquery-cookie-rails'
+  gem 'keymaster-rails'
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"

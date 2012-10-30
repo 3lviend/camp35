@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require jquery.cookie
+//= require keymaster
 //= require timers
 //= require foundation
 //= require autogrow

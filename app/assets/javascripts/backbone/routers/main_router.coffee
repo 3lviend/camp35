@@ -8,6 +8,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     'work_days/:weeks_from_now': 'work_days'
     'entries/:year/:month/:day': 'work_day'
 
+
   before:
     '^((?!login).)*$': ->
         console.info "not login route"
@@ -60,3 +61,16 @@ $.ajaxSetup
       window.location.replace "/#login"
     403: ->
       window.location.replace "/#denied"
+$ ->
+  key 'command+n', ->
+    date = moment()
+    Backbone.history.navigate "/#entries/#{date.year()}/#{date.month()+1}/#{date.date()}/new", true
+  key 'command+t', ->
+    date = moment()
+    Backbone.history.navigate "/#entries/#{date.year()}/#{date.month()+1}/#{date.date()}"
+  key 'command+s', ->
+    $("form button[type=submit]").trigger "click"
+  _.map [0..9], (i) ->
+    key "command+#{i}", ->
+      Backbone.history.navigate "/#work_days/#{i}", true
+
