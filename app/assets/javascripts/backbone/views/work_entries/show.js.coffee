@@ -14,6 +14,7 @@ class TimesheetApp.Views.WorkEntries.IndexView extends Backbone.View
 
   render: =>
     $("#main").html(@template())
+    $("header.row").html "<h1>Work entries for the day</h1><h4>Take a peek at what you've accomplished</h4>"
 
 class TimesheetApp.Views.WorkEntries.IndexViewModel
   collection: ko.observableArray()

@@ -13,7 +13,7 @@ class TimesheetApp.Models.WorkEntry extends Backbone.Model
   last_label: =>
     _.last @get("work_chart_label_parts")
   middle_labels: =>
-    _.rest _.initial(@get("work_chart_label_parts"))
+   _.rest( _.rest( _.initial(@get("work_chart_label_parts")) ))
 
   time_string: =>
     [hours, minutes] = @get("total_duration").split(":")

@@ -22,6 +22,7 @@
 //= require knockout
 //= require moment
 //= require humane
+//= require spin
 //= require backbone
 //= require backbone_filters
 //= require backbone_rails_sync

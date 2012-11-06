@@ -54,13 +54,48 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     entries.url = "/work_day_entries/#{year}/#{month}/#{day}.json"
     entries.fetch()
 
+initSpinner = ->
+    unless window.spin
+      window.spin = new Spinner 
+        lines: 13
+        length: 7
+        width: 4
+        radius: 10
+        corners: 1
+        rotate: 0
+        color: '#fff'
+        speed: 1
+        trail: 58
+        shadow: true
+        hwaccel: false
+        className: 'spinner'
+        zIndex: 2e9
+        top: 'auto'
+        left: 'auto'
+
+startSpinner = ->
+  initSpinner() unless window.spin
+  $("li.name a").css("visibility", "hidden")
+  window.spin.spin $("li.name")[0]
+
+stopSpinner = ->
+  $("li.name a").css("visibility", "visible")
+  window.spin.stop()
 
 $.ajaxSetup
+  beforeSend: startSpinner
+  complete:   stopSpinner
   statusCode:
     401: ->
       window.location.replace "/#login"
     403: ->
       window.location.replace "/#denied"
+
+$(document).ajaxStop stopSpinner
+
+$(document).ajaxStart ->
+  startSpinner()
+
 $ ->
   key 'command+n', ->
     date = moment()
