@@ -79,16 +79,18 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
   set_duration_hour: (index, hour) =>
     durations = @model.get("work_entry_durations")
     d = durations[index].duration
-    [_hour, minute] = d.split(":")
-    durations[index].duration = "#{hour}:#{minute}:00"
-    @model.set("work_entry_durations", durations, silent: true)
+    if d
+      [_hour, minute] = d.split(":")
+      durations[index].duration = "#{hour}:#{minute}:00"
+      @model.set("work_entry_durations", durations, silent: true)
 
   set_duration_minutes: (index, minute) =>
     durations = @model.get("work_entry_durations")
     d = durations[index].duration
-    [hour, _minute] = d.split(":")
-    durations[index].duration = "#{hour}:#{minute}:00"
-    @model.set("work_entry_durations", durations, silent: true)
+    if d
+      [hour, _minute] = d.split(":")
+      durations[index].duration = "#{hour}:#{minute}:00"
+      @model.set("work_entry_durations", durations, silent: true)
 
   render_searches: =>
     lis = @searches.map (chart) ->
