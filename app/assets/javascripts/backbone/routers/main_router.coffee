@@ -87,9 +87,11 @@ $.ajaxSetup
   complete:   stopSpinner
   statusCode:
     401: ->
+      $("#today, #new_entry").hide()
       window.location.replace "/#login"
     403: ->
       window.location.replace "/#denied"
+      $("#today, #new_entry").hide()
 
 $(document).ajaxStop stopSpinner
 
@@ -105,8 +107,7 @@ $(document).oneTime 200, ->
   $("#new_entry").click ->
     now = moment(new Date())
     Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}/new", true
-    false
-  
+    false  
 
 $ ->
   key 'command+n', ->

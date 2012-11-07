@@ -7,6 +7,10 @@ class TimesheetApp.Views.Authentication.LoginView extends Backbone.View
     $("#main").html(@template())
     $("header.row").html("<h1>Log in</h1><h4>Fill in the form and come aboard!</h4>")
     $(".button.login").click @login
+    $("#new_user input").keypress (e) =>
+      if e.keyCode == 13 && !e.shiftKey
+        @login()
+        false
 
   login: =>
     $.ajax
@@ -22,6 +26,7 @@ class TimesheetApp.Views.Authentication.LoginView extends Backbone.View
       success: (data) =>
         if data.success
           humane.log "Welcome aboard!"
+          $("#today, #new_entry").show()
           window.location.replace "/"
           #Backbone.history.navigate "/#", true
         else
