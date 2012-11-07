@@ -153,6 +153,11 @@ table {
   }
 }
 
+fieldset.durations {
+    clear: both;
+    width: 100%;
+}
+
 .button{
   color: white !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
@@ -361,7 +366,7 @@ circle, text{
     }
   }
   .select {
-    width: 127px;
+    width: 216px;
     margin-right: 5px;
   }
   .button.remove {
@@ -380,7 +385,7 @@ circle, text{
 
 .hours-minutes{
   width: 500px !important;
-  margin-left: -136px !important;
+  margin-left: -225px !important;
   clear: both;
   top: -10px;
   margin-bottom: 10px !important;

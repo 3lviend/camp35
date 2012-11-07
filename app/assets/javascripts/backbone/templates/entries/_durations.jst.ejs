@@ -5,8 +5,8 @@
        <% $.each(work_entry.work_entry_durations, function(i, duration) { %>
        <div class="single-duration">
          <a href="#" class="button alert remove <% if(i == 0 ) { %> disabled  <% } %> ">-</a>
-       <% hours = parseInt(duration.duration.split(":")[0]); %>
-       <% minutes = parseInt(duration.duration.split(":")[1]); %>
+       <% hours = parseInt(duration.duration.split(":")[0], 10); %>
+       <% minutes = parseInt(duration.duration.split(":")[1], 10); %>
        <div class="input interval optional">
            <label class="interval optional control-label" 
                   for="work_entry_work_entry_durations_attributes_0_duration">Duration</label>      

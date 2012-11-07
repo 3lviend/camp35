@@ -9,7 +9,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
 
   time_string: =>
     [hours, minutes] = @get("time").split(":")
-    "#{parseInt hours}h #{parseInt minutes}m"
+    "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
 
   day_name: (day) ->
     switch day

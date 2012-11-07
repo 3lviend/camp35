@@ -17,7 +17,7 @@ class TimesheetApp.Models.WorkEntry extends Backbone.Model
 
   time_string: =>
     [hours, minutes] = @get("total_duration").split(":")
-    "#{parseInt hours}h #{parseInt minutes}m"
+    "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
 
   front_url: =>
     "/#entries/#{@get("id")}"
