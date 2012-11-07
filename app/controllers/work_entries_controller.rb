@@ -18,10 +18,9 @@ class WorkEntriesController < ApplicationController
     kinds = params[:work_entry][:work_entry_durations_attributes].values.map {|d| d[:kind_code]}
     @work_entry.work_entry_durations.select {|d| not kinds.include?(d.kind_code)}.each(&:delete)
     if @work_entry.save
-      redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
+      render :json => {:status => 'OK'}.to_json
     else
-      flash[:errors] = @work_entry.errors.full_messages
-      render :edit
+      render :json => {:status => 'ERROR', :errors => @work_entry.errors.full_messages}.to_json
     end
   end
 

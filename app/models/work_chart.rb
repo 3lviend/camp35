@@ -12,6 +12,10 @@ class WorkChart < ActiveRecord::Base
   belongs_to :work_chart_status, :foreign_key => :status, :primary_key => :status
   has_many :work_entries
 
+  #define_index do
+  #  indexes display_label
+  #end
+
   def self.search_for(phrase)
     
   end
