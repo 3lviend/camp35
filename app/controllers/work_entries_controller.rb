@@ -27,7 +27,7 @@ class WorkEntriesController < ApplicationController
   def destroy
     @work_entry = WorkEntry.find params[:id]
     @work_entry.destroy
-    redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
+    render :json => {:status => 'OK'}.to_json
   end
 
   def create
@@ -38,11 +38,10 @@ class WorkEntriesController < ApplicationController
     @work_entry.date_created = DateTime.now
     @work_entry.work_entry_durations.each { |d| d.created_by = d.modified_by =  current_user.email }
     if @work_entry.save
-      redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
+      # redirect_to show_work_day_entries_path(params[:year], params[:month], params[:day])
+      render :json => {:status => 'OK'}.to_json
     else
-      flash[:errors] = @work_entry.errors.full_messages
-      fetch_quicks
-      render :new
+      render :json => {:status => 'ERROR', :errors => @work_entry.errors.full_messages}.to_json
     end
   end
 

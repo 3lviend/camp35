@@ -11,9 +11,12 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       $.ajax
         url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries/#{@model.get('id')}"
         type: "DELETE"
-        success: =>
-          humane.log "Entry deleted. redirecting..."
-          @back()
+        success: (data) =>
+          if data.status == 'OK'
+            humane.log "Entry deleted. redirecting..."
+            @back()
+          else
+            humane.log data.errors
         error: (xhr, status, err)  =>
           humane.log err
     false
