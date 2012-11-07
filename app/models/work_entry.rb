@@ -22,4 +22,8 @@ class WorkEntry < ActiveRecord::Base
     self.date_created = DateTime.now unless self.date_created
   end
 
+  def to_custom_json
+    self.to_json :include => [:work_entry_durations, :work_entry_fees]
+  end
+
 end
