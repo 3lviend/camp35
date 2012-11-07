@@ -7,7 +7,10 @@
           App
     %li.divider
     %li 
-      %a{:href => "/#entries/#{DateTime.now.strftime("%Y/%m/%d")}"} Today
+      %a#today{:href => "#"} Today
+    %li.divider
+    %li
+      %a#new_entry{:href => "#"} New entry
     %li.toggle-topbar= link_to "", "#"
   %section
     %ul.left

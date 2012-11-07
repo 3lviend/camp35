@@ -96,6 +96,18 @@ $(document).ajaxStop stopSpinner
 $(document).ajaxStart ->
   startSpinner()
 
+$(document).oneTime 200, ->
+  $("#today").click ->
+    now = moment(new Date())
+    Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}", true
+    false
+
+  $("#new_entry").click ->
+    now = moment(new Date())
+    Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}/new", true
+    false
+  
+
 $ ->
   key 'command+n', ->
     date = moment()
