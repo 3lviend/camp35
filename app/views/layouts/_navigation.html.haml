@@ -17,7 +17,8 @@
     %ul.right
       - if current_user and current_user.has_role? :admin
         %li.divider
-        %li= link_to 'Admin', rails_admin_path, :onclick => "window.location.href = '/admin'"
-      - if user_signed_in?
+        %li
+          %a#admin{:href => "#"} Admin
         %li.divider
-        %li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
+      %li
+        %a#logout{:href => "#"} Logout

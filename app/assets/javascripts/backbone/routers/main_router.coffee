@@ -87,11 +87,11 @@ $.ajaxSetup
   complete:   stopSpinner
   statusCode:
     401: ->
-      $("#today, #new_entry").hide()
+      $("#today, #new_entry, #logout").hide()
       window.location.replace "/#login"
     403: ->
       window.location.replace "/#denied"
-      $("#today, #new_entry").hide()
+      $("#today, #new_entry, #logout").hide()
 
 $(document).ajaxStop stopSpinner
 
@@ -108,7 +108,23 @@ $(document).oneTime 200, ->
   $("#new_entry").click ->
     now = moment.utc(new Date())
     Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}/new", true
-    false  
+    false
+
+  $("#admin").click ->
+    window.location.replace "/admin"
+    false
+
+  $("#logout").click ->
+    $.ajax
+      url: "/users/sign_out"
+      type: "DELETE"
+      success: =>
+        humane.log "Goodbye"
+        $("#logout").hide()
+        Backbone.history.navigate "/#", true
+      error: =>
+        humane.log "Something wrong happened.. Please contact admin"
+    false
 
 $ ->
   key 'command+n', ->
