@@ -123,7 +123,11 @@ $(document).oneTime 200, ->
         $("#logout").hide()
         Backbone.history.navigate "/#", true
       error: =>
-        humane.log "Something wrong happened.. Please contact admin"
+        # humane.log "Something wrong happened.. Please contact admin"
+        # kinda nasty workaround... TODO: fix
+        humane.log "Goodbye"
+        $("#logout").hide()
+        Backbone.history.navigate "/#", true
     false
 
 $ ->
