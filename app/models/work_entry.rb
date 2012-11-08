@@ -15,7 +15,20 @@ class WorkEntry < ActiveRecord::Base
   end
 
   def total_duration
-    self.work_entry_durations.map(&:duration).map { |d| Time.parse(d).to_datetime}.inject(Time.parse("00:00:00").to_datetime) { |v, a| a+= v.hour.hours; a+= v.min.minutes; a }
+    self.total_for self.work_entry_durations
+  end
+
+  def total_billable
+    self.total_for self.work_entry_durations.select { |d| !d.kind_code[/^billable/].nil? }
+  end
+
+  def total_nonbillable
+    self.total_for self.work_entry_durations.select { |d| !d.kind_code[/^nonbillable/].nil? }
+  end
+
+  def total_for(durations)
+    durations.map(&:duration).map { |d| Time.parse(d).to_datetime}
+             .inject(Time.parse("00:00:00").to_datetime) { |v, a| a+= v.hour.hours; a+= v.min.minutes; a }
   end
 
   def sanitize_entry

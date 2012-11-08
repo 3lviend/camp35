@@ -15,6 +15,25 @@ class TimesheetApp.Models.WorkEntry extends Backbone.Model
   middle_labels: =>
    _.rest( _.rest( _.initial(@get("work_chart_label_parts")) ))
 
+  hours: =>
+    @get("total_duration").split(":")[0]
+
+  minutes: =>
+    @get("total_duration").split(":")[1]
+
+  billable_hours: =>
+    parseInt @get("total_billable").split(":")[0], 10
+
+  billable_minutes: =>
+    parseInt @get("total_billable").split(":")[1], 10
+
+  nonbillable_hours: =>
+    parseInt @get("total_nonbillable").split(":")[0], 10
+
+  nonbillable_minutes: =>
+    parseInt @get("total_nonbillable").split(":")[1], 10
+
+
   time_string: =>
     [hours, minutes] = @get("total_duration").split(":")
     "#{parseInt hours, 10}h #{parseInt minutes, 10}m"

@@ -245,6 +245,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
     $(".calendar", @el).datepicker
       dateFormat: "yy-mm-dd"
     $("#main").html(@el)
+    $("#side").html ""
     $("header.row").html("<h1>New work entry</h1><h4>Create entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:

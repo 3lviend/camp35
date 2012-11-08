@@ -262,6 +262,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".calendar", @el).datepicker
       dateFormat: "yy-mm-dd"
     $("#main").html(@el)
+    $("#side").html ""
     $("header").html("<h1>Edit entries for #{moment.utc(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:
