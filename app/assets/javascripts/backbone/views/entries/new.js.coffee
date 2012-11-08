@@ -28,7 +28,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
         work_entry: data
       success: (data) =>
         if data.status == 'OK'
-          humane.log "Entry saved. redirecting..."
+          humane.log "Entry saved"
           @back()
         else
           humane.log data.errors

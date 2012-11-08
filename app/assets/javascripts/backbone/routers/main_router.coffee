@@ -99,6 +99,7 @@ $(document).ajaxStart ->
   startSpinner()
 
 $(document).oneTime 200, ->
+  humane.timeout = 1000
   $("#today").click ->
     now = moment.utc(new Date())
     Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}", true

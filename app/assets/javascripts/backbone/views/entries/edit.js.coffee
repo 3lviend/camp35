@@ -13,7 +13,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
         type: "DELETE"
         success: (data) =>
           if data.status == 'OK'
-            humane.log "Entry deleted. redirecting..."
+            humane.log "Entry deleted"
             @back()
           else
             humane.log data.errors
@@ -51,7 +51,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       data:
         work_entry: data
       success: =>
-        humane.log "Entry saved. redirecting..."
+        humane.log "Entry saved"
         @back()
       error: (xhr, status, err)  =>
         humane.log err
