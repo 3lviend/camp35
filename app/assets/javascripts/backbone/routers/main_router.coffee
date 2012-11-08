@@ -28,7 +28,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     $(window).oneTime 100, () => view.render()
 
   new_entry: (year, month, day) ->
-    day = moment([year, month-1, day]).format("YYYY-MM-DD")
+    day = moment.utc([year, month-1, day]).format("YYYY-MM-DD")
     entry = new TimesheetApp.Models.WorkEntry(date_performed: day)
     entry.set("work_entry_durations", [
       duration: "00:00:00"
@@ -100,21 +100,21 @@ $(document).ajaxStart ->
 
 $(document).oneTime 200, ->
   $("#today").click ->
-    now = moment(new Date())
+    now = moment.utc(new Date())
     Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}", true
     false
 
   $("#new_entry").click ->
-    now = moment(new Date())
+    now = moment.utc(new Date())
     Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}/new", true
     false  
 
 $ ->
   key 'command+n', ->
-    date = moment()
+    date = moment.utc()
     Backbone.history.navigate "/#entries/#{date.year()}/#{date.month()+1}/#{date.date()}/new", true
   key 'command+t', ->
-    date = moment()
+    date = moment.utc()
     Backbone.history.navigate "/#entries/#{date.year()}/#{date.month()+1}/#{date.date()}"
   key 'command+s', ->
     $("form button[type=submit]").trigger "click"

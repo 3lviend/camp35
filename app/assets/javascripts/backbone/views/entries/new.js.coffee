@@ -15,7 +15,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       duration_minutes: $(".minutes-select", s).val()
     @model.set "work_entry_durations", durations.toArray(), silent: true
 
-    date = moment(@model.get("date_performed"))
+    date = moment.utc(@model.get("date_performed"))
 
     data = @model.toJSON()
     data.work_entry_durations_attributes = data.work_entry_durations

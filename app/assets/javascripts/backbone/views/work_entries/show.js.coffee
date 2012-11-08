@@ -19,7 +19,7 @@ class TimesheetApp.Views.WorkEntries.IndexView extends Backbone.View
 class TimesheetApp.Views.WorkEntries.IndexViewModel
   collection: ko.observableArray()
   constructor: (year, month, day) ->
-    @day = moment [year, month, day]
+    @day = moment.utc [year, month, day]
     @collection.removeAll()
   new_url: =>
     "/#entries/#{@day.year()}/#{@day.month()}/#{@day.date()}/new"

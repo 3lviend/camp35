@@ -7,7 +7,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
 
   delete: =>
     if confirm "Are you sure you want to delete this entry?"
-      date = moment(@model.get("date_performed"))
+      date = moment.utc(@model.get("date_performed"))
       $.ajax
         url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries/#{@model.get('id')}"
         type: "DELETE"
@@ -23,7 +23,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
 
 
   back: =>
-    date = moment(@model.get("date_performed"))
+    date = moment.utc(@model.get("date_performed"))
     Backbone.history.navigate "entries/#{date.year()}/#{date.month() + 1}/#{date.date()}", true
 
   persist: =>
@@ -39,7 +39,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       id: @model.get('work_entry_durations')[i].id
     @model.set "work_entry_durations", durations.toArray(), silent: true
 
-    date = moment(@model.get("date_performed"))
+    date = moment.utc(@model.get("date_performed"))
 
     data = @model.toJSON()
     data.work_entry_durations_attributes = data.work_entry_durations
@@ -262,7 +262,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".calendar", @el).datepicker
       dateFormat: "yy-mm-dd"
     $("#main").html(@el)
-    $("header").html("<h1>Edit entries for #{moment(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
+    $("header").html("<h1>Edit entries for #{moment.utc(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:
         $.param

@@ -1,10 +1,10 @@
 class TimesheetApp.Models.WorkDay extends Backbone.Model
   data_url:  =>
-      date = moment (new Date @get("date"))
+      date = moment.utc (new Date @get("date"))
       "#entries/#{date.year()}/#{date.month() + 1}/#{date.date()}"
 
   date_string: =>
-      date = moment (new Date @get("date"))
+      date = moment.utc (new Date @get("date"))
       "#{date.format('YYYY-MM-DD, dddd')}"
 
   time_string: =>
