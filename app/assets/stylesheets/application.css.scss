@@ -581,3 +581,33 @@ div.no-hover {
     width: 33%;
   }
 }
+
+#calendar {
+  li {
+    list-style-type: none;
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-color: #dfdfdf;
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    cursor: pointer;
+  }
+ 
+  li:hover {
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    background-color: #e6e6e6;
+  }
+
+  @for $d from 0 through 6 {
+    @for $w from 1 through 5 {
+      li.day-#{$d}.week-#{$w} {
+        margin-top: (92*($w - 1)) * 1px;
+        margin-left: (92*$d) * 1px;
+      }
+    }
+  }
+}

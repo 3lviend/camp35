@@ -21,6 +21,16 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
       when 5 then "Friday"
       when 6 then "Saturday"
 
+  day: =>
+    moment.utc(@get("date")).date()
+
+  date_class: =>
+    date = moment.utc(@get("date"))
+    "day-#{date.day()} week-#{@week_of_date(date)}"
+
+  week_of_date: (date) =>
+    Math.ceil((date.date() + moment(date).date(1).day())/7)
+
 class TimesheetApp.Collections.WorkDaysCollection extends Backbone.Collection
   model: TimesheetApp.Models.WorkDay
   url:   "/work_days/0"
