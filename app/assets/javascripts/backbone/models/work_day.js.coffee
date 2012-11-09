@@ -26,10 +26,14 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
 
   date_class: =>
     date = moment.utc(@get("date"))
-    "day-#{date.day()} week-#{@week_of_date(date)}"
+    "day-#{date.day()} week-#{@week_of_date(date)} #{'today' if (date.toDate().toDateString() == (new Date()).toDateString())} #{'weekend' if date.day() == 0 || date.day() == 6}"
 
   week_of_date: (date) =>
     Math.ceil((date.date() + moment(date).date(1).day())/7)
+
+  href: =>
+    date = moment.utc(@get("date"))
+    "/#entries/#{date.year()}/#{date.month() + 1}/#{date.date()}"
 
 class TimesheetApp.Collections.WorkDaysCollection extends Backbone.Collection
   model: TimesheetApp.Models.WorkDay

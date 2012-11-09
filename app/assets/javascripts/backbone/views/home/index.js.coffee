@@ -20,4 +20,5 @@ class TimesheetApp.Views.IndexViewModel
       days.push (new TimesheetApp.Models.WorkDay(date: date.format("YYYY-MM-DD")))
       date.add('days', 1)
     @days = ko.observableArray(days)
-    console.info days
+    @goto = (e) =>
+      Backbone.history.navigate e.href(), true

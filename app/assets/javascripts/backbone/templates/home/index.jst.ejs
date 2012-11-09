@@ -2,7 +2,7 @@
 </ul>
 
 <script type="text/html" id="day-template">
-  <li data-bind="attr: {class: date_class()}">
+  <li data-bind="attr: {class: date_class(), 'data-href': href()}, click: $root.goto">
     <div data-bind="text: day()"></div>
   </li>
 </script>
