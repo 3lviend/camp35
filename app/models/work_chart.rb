@@ -11,6 +11,7 @@ class WorkChart < ActiveRecord::Base
   has_many :work_chart_kinds
   belongs_to :work_chart_status, :foreign_key => :status, :primary_key => :status
   has_many :work_entries
+  has_many :work_chart_kinds_defaults
 
   #define_index do
   #  indexes display_label
@@ -33,8 +34,22 @@ class WorkChart < ActiveRecord::Base
            WHERE id = ?) as bs
         ON work_chart_kinds.work_chart_id = bs.b
       sql
-      @duration_kinds = DurationKind.find_by_sql [query, self.id]
+      defaults = self.default_kinds
+      @duration_kinds = DurationKind.find_by_sql([query, self.id]).sort {|k| defaults.include?(k.code) ? -1 : 1 }
     end
+  end
+
+  def default_kinds
+    kinds = WorkChart.connection.execute <<-sql
+      SELECT *
+      FROM work_chart_kinds_defaults
+      INNER JOIN
+        (SELECT CAST(regexp_split_to_table(branch, '~') AS integer) AS b
+         FROM work_chart_tree_view
+         WHERE id = #{self.id}) bs ON bs.b = work_chart_kinds_defaults.work_chart_id
+      AND bs.b <> 2;
+    sql
+    kinds.to_a.map { |k| k["kind_code"] }
   end
 
   def self.frequent_for(user, limit)
