@@ -27,7 +27,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
   home: (year, month) ->
     days = new TimesheetApp.Collections.WorkDaysCollection()
     days.url = "/work_days/calendar/#{year}/#{month}.json"
-    view = new TimesheetApp.Views.Home.IndexView(collection: days)
+    view = new TimesheetApp.Views.Home.IndexView(collection: days, year: year, month: month)
     days.fetch()
 
   new_entry: (year, month, day) ->
@@ -110,7 +110,7 @@ $(document).oneTime 200, ->
 
   $("#this_month").click ->
     now = moment.utc(new Date())
-    Backbone.history.navigate "/#calendar/#{now.year()}/#{now.month() + 1}}", true
+    Backbone.history.navigate "/#calendar/#{now.year()}/#{now.month() + 1}", true
     false
 
   $("#new_entry").click ->

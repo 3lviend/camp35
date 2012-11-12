@@ -651,3 +651,27 @@ div.no-hover {
     }
   }
 }
+
+#calendar-controls {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 40px;
+  a {
+    float: left;
+    height: 40px;
+    background-color: #DDD;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 2px;
+  }
+  select {
+    float: left;
+    width: auto;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin: 0px;
+    margin-right: 2px;
+  }
+}
