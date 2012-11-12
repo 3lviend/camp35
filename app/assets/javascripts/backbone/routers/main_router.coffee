@@ -2,7 +2,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
   routes :
     '': 'root'
     'login': 'login'
-    'calendar': 'home'
+    'calendar/:year/:month': 'home'
     'entries/:id': 'edit_entry'
     'entries/:year/:month/:day/new': 'new_entry'
     'work_days/:weeks_from_now': 'work_days'
@@ -23,9 +23,11 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     if window.location.pathname != "/users/sign_in"
       window.location.href = "/#work_days/0"
 
-  home: ->
-    view = new TimesheetApp.Views.Home.IndexView()
-    $(window).oneTime 100, () => view.render()
+  home: (year, month) ->
+    days = new TimesheetApp.Collections.WorkDaysCollection()
+    days.url = "/work_days/calendar/#{year}/#{month}.json"
+    view = new TimesheetApp.Views.Home.IndexView(collection: days)
+    days.fetch()
 
   new_entry: (year, month, day) ->
     day = moment.utc([year, month-1, day]).format("YYYY-MM-DD")

@@ -4,6 +4,7 @@ TimesheetApp::Application.routes.draw do
   root :to => "home#index" 
   #root :to => "work_days#index"
   match "/work_days/:weeks_from_now" => "work_days#index", as: :week_work_days
+  match "/work_days/calendar/:year/:month" => "work_days#calendar", as: :calendar
   match "/work_day_entries/:year/:month/:day" => "work_day_entries#show", as: :show_work_day_entries
   resources :work_entries
   resources :work_entries, :path => "/work_day_entries/:year/:month/:day/work_entries"

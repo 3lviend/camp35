@@ -1,7 +1,61 @@
 # Helper model for accessing work days
 class WorkDay
 
-  attr_accessor :date, :time, :user_id
+  attr_accessor :date, :time, :user_id, :billable_time, :nonbillable_time
+
+  def initialize(data = {})
+    self.billable_time = Time.parse "00:00:00"
+    self.nonbillable_time = Time.parse "00:00:00"
+    self.time = Time.parse "00:00:00"
+    data.each do |k, v|
+      self.send "#{k}=", v
+    end
+  end
+
+  def self.by_year_and_month(user, year, month)
+    db_days = WorkEntry.connection.execute <<-sql
+      SELECT SUM(duration) as time, date_performed, work_entry_durations.kind_code
+      FROM work_entries
+      INNER JOIN work_entry_durations
+      ON work_entry_id = work_entries.id
+      WHERE
+      role_id = #{user.system_role_id}
+      AND DATE_PART('year', date_performed) = #{year}
+      AND DATE_PART('month', date_performed) = #{month}
+      GROUP BY date_performed, work_entry_durations.kind_code ORDER BY date_performed;
+    sql
+    days = {}
+    db_days.to_a.each do |d|
+      days[d["date_performed"]] = WorkDay.new(user_id: user.id, date: d["date_performed"].to_datetime) unless days[d["date_performed"]]
+      t = Time.parse d["time"]
+      if d["kind_code"][/^billable/]
+        bt = days[d["date_performed"]].billable_time || Time.parse("00:00:00")
+        bt = bt + t.hour.hours
+        bt = bt + t.min.minutes
+        days[d["date_performed"]].billable_time = bt
+      else
+        bt = days[d["date_performed"]].nonbillable_time || Time.parse("00:00:00")
+        bt = bt + t.hour.hours
+        bt = bt + t.min.minutes
+        days[d["date_performed"]].nonbillable_time = bt
+      end
+    end
+    days.values.each do |d|
+      d.time = d.time + d.billable_time.hour.hours
+      d.time = d.time + d.billable_time.min.minutes
+      d.time = d.time + d.nonbillable_time.hour.hours
+      d.time = d.time + d.nonbillable_time.min.minutes
+    end
+    days = days.values
+    current = DateTime.parse "#{year}-#{month}-1"
+    while current.month == month.to_i
+      unless days.detect {|d| d.date.year == current.year && d.date.month == current.month && d.date.day == current.day}
+        days << WorkDay.new( user_id: user.id, date: current )
+      end
+      current = current + 1.day
+    end
+    days.sort_by(&:date)
+  end
 
   # DB [WorkDay]
   def self.by_user_and_weeks_ago(user, weeks_from_now = 0)

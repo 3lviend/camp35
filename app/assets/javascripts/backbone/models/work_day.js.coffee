@@ -20,7 +20,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
 
   billable_time_string: =>
     if @get("time")
-      [hours, minutes] = @get("time").split(":")
+      [hours, minutes] = @get("billable_time").split(":")
       "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
     else
       date = moment.utc(@get("date"))
@@ -31,7 +31,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
 
   nonbillable_time_string: =>
     if @get("time")
-      [hours, minutes] = @get("time").split(":")
+      [hours, minutes] = @get("nonbillable_time").split(":")
       "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
     else
       date = moment.utc(@get("date"))
@@ -61,7 +61,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
       if date.date() > (moment.utc(new Date())).date() || date.day() == 6 || date.day() == 0
         "status-notyet"
       else
-        if date.date() % 3 == 0
+        if parseInt(@get("time").split(":")[0], 10) < 8
           "status-little"
         else
           "status-ok" # TODO: add real calculations
