@@ -593,6 +593,37 @@ div.no-hover {
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     cursor: pointer;
+    font-family: "OpenSansLight";
+
+    .day-totals {
+       position: absolute;
+       bottom: 5px;
+       right: 5px;
+    }
+
+    .sub {
+       font-size: 10px;
+       text-align: right;
+    }
+
+    .nonbillable {
+       opacity: 0.6;
+    }
+
+
+    .status-today, .status-little, .status-ok {
+       position: absolute;
+       width: 8px;
+       height: 8px;
+       right: 2px;
+       top: 2px;
+       background-color: orange;
+    }
+
+    .status-notyet, .status-notrequired { opacity: 0; }
+    .status-ok { background-color: green; }
+    .status-little { background-color: darkred; }
+
   }
  
   li:hover {
