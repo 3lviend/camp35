@@ -4,5 +4,10 @@
 <script type="text/html" id="day-template">
   <li data-bind="attr: {class: date_class(), 'data-href': href()}, click: $root.goto">
     <div data-bind="text: day()"></div>
+    <div data-bind="attr: {class: status_class()}">&nbsp;</div>
+    <div class="day-totals">
+      <div data-bind="text: time_string()" class="total-all"></div>
+      <div data-bind="text: billable_time_string()" class="sub"></div>
+      <div data-bind="text: nonbillable_time_string()" class="sub nonbillable"></div></div>
   </li>
 </script>

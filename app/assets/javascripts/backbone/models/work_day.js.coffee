@@ -8,8 +8,37 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
       "#{date.format('YYYY-MM-DD, dddd')}"
 
   time_string: =>
-    [hours, minutes] = @get("time").split(":")
-    "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+    if @get("time")
+      [hours, minutes] = @get("time").split(":")
+      "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+    else
+      date = moment.utc(@get("date"))
+      if date.day() == 0 || date.day() == 6
+        ""
+      else
+        "0h 0m"
+
+  billable_time_string: =>
+    if @get("time")
+      [hours, minutes] = @get("billable_time").split(":")
+      "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+    else
+      date = moment.utc(@get("date"))
+      if date.day() == 0 || date.day() == 6
+        ""
+      else
+        "0h 0m"
+
+  nonbillable_time_string: =>
+    if @get("time")
+      [hours, minutes] = @get("nonbillable_time").split(":")
+      "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+    else
+      date = moment.utc(@get("date"))
+      if date.day() == 0 || date.day() == 6
+        ""
+      else
+        "0h 0m"
 
   day_name: (day) ->
     switch day
@@ -23,6 +52,19 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
 
   day: =>
     moment.utc(@get("date")).date()
+
+  status_class: =>
+    date = moment.utc(@get("date"))
+    if date.toDate().toDateString() == (new Date()).toDateString()
+      "status-today"
+    else
+      if date.diff( (moment.utc(new Date())).date() ) < 0 || date.day() == 6 || date.day() == 0
+        "status-notyet"
+      else
+        if parseInt(@get("time").split(":")[0], 10) < 8
+          "status-little"
+        else
+          "status-ok" # TODO: add real calculations
 
   date_class: =>
     date = moment.utc(@get("date"))

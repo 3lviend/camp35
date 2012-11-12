@@ -7,4 +7,9 @@ class WorkDaysController < ApplicationController
     respond_with @days
   end
 
+  def calendar
+    @days = WorkDay.by_year_and_month(current_user, params[:year], params[:month])
+    respond_with @days
+  end
+
 end
