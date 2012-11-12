@@ -643,7 +643,7 @@ div.no-hover {
   }
 
   @for $d from 0 through 6 {
-    @for $w from 1 through 5 {
+    @for $w from 1 through 6 {
       li.day-#{$d}.week-#{$w} {
         margin-top: (92*($w - 1)) * 1px;
         margin-left: (92*$d) * 1px;

@@ -21,7 +21,8 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
 
   root: ->
     if window.location.pathname != "/users/sign_in"
-      window.location.href = "/#work_days/0"
+      date = moment.utc(new Date())
+      window.location.href = "/#calendar/#{date.year()}/#{date.month() + 1}"
 
   home: (year, month) ->
     days = new TimesheetApp.Collections.WorkDaysCollection()
@@ -89,11 +90,11 @@ $.ajaxSetup
   complete:   stopSpinner
   statusCode:
     401: ->
-      $("#today, #new_entry, #logout").hide()
+      $("#today, #new_entry, #logout, #this_month").hide()
       window.location.replace "/#login"
     403: ->
       window.location.replace "/#denied"
-      $("#today, #new_entry, #logout").hide()
+      $("#today, #new_entry, #logout, #this_month").hide()
 
 $(document).ajaxStop stopSpinner
 
@@ -105,6 +106,11 @@ $(document).oneTime 200, ->
   $("#today").click ->
     now = moment.utc(new Date())
     Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}", true
+    false
+
+  $("#this_month").click ->
+    now = moment.utc(new Date())
+    Backbone.history.navigate "/#calendar/#{now.year()}/#{now.month() + 1}}", true
     false
 
   $("#new_entry").click ->

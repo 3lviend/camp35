@@ -58,7 +58,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
     if date.toDate().toDateString() == (new Date()).toDateString()
       "status-today"
     else
-      if date.date() > (moment.utc(new Date())).date() || date.day() == 6 || date.day() == 0
+      if date.diff( (moment.utc(new Date())).date() ) < 0 || date.day() == 6 || date.day() == 0
         "status-notyet"
       else
         if parseInt(@get("time").split(":")[0], 10) < 8

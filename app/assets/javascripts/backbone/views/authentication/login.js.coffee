@@ -6,7 +6,7 @@ class TimesheetApp.Views.Authentication.LoginView extends Backbone.View
   render: =>
     $("#main").html(@template())
     $("header.row").html("<h1>Log in</h1><h4>Fill in the form and come aboard!</h4>")
-    $("#logout, #today, #new_entry, #admin").hide()
+    $("#logout, #today, #new_entry, #admin, #this_month").hide()
     $("#side").html ""
     $(".button.login").click @login
     $("#new_user input").keypress (e) =>
