@@ -31,7 +31,8 @@ class TimesheetApp.Views.IndexViewModel
     @days = ko.observableArray(days)
     @year = ko.observable year
     @month = ko.observable month
-    @years = ko.observableArray([1995..(moment.utc(new Date()).year())].reverse())
+    max_year = moment.utc(new Date()).year()
+    @years = ko.observableArray([1995..(Math.max(max_year, parseInt(year)))].reverse())
     @months = ko.observableArray ($.map ["January", "February", "March", "April", "Mai", "June", "July", "August", "September", "October", "November", "December"], (el, i) -> name: el, value: i + 1 )
     @goto = (e) =>
       Backbone.history.navigate e.href(), true
