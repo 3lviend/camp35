@@ -597,8 +597,8 @@ div.no-hover {
 
     .day-totals {
        position: absolute;
-       bottom: 5px;
-       right: 5px;
+       bottom: 0px;
+       right: 0px;
     }
 
     .sub {
@@ -615,8 +615,8 @@ div.no-hover {
        position: absolute;
        width: 8px;
        height: 8px;
-       right: 2px;
-       top: 2px;
+       right: 0px;
+       top: 0px;
        background-color: orange;
     }
 
@@ -659,7 +659,8 @@ div.no-hover {
   a {
     float: left;
     height: 40px;
-    background-color: #DDD;
+    background-color: transparent;
+    color: #000;
     width: 40px;
     text-align: center;
     line-height: 40px;
@@ -667,6 +668,8 @@ div.no-hover {
   }
   select {
     float: left;
+    border: none;
+    background-color: transparent;
     width: auto;
     height: 40px;
     text-align: center;
