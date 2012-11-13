@@ -13,6 +13,16 @@ class WorkDay
   end
 
   def self.by_year_and_month(user, year, month)
+    first_day = DateTime.new(year.to_i, month.to_i, 1)
+    start_range = first_day
+    while start_range.wday > 0
+      start_range = start_range - 1.day
+    end
+    last_day = DateTime.new(year.to_i, month.to_i, -1)
+    end_range = last_day
+    while end_range.wday < 6
+      end_range = end_range + 1.day
+    end
     db_days = WorkEntry.connection.execute <<-sql
       SELECT SUM(duration) as time, date_performed, work_entry_durations.kind_code
       FROM work_entries
@@ -20,8 +30,8 @@ class WorkDay
       ON work_entry_id = work_entries.id
       WHERE
       role_id = #{user.system_role_id}
-      AND DATE_PART('year', date_performed) = #{year}
-      AND DATE_PART('month', date_performed) = #{month}
+      AND date_performed >= DATE '#{start_range.to_s(:db)}'
+      AND date_performed <= DATE '#{end_range.to_s(:db)}'
       GROUP BY date_performed, work_entry_durations.kind_code ORDER BY date_performed;
     sql
     days = {}
@@ -47,8 +57,8 @@ class WorkDay
       d.time = d.time + d.nonbillable_time.min.minutes
     end
     days = days.values
-    current = DateTime.parse "#{year}-#{month}-1"
-    while current.month == month.to_i
+    current = start_range# + 1.day
+    while current < last_day || current.wday > 0
       unless days.detect {|d| d.date.year == current.year && d.date.month == current.month && d.date.day == current.day}
         days << WorkDay.new( user_id: user.id, date: current )
       end

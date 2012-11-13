@@ -66,12 +66,26 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
         else
           "status-ok" # TODO: add real calculations
 
-  date_class: =>
+  date_class: (year, month) =>
     date = moment.utc(@get("date"))
-    "day-#{date.day()} week-#{@week_of_date(date)} #{'today' if (date.toDate().toDateString() == (new Date()).toDateString())} #{'weekend' if date.day() == 0 || date.day() == 6}"
+    "day-#{date.day()} week-#{@week_of_date(date, year, month)} #{'today' if (date.toDate().toDateString() == (new Date()).toDateString())} #{'weekend' if date.day() == 0 || date.day() == 6}"
 
-  week_of_date: (date) =>
-    Math.ceil((date.date() + moment(date).date(1).day())/7)
+  week_of_date: (date, year, month) =>
+    console.info date
+    console.info year
+    console.info month
+    m = parseInt month
+    if (date.month() + 1 < m && date.year() == year) || date.year() < year
+      1
+    else
+      if date.month() + 1 > m || year < date.year()
+        _date = moment.utc(date)
+        _date.subtract('months', 1)
+        _date.endOf('months', 1)
+        _date.subtract('days', 1)
+        Math.ceil((_date.date() + moment(_date).date(1).day())/7)
+      else
+        Math.ceil((date.date() + moment(date).date(1).day())/7)
 
   href: =>
     date = moment.utc(@get("date"))

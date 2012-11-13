@@ -2,7 +2,7 @@
 </ul>
 
 <script type="text/html" id="day-template">
-  <li data-bind="attr: {class: date_class(), 'data-href': href()}, click: $root.goto">
+  <li data-bind="attr: {class: date_class($root.year(), $root.month()), 'data-href': href()}, click: $root.goto">
     <div data-bind="text: day()"></div>
     <div data-bind="attr: {class: status_class()}">&nbsp;</div>
     <div class="day-totals">
