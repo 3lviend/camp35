@@ -583,6 +583,7 @@ div.no-hover {
 }
 
 #calendar {
+  margin-top: -30px;
   li {
     list-style-type: none;
     position: absolute;
@@ -641,6 +642,10 @@ div.no-hover {
   li.today {
     background-color: #BBB;
   }
+
+  li.out-of-month {
+    opacity: 0.3;
+  }  
 
   @for $d from 0 through 6 {
     @for $w from 1 through 6 {

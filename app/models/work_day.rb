@@ -58,7 +58,7 @@ class WorkDay
     end
     days = days.values
     current = start_range# + 1.day
-    while current < last_day || current.wday > 0
+    while current <= last_day || current.wday > 0
       unless days.detect {|d| d.date.year == current.year && d.date.month == current.month && d.date.day == current.day}
         days << WorkDay.new( user_id: user.id, date: current )
       end

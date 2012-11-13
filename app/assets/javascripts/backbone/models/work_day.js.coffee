@@ -68,7 +68,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
 
   date_class: (year, month) =>
     date = moment.utc(@get("date"))
-    "day-#{date.day()} week-#{@week_of_date(date, year, month)} #{'today' if (date.toDate().toDateString() == (new Date()).toDateString())} #{'weekend' if date.day() == 0 || date.day() == 6}"
+    "day-#{date.day()} week-#{@week_of_date(date, year, month)} #{'today' if (date.toDate().toDateString() == (new Date()).toDateString())} #{'weekend' if date.day() == 0 || date.day() == 6} #{'out-of-month' if date.month() + 1 != month}"
 
   week_of_date: (date, year, month) =>
     console.info date
@@ -79,10 +79,10 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
       1
     else
       if date.month() + 1 > m || year < date.year()
-        _date = moment.utc(date)
+        _date = moment([date.year(), date.month(), 1])
         _date.subtract('months', 1)
-        _date.endOf('months', 1)
-        _date.subtract('days', 1)
+        _date.endOf('month')
+        # _date.subtract('days', 1)
         Math.ceil((_date.date() + moment(_date).date(1).day())/7)
       else
         Math.ceil((date.date() + moment(date).date(1).day())/7)
