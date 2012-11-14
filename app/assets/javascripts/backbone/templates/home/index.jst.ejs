@@ -1,6 +1,9 @@
 <ul id="calendar" data-bind="template: {foreach: days(), name: 'day-template'}">
 </ul>
 
+<ul id="calendar-week-totals" data-bind="template: {foreach: week_totals(), name: 'week-total-template'}">
+</ul>
+
 <script type="text/html" id="day-template">
   <li data-bind="attr: {class: date_class($root.year(), $root.month()), 'data-href': href()}, click: $root.goto">
     <div data-bind="text: day()"></div>
@@ -8,5 +11,15 @@
       <div data-bind="text: time_string()" class="total-all"></div>
       <div data-bind="text: billable_time_string()" class="sub"></div>
       <div data-bind="text: nonbillable_time_string()" class="sub nonbillable"></div></div>
+  </li>
+</script>
+
+<script id="week-total-template" type="text/html">
+  <li>
+    <div class="day-totals">
+      <div data-bind="text: total" class="total-all"></div>
+      <div class="sub">20h 0m</div>
+      <div class="sub nonbillable">21h 30m</div>
+    </div>
   </li>
 </script>

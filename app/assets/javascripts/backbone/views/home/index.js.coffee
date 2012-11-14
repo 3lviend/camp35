@@ -10,8 +10,9 @@ class TimesheetApp.Views.Home.IndexView extends Backbone.View
     @collection = @options.collection
     @collection.on "reset", =>
       @render()
-      @collection.each (day) =>
-        @view.days.push day
+      #@collection.each (day) =>
+      #  @view.days.push day
+      @view.days(@collection.models)
       ko.applyBindings(@view)
 
   render: () ->
@@ -25,10 +26,26 @@ class TimesheetApp.Views.IndexViewModel
   constructor: (year, month) ->
     date = moment.utc("2012-11-01")
     days = []
-    #while date.month() + 1 == 11
-    #  days.push (new TimesheetApp.Models.WorkDay(date: date.format("YYYY-MM-DD")))
-    #  date.add('days', 1)
     @days = ko.observableArray(days)
+    @week_totals = ko.computed () =>
+      grouped = _.groupBy @days(), (day) =>
+        date = moment.utc(day.get("date"))
+        week = day.week_of_date(date, parseInt(year, 10), parseInt(month,10))
+        console.info "#{date.toDate().toDateString()} week: #{week}"
+        week
+      console.info grouped
+      reduceTime = (memo, time) =>
+        # memo is in "0h 0m" format
+        [mh, mm] = _.map memo.split(" "), (i) -> parseInt(i, 10)
+        [hours, minutes] = _.map time.split(":"), (i) -> parseInt(i, 10)
+        nm = mm + minutes
+        nh = mh + hours
+        if nm >= 60
+          nh = nh + 1
+          nm = nm - 60
+        "#{nh}h #{nm}m"
+      _.map _.values(grouped), (days) =>
+        total: (_.reduce (_.map(days, (day) => day.get("time"))), reduceTime, "0h 0m")
     @year = ko.observable year
     @month = ko.observable month
     max_year = moment.utc(new Date()).year()

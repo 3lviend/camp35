@@ -675,3 +675,36 @@ div.no-hover {
     margin-right: 2px;
   }
 }
+
+#calendar-week-totals {
+  list-style-type: none;
+  float: left;
+  margin-left: 645px;
+   
+  li {
+    width: 90px;
+    height: 90px;
+    border-left: 2px solid #86C400;
+    font-family: "OpenSansLight";
+    position: relative;
+    margin-bottom: 2px;
+
+
+    .day-totals {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+
+      .sub {
+	 font-size: 10px;
+         text-align: right;
+      }
+
+      .nonbillable {
+	 font-size: 10px;
+	 text-align: right;
+	 opacity: 0.6;
+      }
+    }
+  }
+}
