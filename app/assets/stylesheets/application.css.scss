@@ -610,29 +610,21 @@ div.no-hover {
     .nonbillable {
        opacity: 0.6;
     }
+  }
 
-
-    .status-today, .status-little, .status-ok {
-       position: absolute;
-       width: 8px;
-       height: 8px;
-       right: 0px;
-       top: 0px;
+  li.status-today, li.status-little, li.status-ok {
+       /*position: absolute;*/
+       /*width: 8px;*/
+       /*height: 8px;*/
+       /*right: 0px;*/
+       /*top: 0px;*/
        background-color: orange;
     }
 
-    .status-notyet, .status-notrequired { opacity: 0; }
-    .status-ok { background-color: green; }
-    .status-little { background-color: darkred; }
 
-  }
- 
-  li:hover {
-    transition: all 0.5s ease-in-out;
-    -webkit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
-    background-color: #e6e6e6;
-  }
+    li.status-ok { background-color: #86C400; }
+    li.status-little { background-color: #E0776B; }
+
 
 
   li.weekend {
@@ -640,7 +632,7 @@ div.no-hover {
   }
 
   li.today {
-    background-color: #BBB;
+    background-color: #FA0;
   }
 
   li.out-of-month {
