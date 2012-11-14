@@ -707,4 +707,9 @@ div.no-hover {
       }
     }
   }
+
+  li.total-notyet { display: none; }
+  li.total-ok { border-left: 2px solid #86C400; }
+  li.total-little { border-left: 2px solid #E0776B; }
+  li.total-thisweek { border-left: 2px solid #FA0; }
 }

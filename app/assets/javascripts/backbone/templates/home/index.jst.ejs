@@ -15,7 +15,7 @@
 </script>
 
 <script id="week-total-template" type="text/html">
-  <li>
+  <li data-bind="attr: {class: total_class()}">
     <div class="day-totals">
       <div data-bind="text: total" class="total-all"></div>
       <div class="sub">20h 0m</div>

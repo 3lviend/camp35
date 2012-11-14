@@ -46,6 +46,19 @@ class TimesheetApp.Views.IndexViewModel
         "#{nh}h #{nm}m"
       _.map _.values(grouped), (days) =>
         total: (_.reduce (_.map(days, (day) => day.get("time"))), reduceTime, "0h 0m")
+        total_class: () =>
+          date = moment(days[0].get("date"))
+          if date > moment.utc() 
+            'total-notyet'
+          else if moment.utc(_.last(days).get("date")) > moment.utc() && date < moment.utc()
+            'total-thisweek'
+          else
+            total = (_.reduce (_.map(days, (day) => day.get("time"))), reduceTime, "0h 0m")
+            [hours, minutes] = total.split(" ")
+            if parseInt(hours, 10) >= 40
+              'total-ok'
+            else
+              'total-little'
     @year = ko.observable year
     @month = ko.observable month
     max_year = moment.utc(new Date()).year()
