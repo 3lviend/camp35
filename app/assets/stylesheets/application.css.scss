@@ -708,8 +708,24 @@ div.no-hover {
     }
   }
 
-  li.total-notyet { display: none; }
+  li.total-notyet { visibility: hidden; }
   li.total-ok { border-left: 2px solid #86C400; }
   li.total-little { border-left: 2px solid #E0776B; }
   li.total-thisweek { border-left: 2px solid #FA0; }
 }
+
+#calendar-month-totals {
+  border-collapse: separate;
+border-spacing: 0px 3px;
+background: transparent;
+}
+
+#calendar-month-totals td {
+background: #EAEAEA;
+
+}
+
+.month-notyet { visibility: hidden; }
+.month-ok { border-left: 2px solid #86C400; }
+.month-little { border-left: 2px solid #E0776B; }
+.month-current { border-left: 2px solid #FA0; }

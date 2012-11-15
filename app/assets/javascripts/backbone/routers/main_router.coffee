@@ -25,10 +25,15 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
       window.location.href = "/#calendar/#{date.year()}/#{date.month() + 1}"
 
   home: (year, month) ->
+    months = new TimesheetApp.Collections.WorkMonthsCollection()
     days = new TimesheetApp.Collections.WorkDaysCollection()
     days.url = "/work_days/calendar/#{year}/#{month}.json"
-    view = new TimesheetApp.Views.Home.IndexView(collection: days, year: year, month: month)
+    now = moment.utc([parseInt(year,10), parseInt(month, 10) - 1, 1])
+    before = moment.utc(now).subtract('months', 5)
+    months.url = "/work_months/#{before.format('YYYY-MM-01')}/#{now.format('YYYY-MM-01')}.json"
+    view = new TimesheetApp.Views.Home.IndexView(collection: days, year: year, month: month, months: months)
     days.fetch()
+    months.fetch()
 
   new_entry: (year, month, day) ->
     day = moment.utc([year, month-1, day]).format("YYYY-MM-DD")

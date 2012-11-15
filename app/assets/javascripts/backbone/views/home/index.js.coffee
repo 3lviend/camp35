@@ -14,6 +14,9 @@ class TimesheetApp.Views.Home.IndexView extends Backbone.View
       #  @view.days.push day
       @view.days(@collection.models)
       ko.applyBindings(@view)
+    @months = @options.months
+    @months.on "reset", =>
+      @view.work_months(@months.models)
 
   render: () ->
     $(@el).html(@template())
@@ -27,6 +30,7 @@ class TimesheetApp.Views.IndexViewModel
     date = moment.utc("2012-11-01")
     days = []
     @days = ko.observableArray(days)
+    @work_months = ko.observableArray([])
     @week_totals = ko.computed () =>
       grouped = _.groupBy @days(), (day) =>
         date = moment.utc(day.get("date"))
