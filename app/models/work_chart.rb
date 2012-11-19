@@ -65,7 +65,8 @@ class WorkChart < ActiveRecord::Base
     charts_with_labels_sql = WorkChart.WITH_LABELS_SQL
 
     ids = WorkChart.find_by_sql(frequent_sql).map(&:work_chart_id)
-    WorkChart.find_by_sql [charts_with_labels_sql, ids, ids]
+    charts_by_id = WorkChart.find_by_sql([charts_with_labels_sql, ids, ids]).to_a.index_by(&:id)
+    ids.map {|id| charts_by_id[id.to_i] }
   end
 
   def self.recent_for(user, limit)
@@ -81,7 +82,8 @@ class WorkChart < ActiveRecord::Base
     charts_with_labels_sql = WorkChart.WITH_LABELS_SQL
 
     ids = WorkChart.find_by_sql(recent_sql).map(&:work_chart_id)
-    WorkChart.find_by_sql [charts_with_labels_sql, ids, ids]
+    charts_by_id = WorkChart.find_by_sql([charts_with_labels_sql, ids, ids]).index_by(&:id)
+    ids.map {|id| charts_by_id[id.to_i] }
   end
 
   def self.WITH_LABELS_SQL

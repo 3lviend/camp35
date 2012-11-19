@@ -29,21 +29,21 @@ class WorkChartsController < ApplicationController
 
   def frequent
     key = "user_frequent_#{current_user.id}"
-    @frequents = Rails.cache.read key
-    unless @frequents
+    # @frequents = Rails.cache.read key
+    # unless @frequents
       @frequents = WorkChart.frequent_for(current_user, 20)
-      Rails.cache.write key, @frequents, :expires_in => 2.days
-    end
+    #   Rails.cache.write key, @frequents, :expires_in => 2.days
+    # end
     respond_with @frequents
   end
 
   def recent
-    key = "user_recent_#{current_user.id}"
-    @recents = Rails.cache.read key
-    unless @recents
+    # key = "user_recent_#{current_user.id}"
+    # @recents = Rails.cache.read key
+    # unless @recents
       @recents = WorkChart.recent_for(current_user, 20)
-      Rails.cache.write key, @recents, :expires_in => 2.days
-    end
+    #  Rails.cache.write key, @recents, :expires_in => 2.days
+    # end
     respond_with @recents
   end
 

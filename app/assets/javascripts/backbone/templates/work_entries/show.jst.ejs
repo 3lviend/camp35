@@ -20,10 +20,10 @@
 <script id="entry_template" type="text/x-jquery-tmpl">
   <tr>
     <td>
-      <span data-bind="text: top_label()"></span>
-      <span data-bind="template: {name: 'middle_label_template', foreach: middle_labels()}">
+      <span data-bind="text: top_label(), visible: chart_has_many_labels()"></span>
+      <span data-bind="template: {name: 'middle_label_template', foreach: middle_labels()}, visible: chart_has_many_labels()">
       </span>
-      <br>
+      <br data-bind="visible: chart_has_many_labels()">
       →
       <b data-bind="text: last_label()"></b>
     </td>

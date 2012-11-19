@@ -6,12 +6,19 @@ class TimesheetApp.Models.WorkEntry extends Backbone.Model
     work_entry_durations: [
       duration: "00:00:00"
     ]
+
   url: =>
     "/work_entries/#{@id}.json"
+
   top_label: =>
     _.first _.rest(@get("work_chart_label_parts"))
+
+  chart_has_many_labels: =>
+    @get("work_chart_label_parts").length > 2
+
   last_label: =>
     _.last @get("work_chart_label_parts")
+
   middle_labels: =>
    _.rest( _.rest( _.initial(@get("work_chart_label_parts")) ))
 

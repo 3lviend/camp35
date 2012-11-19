@@ -598,8 +598,8 @@ div.no-hover {
 
     .day-totals {
        position: absolute;
-       bottom: 0px;
-       right: 0px;
+       bottom: 5px;
+       right: 5px;
     }
 
     .sub {
@@ -679,7 +679,7 @@ div.no-hover {
 #calendar-week-totals {
   list-style-type: none;
   float: left;
-  margin-left: 645px;
+  margin-left: 700px;
    
   li {
     width: 90px;
@@ -692,8 +692,8 @@ div.no-hover {
 
     .day-totals {
       position: absolute;
-      bottom: 0px;
-      right: 0px;
+      bottom: 5px;
+      right: 5px;
 
       .sub {
 	 font-size: 10px;
