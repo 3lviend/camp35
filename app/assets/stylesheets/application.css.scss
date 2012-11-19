@@ -729,3 +729,11 @@ background: #EAEAEA;
 .month-ok { border-left: 2px solid #86C400; }
 .month-little { border-left: 2px solid #E0776B; }
 .month-current { border-left: 2px solid #FA0; }
+
+.recent h4, .frequent h4 {
+margin-bottom: 5px;
+padding-top: 15px;
+font-size: 14px;
+font-weight: bold;
+font-family: OpenSansBold !important;
+ }
