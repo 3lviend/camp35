@@ -20,8 +20,8 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
         "0h 0m".format_interval()
 
   billable_time_string: =>
-    if @get("time")
-      @get("time").format_interval()
+    if @get("billable_time")
+      @get("billable_time").format_interval()
     else
       date = moment.utc(@get("date"))
       if date.day() == 0 || date.day() == 6
@@ -30,8 +30,8 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
         "0h 0m".format_interval()
 
   nonbillable_time_string: =>
-    if @get("time")
-      @get("time").format_interval()
+    if @get("nonbillable_time")
+      @get("nonbillable_time").format_interval()
     else
       date = moment.utc(@get("date"))
       if date.day() == 0 || date.day() == 6
