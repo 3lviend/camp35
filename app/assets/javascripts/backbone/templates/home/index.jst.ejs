@@ -41,8 +41,8 @@
   <tr >
     <td><a data-bind="text: month_year_string(), attr: {href: front_url()}"></a></td>
     <td data-bind="text: available_string()"></td>
-    <td data-bind="text: get('billable_total')"></td>
-    <td data-bind="text: get('nonbillable_total')"></td>
-    <td data-bind="text: get('total'), attr: {class: month_class()}"></td>
+    <td data-bind="text: billable_string()"></td>
+    <td data-bind="text: nonbillable_string()"></td>
+    <td data-bind="text: total_string(), attr: {class: month_class()}"></td>
   </tr>
 </script>

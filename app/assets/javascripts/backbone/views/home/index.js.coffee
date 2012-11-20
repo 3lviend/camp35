@@ -37,7 +37,7 @@ class TimesheetApp.Views.IndexViewModel
         week = day.week_of_date(date, parseInt(year, 10), parseInt(month,10))
         console.info "#{date.toDate().toDateString()} week: #{week}"
         week
-      console.info grouped
+        # all this need serious refactor
       reduceTime = (memo, time) =>
         # memo is in "0h 0m" format
         [mh, mm] = _.map memo.split(" "), (i) -> parseInt(i, 10)
@@ -49,9 +49,9 @@ class TimesheetApp.Views.IndexViewModel
           nm = nm - 60
         "#{nh}h #{nm}m"
       _.map _.values(grouped), (days) =>
-        total: (_.reduce (_.map(days, (day) => day.get("time"))), reduceTime, "0h 0m")
-        billable_total: (_.reduce (_.map(days, (day) => day.get("billable_time"))), reduceTime, "0h 0m")
-        nonbillable_total: (_.reduce (_.map(days, (day) => day.get("nonbillable_time"))), reduceTime, "0h 0m")
+        total: (_.reduce (_.map(days, (day) => day.get("time"))), reduceTime, "0h 0m").format_interval()
+        billable_total: (_.reduce (_.map(days, (day) => day.get("billable_time"))), reduceTime, "0h 0m").format_interval()
+        nonbillable_total: (_.reduce (_.map(days, (day) => day.get("nonbillable_time"))), reduceTime, "0h 0m").format_interval()
         total_class: () =>
           date = moment(days[0].get("date"))
           if date > moment.utc() 

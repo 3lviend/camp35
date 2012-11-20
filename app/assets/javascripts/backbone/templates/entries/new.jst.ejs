@@ -89,6 +89,17 @@
        <textarea class="text optional" cols="40" id="work_entry_description" 
                  name="work_entry[description]" rows="3" ><%= description %></textarea>
      </div>
+
+
+     <div class="panel input">
+       <div class="four columns">
+	 <a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" >Cancel</a>
+       </div>
+       <div class="eight columns">
+	 <button class="button" type="submit">Save</button>
+       </div>
+       <div class="clearfix"></div>
+     </div>
 </div>
 
 </form>

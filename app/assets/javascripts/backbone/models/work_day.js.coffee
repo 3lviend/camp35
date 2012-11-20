@@ -9,36 +9,35 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
 
   time_string: =>
     if @get("time")
-      [hours, minutes] = @get("time").split(":")
-      "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+      # [hours, minutes] = @get("time").split(":")
+      # "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+      @get("time").format_interval()
     else
       date = moment.utc(@get("date"))
       if date.day() == 0 || date.day() == 6
         ""
       else
-        "0h 0m"
+        "0h 0m".format_interval()
 
   billable_time_string: =>
     if @get("time")
-      [hours, minutes] = @get("billable_time").split(":")
-      "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+      @get("time").format_interval()
     else
       date = moment.utc(@get("date"))
       if date.day() == 0 || date.day() == 6
         ""
       else
-        "0h 0m"
+        "0h 0m".format_interval()
 
   nonbillable_time_string: =>
     if @get("time")
-      [hours, minutes] = @get("nonbillable_time").split(":")
-      "#{parseInt hours, 10}h #{parseInt minutes, 10}m"
+      @get("time").format_interval()
     else
       date = moment.utc(@get("date"))
       if date.day() == 0 || date.day() == 6
         ""
       else
-        "0h 0m"
+        "0h 0m".format_interval()
 
   day_name: (day) ->
     switch day

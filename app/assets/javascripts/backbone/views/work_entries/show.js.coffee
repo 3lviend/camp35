@@ -22,18 +22,19 @@ class TimesheetApp.Views.WorkEntries.IndexViewModel
 
   constructor: (year, month, day) ->
     @collection = ko.observableArray()
+    # serious refactor needed here!
     @billable = ko.computed =>
       hours = _.reduce @collection(), ((memo, e) -> memo + e.billable_hours()), 0
       minutes = _.reduce @collection(), ((memo, e) -> memo + e.billable_minutes()), 0
-      moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm")
+      moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm").format_interval()
     @nonbillable = ko.computed =>
       hours = _.reduce @collection(), ((memo, e) -> memo + e.nonbillable_hours()), 0 
       minutes = _.reduce @collection(), ((memo, e) -> memo + e.nonbillable_minutes()), 0
-      moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm")
+      moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm").format_interval()
     @total = ko.computed =>
       hours = _.reduce @collection(), ((memo, e) -> memo + parseInt(e.hours(), 10)), 0 
       minutes = _.reduce @collection(), ((memo, e) -> memo + parseInt(e.minutes(), 10)), 0
-      moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm")
+      moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm").format_interval()
     @day = moment.utc [year, month, day]
     @collection.removeAll()
     @
