@@ -103,9 +103,9 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
     others = @frequents.filter (chart) ->
       chart.get('labels').length < 3 || chart.get('labels')[1] != "Clients"
-    clis = clients.map (chart) ->
+    clis = _.sortBy(clients, (c) -> c.get("labels")[2]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[2..10].join(' / ')}</li>"
-    olis = others.map (chart) ->
+    olis = _.sortBy(others, (c) -> c.get("labels")[1]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
     $(".frequent ul.clients").html(clis.join("\n"))
     $(".frequent ul.other").html(olis.join("\n"))
@@ -116,9 +116,9 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
     others = @recents.filter (chart) ->
       chart.get('labels').length < 3 || chart.get('labels')[1] != "Clients"
-    clis = clients.map (chart) ->
+    clis = _.sortBy(clients, (c) -> c.get("labels")[2]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[2..10].join(' / ')}</li>"
-    olis = others.map (chart) ->
+    olis = _.sortBy(others, (c) -> c.get("labels")[1]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
     $(".recent ul.clients").html(clis.join("\n"))
     $(".recent ul.other").html(olis.join("\n"))

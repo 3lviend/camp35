@@ -68,7 +68,15 @@
                  type="text" value="<% if(work_entry_fees.length > 0) {%><%= work_entry_fees[0].fee %><% } %>" >
         </div>
       </div>
-
+     <div class="panel input">
+       <div class="four columns">
+	 <a href="/work_day_entries/2012/10/10/work_entries/162925" class="button alert" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Delete</a>
+       </div>
+       <div class="eight columns">
+	 <button class="button" type="submit">Save</button>
+       </div>
+       <div class="clearfix"></div>
+     </div>
      <fieldset class="durations">
      
      </fieldset>
@@ -79,13 +87,5 @@
                  name="work_entry[description]" rows="3" ><%= description %></textarea>
      </div>
 </div>
-  <div class="panel input">
-<div class="four columns">
-<a href="/work_day_entries/2012/10/10/work_entries/162925" class="button alert" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Delete</a>
-</div>
-<div class="eight columns">
-<button class="button" type="submit">Save
-</button></div>
-<div class="clearfix"></div>
-</div>
+
 </form>
