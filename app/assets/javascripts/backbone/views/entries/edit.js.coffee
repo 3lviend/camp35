@@ -62,6 +62,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     @charts = []
     @charts[0] = new TimesheetApp.Collections.WorkChartsCollection()
     @charts[0].on "reset", @render_charts
+    @show_inactive = false
     @frequents = new TimesheetApp.Collections.WorkChartsCollection()
     @frequents.url = "/work_charts/frequent.json"
     @frequents.on "reset", @render_frequents
@@ -249,8 +250,11 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       @selected_chart.set("id", last_selected.get("id"), silent: true)
       @selected_chart.fetch()
     data =
-      charts: @charts.map (charts) ->
-        charts.toJSON()
+      charts: @charts.map (charts) =>
+        if @show_inactive
+          charts.toJSON()
+        else
+          _.map charts.where(status: "active"), (c) -> c.toJSON()
       entry: @model.toJSON()
     $(".chart-selects", @el).html(@selects_template(data)) 
     $(".chart-selects select").change (e) =>
@@ -286,6 +290,12 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       $("html").click => $(".no-hover", @el).removeClass("shown")
       $(".no-hover", @el).toggleClass "shown"
       e.stopPropagation()
+    $(".toggle_charts_filter").click (e) =>
+      @show_inactive = not @show_inactive
+      @render_charts()
+      label = if @show_inactive then "Hide inactive" else "Show inactive"
+      $(e.currentTarget).html label
+      false
     @frequents.fetch()
     @recents.fetch()
     $("input.charts-search", @el).focus (e) =>

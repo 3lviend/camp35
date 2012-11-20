@@ -3,13 +3,13 @@ class WorkChartsController < ApplicationController
   respond_to :json
 
   def index
-    key = "work_charts_#{params[:include_inactive]}_#{params[:parent_id]}"
-    @charts = Rails.cache.read key
-    unless @charts
+    # key = "work_charts_#{params[:include_inactive]}_#{params[:parent_id]}"
+    # @charts = Rails.cache.read key
+    # unless @charts
       base = params[:include_inactive] ? WorkChart.where({}) : WorkChart.where(status: "active")
       @charts = base.where(parent_id: params[:parent_id]).order(:display_label)
-      Rails.cache.write key, @charts, :expires_in => 2.days
-    end
+      # Rails.cache.write key, @charts, :expires_in => 2.days
+    # end
     respond_with @charts
   end
 

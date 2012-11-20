@@ -43,6 +43,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
     @charts = []
     @charts[0] = new TimesheetApp.Collections.WorkChartsCollection()
     @charts[0].on "reset", @render_charts
+    @show_inactive = false
     @frequents = new TimesheetApp.Collections.WorkChartsCollection()
     @frequents.url = "/work_charts/frequent.json"
     @frequents.on "reset", @render_frequents
@@ -232,8 +233,11 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       @selected_chart.set("id", last_selected.get("id"), silent: true)
       @selected_chart.fetch()
     data =
-      charts: @charts.map (charts) ->
-        charts.toJSON()
+      charts: @charts.map (charts) =>
+        if @show_inactive
+          charts.toJSON()
+        else
+          _.map charts.where(status: "active"), (c) -> c.toJSON()
       entry: @model.toJSON()
     $(".chart-selects", @el).html(@selects_template(data)) 
     $(".chart-selects select").change (e) =>
@@ -251,6 +255,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
         data:
           $.param
             parent_id: val
+            include_inactive: true
 
   render: =>
     $("section[role=main]").html("")
@@ -264,13 +269,20 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
     @charts[0].fetch
       data:
         $.param
-          parent_id: 2
+          parent_id: 2,
+          include_inactive: true
     $(".dropdown", @el).click (e) =>
       $("html").click => $(".no-hover", @el).removeClass("shown")
       $(".no-hover", @el).toggleClass "shown"
       e.stopPropagation()
     @frequents.fetch()
     @recents.fetch()
+    $(".toggle_charts_filter").click (e) =>
+      @show_inactive = not @show_inactive
+      @render_charts()
+      label = if @show_inactive then "Hide inactive" else "Show inactive"
+      $(e.currentTarget).html label
+      false
     $("input.charts-search", @el).focus (e) =>
       $(".search-results", @el).show()
     $("input.charts-search", @el).blur => $(".search-results", @el).hide()
