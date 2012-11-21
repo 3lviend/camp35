@@ -61,6 +61,8 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    cool.io (1.1.0)
+      iobuffer (>= 1.0.0)
     d3-rails (0.0.5)
       railties (>= 3.1)
     devise (2.1.2)
@@ -96,6 +98,7 @@ GEM
     hpricot (0.8.6)
     humane-rails (3.0.5.0.1.5)
     i18n (0.6.1)
+    iobuffer (1.1.2)
     journey (1.0.4)
     jquery-cookie-rails (0.1.1)
       jquery-rails (~> 2.0)
@@ -130,6 +133,10 @@ GEM
       sassy-math (>= 1.2)
     momentjs-rails (1.7.0)
       railties (~> 3.1)
+    msgpack (0.4.7)
+    msgpack-rpc (0.5.1)
+      cool.io (~> 1.1.0)
+      msgpack (~> 0.4.4)
     multi_json (1.3.7)
     nested_form (0.2.3)
     nokogiri (1.5.5)
@@ -278,6 +285,7 @@ DEPENDENCIES
   keymaster-rails
   knockoutjs-rails
   momentjs-rails
+  msgpack-rpc
   pg (>= 0.14.1)
   rabl
   rails (= 3.2.8)
