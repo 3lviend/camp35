@@ -15,7 +15,7 @@ class TimesheetApp.Views.WorkEntries.IndexView extends Backbone.View
 
   render: =>
     $("#main").html(@template())
-    $("header.row").html "<h1>Work entries for the day</h1><h4>Take a peek at what you've accomplished</h4>"
+    $("header.row").html "<h1>Work entries for #{@view.day.format('dddd, MMM Do YYYY')}</h1><h4>Take a peek at what you've accomplished</h4>"
     $("#side").html @totals_tpl()
 
 class TimesheetApp.Views.WorkEntries.IndexViewModel
