@@ -624,8 +624,8 @@ div.no-hover {
 
 
     li.status-ok { background-color: #86C400; }
-    li.status-little { background-color: #E0776B; }
-
+    li.status-little { background-color: #FF4300; }
+    li.status-has-zero { background-color: #FF6D6D; }
 
 
   li.weekend {
@@ -710,7 +710,7 @@ div.no-hover {
 
   li.total-notyet { visibility: hidden; }
   li.total-ok { background:  #86C400; }
-  li.total-little { background:  #E0776B; }
+  li.total-little { background: #FF4300; }
   li.total-thisweek { background:  #FA0; }
 }
 
@@ -728,7 +728,7 @@ background: #EAEAEA;
 
 .month-notyet { visibility: hidden; }
 .month-ok { background:  #86C400 !important; }
-.month-little { background:  #E0776B !important; }
+.month-little { background:  #FF4300 !important; }
 .month-current { background:  #FA0 !important; }
 
 .recent h4, .frequent h4 {

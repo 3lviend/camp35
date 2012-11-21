@@ -1,7 +1,7 @@
 # Helper model for accessing work days
 class WorkDay
 
-  attr_accessor :date, :time, :user_id, :billable_time, :nonbillable_time
+  attr_accessor :date, :time, :user_id, :billable_time, :nonbillable_time, :has_zero
 
   def initialize(data = {})
     self.billable_time = Time.parse "00:00:00"
@@ -24,7 +24,7 @@ class WorkDay
       end_range = end_range + 1.day
     end
     db_days = WorkEntry.connection.execute <<-sql
-      SELECT SUM(duration) as time, date_performed, work_entry_durations.kind_code
+      SELECT not every(duration <> '00:00:00') as has_zero, SUM(duration) as time, date_performed, work_entry_durations.kind_code
       FROM work_entries
       INNER JOIN work_entry_durations
       ON work_entry_id = work_entries.id
@@ -36,7 +36,8 @@ class WorkDay
     sql
     days = {}
     db_days.to_a.each do |d|
-      days[d["date_performed"]] = WorkDay.new(user_id: user.id, date: d["date_performed"].to_datetime) unless days[d["date_performed"]]
+      days[d["date_performed"]] = WorkDay.new(has_zero: d["has_zero"] == "t", user_id: user.id, date: d["date_performed"].to_datetime) unless days[d["date_performed"]]
+      days[d["date_performed"]].has_zero = true if d["has_zero"] == "t"
       t = Time.parse d["time"]
       if d["kind_code"][/^billable/]
         bt = days[d["date_performed"]].billable_time || Time.parse("00:00:00")
@@ -60,7 +61,7 @@ class WorkDay
     current = start_range# + 1.day
     while current <= last_day || current.wday > 0
       unless days.detect {|d| d.date.year == current.year && d.date.month == current.month && d.date.day == current.day}
-        days << WorkDay.new( user_id: user.id, date: current )
+        days << WorkDay.new( user_id: user.id, date: current, has_zero: false)
       end
       current = current + 1.day
     end

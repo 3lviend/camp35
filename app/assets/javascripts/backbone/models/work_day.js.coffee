@@ -53,6 +53,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
     moment.utc(@get("date")).date()
 
   status_class: =>
+    return "status-has-zero" if @get("has_zero")
     date = moment.utc(@get("date"))
     today = moment.utc(new Date())
     if date.year() == today.year() && date.month() == today.month() && date.date() == today.date()
@@ -64,7 +65,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
         if parseInt(@get("time").split(":")[0], 10) < 8
           "status-little"
         else
-          "status-ok" # TODO: add real calculations
+          "status-ok" 
 
   date_class: (year, month) =>
     date = moment.utc(@get("date"))
