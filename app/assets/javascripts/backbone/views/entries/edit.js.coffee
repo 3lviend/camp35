@@ -23,7 +23,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
 
 
   back: =>
-    date = moment.utc(@model.get("date_performed"))
+    date = moment.utc(@model.get("date_performed"), "ddd, YYYY-MM-DD")
     Backbone.history.navigate "entries/#{date.year()}/#{date.month() + 1}/#{date.date()}", true
 
   persist: =>
@@ -278,7 +278,8 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(@el).html(@template(@model.toJSON()))
     $("textarea", @el).autoGrow()
     $(".calendar", @el).datepicker
-      dateFormat: "yy-mm-dd"
+      dateFormat: "DD, yy-mm-dd"
+    $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
     $("#main").html(@el)
     $("#side").html ""
     $("header").html("<h1>Edit entries for #{moment.utc(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")

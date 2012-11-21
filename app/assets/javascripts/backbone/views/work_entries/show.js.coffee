@@ -35,8 +35,8 @@ class TimesheetApp.Views.WorkEntries.IndexViewModel
       hours = _.reduce @collection(), ((memo, e) -> memo + parseInt(e.hours(), 10)), 0 
       minutes = _.reduce @collection(), ((memo, e) -> memo + parseInt(e.minutes(), 10)), 0
       moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm").format_interval()
-    @day = moment.utc [year, month, day]
+    @day = moment.utc [year, month-1, day]
     @collection.removeAll()
     @
   new_url: =>
-    "/#entries/#{@day.year()}/#{@day.month()}/#{@day.date()}/new"
+    "/#entries/#{@day.year()}/#{@day.month() + 1}/#{@day.date()}/new"

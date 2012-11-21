@@ -262,7 +262,8 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
     $(@el).html(@template(@model.toJSON()))
     $("textarea", @el).autoGrow()
     $(".calendar", @el).datepicker
-      dateFormat: "yy-mm-dd"
+      dateFormat: "DD, yy-mm-dd"
+    $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
     $("#main").html(@el)
     $("#side").html ""
     $("header.row").html("<h1>New work entry</h1><h4>Create entry for the work you're doing at End Point</h4>")
