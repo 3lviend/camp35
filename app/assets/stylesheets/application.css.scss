@@ -742,3 +742,24 @@ font-family: OpenSansBold !important;
 .work_chart_selector a {
   font-size: 0.75em;
 }
+
+table.work_day_table {
+  td:nth-child(even) {
+    background: #f3f3f3 !important;
+  }
+
+  tr:nth-child(even) {
+    td:nth-child(even) {
+      background: #f0f0f0 !important;
+    }
+  }
+
+  col:first-child {
+    width: 180px;
+  }
+
+  col:last-child {
+    width: 10px;
+  }
+
+}
