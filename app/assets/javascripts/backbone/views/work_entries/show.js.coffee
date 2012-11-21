@@ -22,6 +22,11 @@ class TimesheetApp.Views.WorkEntries.IndexViewModel
 
   constructor: (year, month, day) ->
     @collection = ko.observableArray()
+    @collection.subscribe (entries) ->
+      return if entries.length == 0
+      $(window).oneTime 40, () ->
+        $(".work_day_table td:nth-child(2), .day_totals td:last-child").each (i, cell) ->
+          TimesheetApp.Helpers.TableHelper.align_interval cell
     # serious refactor needed here!
     @billable = ko.computed =>
       hours = _.reduce @collection(), ((memo, e) -> memo + e.billable_hours()), 0

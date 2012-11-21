@@ -5,6 +5,8 @@
 #= require_tree ./routers
 #= require ./lib/time_interval
 #= require ./lib/string_extensions
+#= require ./lib/font_helper
+#= require ./lib/table_helper
 
 window.TimesheetApp =
   Models: {}

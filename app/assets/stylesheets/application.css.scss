@@ -719,11 +719,19 @@ div.no-hover {
   border-spacing: 0px 3px;
   background: transparent;
   clear: both;
+
+  td, th { text-align: right; }
+  td:first-child { text-align: left; }
 }
 
 #calendar-month-totals td {
-background: #EAEAEA;
+  background: #EAEAEA;
+}
 
+.day_totals {
+  td:last-child {
+    text-align: right;
+  }
 }
 
 .month-notyet { visibility: hidden; }

@@ -31,6 +31,11 @@ class TimesheetApp.Views.IndexViewModel
     days = []
     @days = ko.observableArray(days)
     @work_months = ko.observableArray([])
+    @work_months.subscribe (months) =>
+      # just update paddings of all cells with totals data
+      $(window).oneTime 40, () ->
+        $("#calendar-month-totals td:not(:first-child)").each (i, cell) ->
+          TimesheetApp.Helpers.TableHelper.align_interval cell
     @week_totals = ko.computed () =>
       grouped = _.groupBy @days(), (day) =>
         date = moment.utc(day.get("date"))
