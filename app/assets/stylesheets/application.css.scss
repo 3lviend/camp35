@@ -685,7 +685,6 @@ div.no-hover {
   li {
     width: 90px;
     height: 90px;
-    border-left: 2px solid #86C400;
     font-family: "OpenSansLight";
     position: relative;
     margin-bottom: 2px;
@@ -710,15 +709,16 @@ div.no-hover {
   }
 
   li.total-notyet { visibility: hidden; }
-  li.total-ok { border-left: 2px solid #86C400; }
-  li.total-little { border-left: 2px solid #E0776B; }
-  li.total-thisweek { border-left: 2px solid #FA0; }
+  li.total-ok { background:  #86C400; }
+  li.total-little { background:  #E0776B; }
+  li.total-thisweek { background:  #FA0; }
 }
 
 #calendar-month-totals {
   border-collapse: separate;
-border-spacing: 0px 3px;
-background: transparent;
+  border-spacing: 0px 3px;
+  background: transparent;
+  clear: both;
 }
 
 #calendar-month-totals td {
@@ -727,9 +727,9 @@ background: #EAEAEA;
 }
 
 .month-notyet { visibility: hidden; }
-.month-ok { border-left: 2px solid #86C400; }
-.month-little { border-left: 2px solid #E0776B; }
-.month-current { border-left: 2px solid #FA0; }
+.month-ok { background:  #86C400 !important; }
+.month-little { background:  #E0776B !important; }
+.month-current { background:  #FA0 !important; }
 
 .recent h4, .frequent h4 {
 margin-bottom: 5px;
