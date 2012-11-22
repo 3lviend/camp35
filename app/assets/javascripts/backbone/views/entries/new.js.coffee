@@ -101,26 +101,26 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
 
   render_frequents: =>
     clients = @frequents.filter (chart) ->
-      chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
+      chart.get('labels').length > 2 && chart.get('labels')[0] == "Clients"
     others = @frequents.filter (chart) ->
-      chart.get('labels').length < 3 || chart.get('labels')[1] != "Clients"
-    clis = _.sortBy(clients, (c) -> c.get("labels")[2]).map (chart) ->
-      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[2..10].join(' / ')}</li>"
-    olis = _.sortBy(others, (c) -> c.get("labels")[1]).map (chart) ->
+      chart.get('labels').length < 2 || chart.get('labels')[0] != "Clients"
+    clis = _.sortBy(clients, (c) -> c.get("labels")[1]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
+    olis = _.sortBy(others, (c) -> c.get("labels")[0]).map (chart) ->
+      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[0..10].join(' / ')}</li>"
     $(".frequent ul.clients").html(clis.join("\n"))
     $(".frequent ul.other").html(olis.join("\n"))
     $(".frequent ul li").click @handle_quick_pick_option
 
   render_recents: =>
     clients = @recents.filter (chart) ->
-      chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
+      chart.get('labels').length > 2 && chart.get('labels')[0] == "Clients"
     others = @recents.filter (chart) ->
-      chart.get('labels').length < 3 || chart.get('labels')[1] != "Clients"
-    clis = _.sortBy(clients, (c) -> c.get("labels")[2]).map (chart) ->
-      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[2..10].join(' / ')}</li>"
-    olis = _.sortBy(others, (c) -> c.get("labels")[1]).map (chart) ->
+      chart.get('labels').length < 2 || chart.get('labels')[0] != "Clients"
+    clis = _.sortBy(clients, (c) -> c.get("labels")[1]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
+    olis = _.sortBy(others, (c) -> c.get("labels")[0]).map (chart) ->
+      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[0..10].join(' / ')}</li>"
     $(".recent ul.clients").html(clis.join("\n"))
     $(".recent ul.other").html(olis.join("\n"))
     $(".recent ul li").click @handle_quick_pick_option

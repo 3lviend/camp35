@@ -74,10 +74,35 @@ class WorkChart < ActiveRecord::Base
         LIMIT #{limit};
     eos
     charts_with_labels_sql = WorkChart.WITH_LABELS_SQL
-
+    labels_sql = <<-sql
+      WITH RECURSIVE tree AS
+        (SELECT display_label,
+                id,
+                parent_id,
+                status,
+                NULL::varchar AS parent_name,
+                display_label::text AS path
+        FROM work_chart
+        WHERE parent_id IS NULL
+        UNION SELECT f1.display_label,
+                      f1.id,
+                      f1.parent_id,
+                      f1.status,
+                      tree.display_label AS parent_name,
+                      tree.path || '-' || f1.display_label::text AS path
+        FROM tree
+        JOIN work_chart f1 ON f1.parent_id = tree.id)
+      SELECT id,
+            parent_id,
+            status,
+            path
+      FROM tree
+      WHERE id in (?)
+    sql
     ids = WorkChart.find_by_sql(frequent_sql).map(&:work_chart_id)
-    charts_by_id = WorkChart.find_by_sql([charts_with_labels_sql, ids, ids]).to_a.index_by(&:id)
-    ids.map {|id| charts_by_id[id.to_i] }
+    WorkChart.find_by_sql([labels_sql, ids]).map {|c| c["labels"] = c["path"].split("-")[2..100]; c}
+    # charts_by_id = WorkChart.find_by_sql([charts_with_labels_sql, ids, ids]).to_a.index_by(&:id)
+    # ids.map {|id| charts_by_id[id.to_i] }
   end
 
   def self.recent_for(user, limit)
@@ -91,10 +116,36 @@ class WorkChart < ActiveRecord::Base
         LIMIT #{limit};
     eos
     charts_with_labels_sql = WorkChart.WITH_LABELS_SQL
-
+    labels_sql = <<-sql
+      WITH RECURSIVE tree AS
+        (SELECT display_label,
+                id,
+                parent_id,
+                status,
+                NULL::varchar AS parent_name,
+                display_label::text AS path
+        FROM work_chart
+        WHERE parent_id IS NULL
+        UNION SELECT f1.display_label,
+                      f1.id,
+                      f1.parent_id,
+                      f1.status,
+                      tree.display_label AS parent_name,
+                      tree.path || '-' || f1.display_label::text AS path
+        FROM tree
+        JOIN work_chart f1 ON f1.parent_id = tree.id)
+      SELECT id,
+            parent_id,
+            status,
+            path
+      FROM tree
+      WHERE id in (?)
+    sql
+ 
     ids = WorkChart.find_by_sql(recent_sql).map(&:work_chart_id)
-    charts_by_id = WorkChart.find_by_sql([charts_with_labels_sql, ids, ids]).index_by(&:id)
-    ids.map {|id| charts_by_id[id.to_i] }
+    WorkChart.find_by_sql([labels_sql, ids]).map {|c| c["labels"] = c["path"].split("-")[2..100]; c}
+    # charts_by_id = WorkChart.find_by_sql([charts_with_labels_sql, ids, ids]).index_by(&:id)
+    # ids.map {|id| charts_by_id[id.to_i] }
   end
 
   def self.leafs_with_labels
