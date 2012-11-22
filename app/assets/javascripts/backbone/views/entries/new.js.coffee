@@ -51,7 +51,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
     @recents.url = "/work_charts/recent.json"
     @recents.on "reset", @render_recents
     @searches = new TimesheetApp.Collections.WorkChartsCollection()
-    @searches.on "reset", @render_searches
+    # @searches.on "reset", @render_searches
     @duration_kinds = new TimesheetApp.Collections.DurationKindsCollection()
     @duration_kinds.on "reset", =>
       @render_durations()
@@ -265,6 +265,13 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       dateFormat: "DD, yy-mm-dd"
     $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
     $("#main").html(@el)
+    $(".charts-search").autocomplete
+      source: "/work_charts/search",
+      minLength: 2,
+      select: (e, ul) =>
+        @selected_chart.set("id", ul.item.value, silent: true)
+        @selected_chart.fetch()
+        $(window).oneTime 10, () -> $(".charts-search").val("")
     $("#side").html ""
     $("header.row").html("<h1>New work entry</h1><h4>Create entry for the work you're doing at End Point</h4>")
     @charts[0].fetch

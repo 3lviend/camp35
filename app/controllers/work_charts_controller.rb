@@ -24,7 +24,7 @@ class WorkChartsController < ApplicationController
   end
 
   def search
-    render :json => WorkChart.search_for(params[:phrase]).to_json
+    render :json => WorkChart.search_for(params[:term]).map { |c| {label: c["labels"].join(" - "), value: c["id"]}}.to_json
   end
 
   def frequent

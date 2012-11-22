@@ -116,32 +116,33 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".search-results ul").html(lis.join("\n"))
     $(".search-results ul li").click @handle_quick_pick_option
 
+
+
   render_frequents: =>
     clients = @frequents.filter (chart) ->
-      chart.get('labels').length > 2 && chart.get('labels')[0] == "Clients"
+      chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
     others = @frequents.filter (chart) ->
-      chart.get('labels').length < 2 || chart.get('labels')[0] != "Clients"
-    clis = _.sortBy(clients, (c) -> c.get("labels")[1]).map (chart) ->
+      chart.get('labels').length < 3 || chart.get('labels')[1] != "Clients"
+    clis = _.sortBy(clients, (c) -> c.get("labels")[2]).map (chart) ->
+      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[2..10].join(' / ')}</li>"
+    olis = _.sortBy(others, (c) -> c.get("labels")[1]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
-    olis = _.sortBy(others, (c) -> c.get("labels")[0]).map (chart) ->
-      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[0..10].join(' / ')}</li>"
     $(".frequent ul.clients").html(clis.join("\n"))
     $(".frequent ul.other").html(olis.join("\n"))
     $(".frequent ul li").click @handle_quick_pick_option
 
   render_recents: =>
     clients = @recents.filter (chart) ->
-      chart.get('labels').length > 2 && chart.get('labels')[0] == "Clients"
+      chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
     others = @recents.filter (chart) ->
-      chart.get('labels').length < 2 || chart.get('labels')[0] != "Clients"
-    clis = _.sortBy(clients, (c) -> c.get("labels")[1]).map (chart) ->
+      chart.get('labels').length < 3 || chart.get('labels')[1] != "Clients"
+    clis = _.sortBy(clients, (c) -> c.get("labels")[2]).map (chart) ->
+      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[2..10].join(' / ')}</li>"
+    olis = _.sortBy(others, (c) -> c.get("labels")[1]).map (chart) ->
       "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[1..10].join(' / ')}</li>"
-    olis = _.sortBy(others, (c) -> c.get("labels")[0]).map (chart) ->
-      "<li data-id='#{chart.get('id')}'>#{chart.get('labels')[0..10].join(' / ')}</li>"
     $(".recent ul.clients").html(clis.join("\n"))
     $(".recent ul.other").html(olis.join("\n"))
     $(".recent ul li").click @handle_quick_pick_option
-
 
   render_durations: =>
     data =
@@ -283,6 +284,14 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
     $("#main").html(@el)
     $("#side").html ""
+    $(".charts-search").autocomplete
+      source: "/work_charts/search",
+      minLength: 2,
+      select: (e, ul) =>
+        @selected_chart.set("id", ul.item.value, silent: true)
+        @selected_chart.fetch()
+        $(window).oneTime 10, () -> $(".charts-search").val("")
+ 
     $("header").html("<h1>Edit entries for #{moment.utc(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:
