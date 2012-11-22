@@ -24,7 +24,7 @@ class WorkChartsController < ApplicationController
   end
 
   def search
-    respond_with WorkChart.search_for(params[:phrase])
+    render :json => WorkChart.search_for(params[:phrase]).to_json
   end
 
   def frequent

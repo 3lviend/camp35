@@ -18,7 +18,8 @@ class WorkChart < ActiveRecord::Base
   #end
 
   def self.search_for(phrase)
-    
+    search = ChartsSearchClient.new
+    search.find phrase
   end
 
   def duration_kinds
@@ -86,6 +87,45 @@ class WorkChart < ActiveRecord::Base
     ids.map {|id| charts_by_id[id.to_i] }
   end
 
+  def self.leafs_with_labels
+    ids = WorkChart.find_by_sql <<-sql
+      SELECT id
+      FROM work_chart
+      WHERE id NOT IN
+          (SELECT DISTINCT parent_id
+          FROM work_chart
+          WHERE parent_id IS NOT NULL)
+        AND status = 'active'; 
+    sql
+    ids = ids.map(&:id)
+    labels_sql = <<-sql
+      WITH RECURSIVE tree AS
+        (SELECT display_label,
+                id,
+                parent_id,
+                status,
+                NULL::varchar AS parent_name,
+                display_label::text AS path
+        FROM work_chart
+        WHERE parent_id IS NULL
+        UNION SELECT f1.display_label,
+                      f1.id,
+                      f1.parent_id,
+                      f1.status,
+                      tree.display_label AS parent_name,
+                      tree.path || '-' || f1.display_label::text AS path
+        FROM tree
+        JOIN work_chart f1 ON f1.parent_id = tree.id)
+      SELECT id,
+            parent_id,
+            status,
+            path
+      FROM tree
+      WHERE id in (?)
+    sql
+    WorkChart.find_by_sql([labels_sql, ids]).map {|c| c["labels"] = c["path"].split("-")[2..100]; c}
+  end
+
   def self.WITH_LABELS_SQL
     <<-sql
       SELECT array(SELECT "work_chart"."display_label"
@@ -139,10 +179,12 @@ class WorkChart < ActiveRecord::Base
   end
 
   def labels
-    symbol = "chart_labels_#{self.id}".to_sym
-    if Rails.cache.exist? symbol
-      Rails.cache.read symbol
-    else
+    # symbol = "chart_labels_#{self.id}".to_sym
+    # if Rails.cache.exist? symbol
+    #   Rails.cache.read symbol
+    # else
+
+    @labels ||= self["labels"]
       unless @labels
         sql = <<-eos
           SELECT "work_chart"."display_label" 
@@ -158,10 +200,8 @@ class WorkChart < ActiveRecord::Base
         eos
         @labels = WorkChart.connection.execute(sql).to_a.map {|c| c["display_label"]}
       end
-      # TODO: implement sweeper!
-      Rails.cache.write symbol, @labels, :expires_in => 2.days
+      # Rails.cache.write symbol, @labels, :expires_in => 2.days
       @labels
-    end
   end
 
   def self.all_with_labels

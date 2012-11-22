@@ -16,7 +16,7 @@ class SearchIndex
     prefixes.each do |prefix|
       @words[prefix] ||= []
       @words[prefix] << chart["id"]
-      puts "Added charts for word #{prefix} Currently indexed by this word: #{@words[prefix].count}"
+      # puts "Added charts for word #{prefix} Currently indexed by this word: #{@words[prefix].count}"
     end
   end
 
@@ -32,8 +32,8 @@ class SearchIndex
   end
 
   def ids_for_word(word)
-    puts "About to return following ids: #{@words[word.downcase]} for word: \"#{word}\""
-    puts @words
+    # puts "About to return following ids: #{@words[word.downcase]} for word: \"#{word}\""
+    # puts @words
     @words[word.downcase]
   end
 
@@ -70,9 +70,9 @@ class SearchHandler
 
   def find(phrase)
     words = phrase.split.map(&:strip)
-    puts "Searching for those words: #{words}"
-    ids = words.map { |word| @index.ids_for_word word }.inject {|x,y| x & y}.uniq
-    puts "Found for phrase #{phrase} following ids: #{ids}"
+    # puts "Searching for those words: #{words}"
+    ids = words.map { |word| @index.ids_for_word word }.inject {|x,y| x & y}.uniq rescue []
+    # puts "Found for phrase #{phrase} following ids: #{ids}"
     @index.charts_for_ids ids
   end
 
