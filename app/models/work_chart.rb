@@ -13,11 +13,21 @@ class WorkChart < ActiveRecord::Base
   has_many :work_entries
   has_many :work_chart_kinds_defaults
 
-  #define_index do
-  #  indexes display_label
-  #end
+
+  def self.ensure_data_indexed
+    c = ChartsSearchClient.new
+    unless c.index_initialized?
+      all = WorkChart.leafs_with_labels
+      cur = 0
+      all.each do |wc| 
+        c.add_to_index wc
+        cur = cur + 1
+      end
+    end
+  end
 
   def self.search_for(phrase)
+    WorkChart.ensure_data_indexed
     search = ChartsSearchClient.new
     search.find phrase
   end
