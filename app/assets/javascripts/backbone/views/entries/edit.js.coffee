@@ -70,7 +70,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     @recents.url = "/work_charts/recent.json"
     @recents.on "reset", @render_recents
     @searches = new TimesheetApp.Collections.WorkChartsCollection()
-    @searches.on "reset", @render_searches
+    # @searches.on "reset", @render_searches
     @duration_kinds = new TimesheetApp.Collections.DurationKindsCollection()
     @duration_kinds.on "reset", =>
       @render_durations()
