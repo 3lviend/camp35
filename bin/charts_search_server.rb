@@ -2,6 +2,7 @@
 
 require 'boson/runner'
 require 'msgpack/rpc'
+require 'msgpack/rpc/transport/unix'
 
 class SearchIndex
 
@@ -69,6 +70,7 @@ class SearchHandler
   end
 
   def find(phrase)
+    puts "Searching for: '#{phrase}'"
     words = phrase.split.map(&:strip)
     # puts "Searching for those words: #{words}"
     ids = words.map { |word| @index.ids_for_word word }.inject {|x,y| x & y}.uniq rescue []
@@ -85,9 +87,14 @@ class ChartsSearchServer < Boson::Runner
   
   def start
     puts "Search server is starting"
-    index  = SearchIndex.new
-    server = MessagePack::RPC::Server.new
-    server.listen "0.0.0.0", 18800, SearchHandler.new(index)
+    index     = SearchIndex.new
+    path      = File.join ["var", "run", "charts_search.sock"]
+    if File.exists? path
+      File.delete path
+    end
+    transport = MessagePack::RPC::UNIXServerTransport.new path
+    server    = MessagePack::RPC::Server.new
+    server.listen transport, SearchHandler.new(index)
     puts "Search server ready."
     server.run
   end
