@@ -101,4 +101,13 @@ class ChartsSearchServer < Boson::Runner
 
 end
 
-ChartsSearchServer.start
+
+if $0 == __FILE__
+  if File.new(__FILE__).flock(File::LOCK_EX | File::LOCK_NB)
+    ChartsSearchServer.start
+  else
+    puts "Charts index & search server already running.."
+  end
+end
+
+
