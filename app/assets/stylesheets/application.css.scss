@@ -776,3 +776,16 @@ table.work_day_table {
   z-index: 9999 !important;
 }
 
+.assume-users-list {
+  list-style-type: none;
+}
+
+.assume-users-list li {
+  background-color: #F4F4F4;
+  padding: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
