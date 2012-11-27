@@ -12,6 +12,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     @current_role = new TimesheetApp.Models.Role
     @current_role.url = "/roles/current.json"
     @on "admin:assume-other", () =>
+      @current_role.fetch()
       others = new TimesheetApp.Collections.RolesCollection
       others.url = "/roles/others.json"
       view = new TimesheetApp.Views.Admin.SwitchUserView(other_roles: others)

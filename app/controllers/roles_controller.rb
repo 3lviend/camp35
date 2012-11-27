@@ -8,7 +8,7 @@ class RolesController < ApplicationController
   def others
     #@others = IC::User.enabled
     #     .where("role_id <> ? AND email <> ?", current_user.system_role_id, "root@domain.com")
-    @others = current_user.others_accessible
+    @others = current_user.others_accessible + IC::User.where(role_id: current_user["system_role_id"])
   end
 
   def assume

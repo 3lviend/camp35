@@ -25,6 +25,7 @@ class TimesheetApp.Views.Admin.SwitchUserViewModel
         success: (data) =>
           Backbone.history.fragment = null
           Backbone.history.navigate(document.location.hash, true)
+          window.router.current_role.fetch()
           $("#modal").trigger 'reveal:close'
         error: (data) =>
           console.info "implement me"
