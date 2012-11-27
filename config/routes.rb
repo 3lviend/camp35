@@ -24,6 +24,9 @@ TimesheetApp::Application.routes.draw do
       get 'duration_kinds'
     end
   end
+  match "/roles/current" => "roles#current"
+  match "/roles/others"  => "roles#others"
+  match "/roles/assume"  => "roles#assume"
 
   devise_for :users, :controllers => {:sessions => 'sessions'}
 end

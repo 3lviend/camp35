@@ -8,16 +8,26 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     'work_days/:weeks_from_now': 'work_days'
     'entries/:year/:month/:day': 'work_day'
 
+  initialize: ->
+    @current_role = new TimesheetApp.Models.Role
+    @current_role.url = "/roles/current.json"
+    @on "admin:assume-other", () =>
+      others = new TimesheetApp.Collections.RolesCollection
+      others.url = "/roles/others.json"
+      view = new TimesheetApp.Views.Admin.SwitchUserView(other_roles: others)
+      $(window).oneTime 100, () -> 
+        view.render()
+        others.fetch()
 
   before:
     '^((?!login).)*$': ->
         @render_navigation()
+        @current_role.fetch()
     'login': =>
         $(".top-bar").html("")
 
   render_navigation: ->
-    view = new TimesheetApp.Views.Navigation.TopBarView()
-    $(window).oneTime 100, () -> view.render()
+    view = new TimesheetApp.Views.Navigation.TopBarView(role: @current_role)
 
   login: ->
     view = new TimesheetApp.Views.Authentication.LoginView()

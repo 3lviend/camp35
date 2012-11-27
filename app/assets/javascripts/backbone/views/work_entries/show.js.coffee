@@ -11,7 +11,8 @@ class TimesheetApp.Views.WorkEntries.IndexView extends Backbone.View
       @render()
       @collection.each (entry) =>
         @view.collection.push entry
-      ko.applyBindings(@view)
+      ko.applyBindings @view, $("#main")[0]
+      ko.applyBindings @view, $("#side")[0]
 
   render: =>
     $("#main").html(@template())

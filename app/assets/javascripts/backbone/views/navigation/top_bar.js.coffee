@@ -2,19 +2,17 @@ TimesheetApp.Views.Navigation ||= {}
 
 class TimesheetApp.Views.Navigation.TopBarView extends Backbone.View
   template: JST["backbone/templates/navigation/top_bar"]
-  assume_template: JST["backbone/templates/navigation/assume"]
 
   initialize: () ->
-    @view = new TimesheetApp.Views.Navigation.TopBarViewModel
+    @current_role = @options.role
+    @current_role.on "change", =>
+      @render()
+      ko.applyBindings @view, $(".top-bar")[0]
+    @view = new TimesheetApp.Views.Navigation.TopBarViewModel(@current_role)
 
   render: () ->
     unless $(".top-bar").html() != ""
       $(".top-bar").html @template()
-
-      $("#assume-other").click =>
-        $("#modal").html(@assume_template()).reveal()
-        ko.applyBindings(@view, $("#modal")[0])
-        false
 
       $("#today").click ->
         now = moment.utc(new Date())
@@ -54,10 +52,8 @@ class TimesheetApp.Views.Navigation.TopBarView extends Backbone.View
 
 
 class TimesheetApp.Views.Navigation.TopBarViewModel
-  constructor: ->
-    @roles = ko.observableArray([
-      {display_label: "Kamil"},
-      {display_label: "Jon"}
-    ])
-    @assume_role = (role) =>
-      console.info "Assuming role of #{role.display_label}"
+  constructor: (role) ->
+    @current_role = ko.observable role
+    @assume_other = () ->
+      window.router.trigger "admin:assume-other"
+      false

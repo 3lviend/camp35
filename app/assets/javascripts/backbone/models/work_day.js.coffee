@@ -73,9 +73,9 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
     "day-#{date.day()} week-#{@week_of_date(date, year, month)} #{'today' if date.year() == today.year() && date.month() == today.month() && date.date() == today.date()} #{'weekend' if date.day() == 0 || date.day() == 6} #{'out-of-month' if date.month() + 1 != month} #{@status_class()}"
 
   week_of_date: (date, year, month) =>
-    console.info date
-    console.info year
-    console.info month
+    # console.consoleinfo date
+    # console.info year
+    # # console.info month
     m = parseInt month
     if (date.month() + 1 < m && date.year() == year) || date.year() < year
       1
