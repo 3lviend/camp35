@@ -38,12 +38,21 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       modified_by: @model.get('work_entry_durations')[0].created_by
       id: @model.get('work_entry_durations')[i].id
     @model.set "work_entry_durations", durations.toArray(), silent: true
+    s_fee = $("#work_entry_work_entry_fees_attributes_0_fee").val()
+    if _.isNaN parseFloat(s_fee, 10)
+      s_fee = "0"
+    fees = [
+      fee: parseFloat s_fee, 10
+    ]
+    @model.set "work_entry_fees", fees, silent: true
 
     date = moment.utc(@model.get("date_performed"))
 
     data = @model.toJSON()
     data.work_entry_durations_attributes = data.work_entry_durations
     delete data.work_entry_durations
+    data.work_entry_fees_attributes = data.work_entry_fees
+    delete data.work_entry_fees
 
     $.ajax
       url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries/#{@model.get('id')}"

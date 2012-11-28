@@ -12,14 +12,15 @@ class WorkEntriesController < ApplicationController
   end
 
   def update
-    @work_entry = WorkEntry.includes(:work_entry_durations).find params[:id]
-    log_state @work_entry
+    @work_entry = WorkEntry.includes(:work_entry_durations, :work_entry_fees).find params[:id]
+    fee = params[:work_entry][:work_entry_fees_attributes]["0"]
+    params[:work_entry].delete(:work_entry_fees_attributes)
     @work_entry.assign_attributes(params[:work_entry])
+    @work_entry.work_entry_fees.first.fee = fee[:fee].to_f
     @work_entry.work_entry_durations.each {|d| d.work_entry_id = @work_entry.id}
     kinds = params[:work_entry][:work_entry_durations_attributes].values.map {|d| d[:kind_code]}
     @work_entry.work_entry_durations.select {|d| not kinds.include?(d.kind_code)}.each(&:delete)
     if @work_entry.save
-      log_state @work_entry
       render :json => {:status => 'OK'}.to_json
     else
       render :json => {:status => 'ERROR', :errors => @work_entry.errors.full_messages}.to_json
@@ -39,6 +40,13 @@ class WorkEntriesController < ApplicationController
     @work_entry.role_id = current_user.system_role_id
     @work_entry.status_code = "unconfirmed"
     @work_entry.date_created = DateTime.now
+    @work_entry.work_entry_fees.each do |f| 
+      f.work_entry_id = @work_entry.id
+      f.date_created = DateTime.now unless f.date_created
+      f.created_by = current_user.email unless f.created_by
+      f.modified_by = current_user.email
+      f.last_modified = DateTime.now
+    end
     @work_entry.work_entry_durations.each { |d| d.created_by = d.modified_by =  current_user.email }
     if @work_entry.save
       log_state @work_entry
