@@ -26,10 +26,11 @@ class WorkChart < ActiveRecord::Base
     end
   end
 
-  def self.search_for(phrase)
+  def self.search_for(phrase, config = {:include_hidden => false})
     WorkChart.ensure_data_indexed
     search = ChartsSearchClient.new
-    search.find phrase
+    charts = search.find phrase
+    config[:include_hidden] ? charts : charts.select { |c| c["status"] == "active" }
   end
 
   def duration_kinds
@@ -156,7 +157,6 @@ class WorkChart < ActiveRecord::Base
           (SELECT DISTINCT parent_id
           FROM work_chart
           WHERE parent_id IS NOT NULL)
-        AND status = 'active'; 
     sql
     ids = ids.map(&:id)
     labels_sql = <<-sql

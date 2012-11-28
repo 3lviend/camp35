@@ -18,6 +18,7 @@ TimesheetApp::Application.routes.draw do
       get 'frequent'
       get 'recent'
       get 'search'
+      get 'search_all'
     end
 
     member do

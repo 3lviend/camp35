@@ -23,8 +23,18 @@ class WorkChartsController < ApplicationController
     respond_with @chart
   end
 
+  def _search(config = {:include_hidden => false})
+    render :json => WorkChart.search_for(params[:term], :include_hidden => config[:include_hidden])
+                      .map { |c| {label: c["labels"].join(" - "), value: c["id"]}}
+                      .to_json
+  end
+
   def search
-    render :json => WorkChart.search_for(params[:term]).map { |c| {label: c["labels"].join(" - "), value: c["id"]}}.to_json
+    _search
+  end
+
+  def search_all
+    _search :include_hidden => true
   end
 
   def frequent

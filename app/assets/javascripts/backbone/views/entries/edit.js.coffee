@@ -284,6 +284,16 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
           $.param
             parent_id: val
 
+  set_search: =>
+    $(".charts-search").autocomplete
+      source: "/work_charts/search#{if @show_inactive then '_all' else ''}",
+      minLength: 2,
+      select: (e, ul) =>
+        @selected_chart.set("id", ul.item.value, silent: true)
+        @selected_chart.fetch()
+        $(window).oneTime 10, () -> $(".charts-search").val("")
+ 
+
   render: =>
     $("section[role=main]").html("")
     $(@el).html(@template(@model.toJSON()))
@@ -293,14 +303,8 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
     $("#main").html(@el)
     $("#side").html ""
-    $(".charts-search").autocomplete
-      source: "/work_charts/search",
-      minLength: 2,
-      select: (e, ul) =>
-        @selected_chart.set("id", ul.item.value, silent: true)
-        @selected_chart.fetch()
-        $(window).oneTime 10, () -> $(".charts-search").val("")
- 
+    @set_search()
+
     $("header").html("<h1>Edit entries for #{moment.utc(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:
@@ -313,6 +317,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".toggle_charts_filter").click (e) =>
       @show_inactive = not @show_inactive
       @render_charts()
+      @set_search()
       label = if @show_inactive then "Hide inactive" else "Show inactive"
       $(e.currentTarget).html label
       false
