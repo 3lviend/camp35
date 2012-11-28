@@ -103,6 +103,21 @@ ul.nav li {
   li.name b{
     font-family: "OpenSansLight";
   }
+
+  li a img, li img.icon {
+    margin-top: 8px;
+    float: left;
+    margin-right: 10px;
+    height: 28px;
+  }
+
+  li img.icon { margin-left: 10px; margin-right: 0px; }
+
+  li.has-dropdown .dropdown li a img {
+    margin-top: 0px;
+    height: 16px;
+  }
+
 }
 
 header.row{
@@ -172,6 +187,12 @@ fieldset.durations {
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0) !important;
   filter: progid:dximagetransform.microsoft.gradient(enabled=false) !important;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.8) !important;
+  line-height: 20px !important;
+
+  img {
+    height: 20px;
+    float: left;
+  }
 }
 
 
@@ -819,4 +840,21 @@ table.work_day_table {
 }
 .top-bar {
   margin-bottom: 0px !important;
+}
+
+.charts-search, .charts-search:focus {
+  background-image: url(/search-gray.png) !important;
+  background-position: 99% 5px !important;
+  background-repeat: no-repeat !important;
+}
+
+.calendar {
+  background-image: url(/calendar-gray.png) !important;
+  background-position: 99% 5px !important;
+  background-repeat: no-repeat !important;
+}
+input.currency {
+  background-image: url(/wallet-gray.png) !important;
+  background-position: 99% 5px !important;
+  background-repeat: no-repeat !important;
 }

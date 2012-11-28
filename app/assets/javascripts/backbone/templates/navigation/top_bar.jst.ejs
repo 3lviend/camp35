@@ -5,15 +5,18 @@
   </li>
   <li class="divider"></li>
   <li>
-  <a href="#" id="this_month">Calendar</a>
+    <a href="#" id="this_month">
+      <img src="/calendar-white.png" />
+      Calendar
+    </a>
   </li>
   <li class="divider"></li>
   <li>
-  <a href="#" id="today">Today</a>
+  <a href="#" id="today"><img src="/notes-white.png" />Today</a>
   </li>
   <li class="divider"></li>
   <li>
-  <a href="#" id="new_entry">New entry</a>
+  <a href="#" id="new_entry"><img src="/compose-white.png" />New entry</a>
   </li>
   <li class="toggle-topbar"><a href="#"></a></li>
 </ul>
@@ -21,11 +24,11 @@
   <ul class="left"></ul>
   <ul class="right">
     <li class="divider" data-bind="visible: current_role().get('is_admin')"></li>
-    <li class="has-dropdown" data-bind="if: current_role().get('is_admin')" >
-      <a href="#" id="admin">Admin</a>
+    <li class="has-dropdown"  >
+    <a href="#" id="admin">Settings</a>
       <ul class="dropdown">
         <li>
-          <a id="assume-other" data-bind="click: assume_other" href="#">Switch role</a>
+        <a id="assume-other" data-bind="click: assume_other, if: current_role().get('is_admin')" href="#"><img src="/swap-white.png" />Switch role</a>
         </li>
       </ul>
     </li>
