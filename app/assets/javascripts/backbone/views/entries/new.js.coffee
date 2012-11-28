@@ -49,6 +49,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       
   back: =>
     Backbone.history.navigate Backbone.history.fragment.replace("/new", ""), true
+    $("#modal").trigger 'reveal:close'
 
   initialize: () =>
     @charts = []
@@ -279,16 +280,30 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
  
 
   render: =>
-    $("section[role=main]").html("")
+    #  $("section[role=main]").html("")
     $(@el).html(@template(@model.toJSON()))
+    $("#modal").html(@el).reveal
+      closed: () =>
+        $("#modal").html ""
+        @back()
+      animation: 'none'
+    ko.applyBindings(@view, $("#modal")[0])
+    false
+
     $("textarea", @el).autoGrow()
     $(".calendar", @el).datepicker
       dateFormat: "DD, yy-mm-dd"
     $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
-    $("#main").html(@el)
-    @set_search()
-    $("#side").html ""
-    $("header.row").html("<h1>New work entry</h1><h4>Create entry for the work you're doing at End Point</h4>")
+   # $("#main").html(@el)
+    $(".charts-search").autocomplete
+      source: "/work_charts/search",
+      minLength: 2,
+      select: (e, ul) =>
+        @selected_chart.set("id", ul.item.value, silent: true)
+        @selected_chart.fetch()
+        $(window).oneTime 10, () -> $(".charts-search").val("")
+        # $("#side").html ""
+        # $("header.row").html("<h1>New work entry</h1><h4>Create entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:
         $.param

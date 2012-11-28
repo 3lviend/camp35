@@ -1,0 +1,45 @@
+<ul>
+  <li class="name">
+  <a href="/#" style="visibility: visible;"><b>Timesheet</b><span>App</span>
+  </a>
+  </li>
+  <li class="divider"></li>
+  <li>
+    <a href="#" id="this_month">
+      <img src="/calendar-white.png" />
+      Calendar
+    </a>
+  </li>
+  <li class="divider"></li>
+  <li>
+  <a href="#" id="today"><img src="/notes-white.png" />Today</a>
+  </li>
+  <li class="divider"></li>
+  <li>
+  <a href="#" id="new_entry"><img src="/compose-white.png" />New entry</a>
+  </li>
+  <li class="toggle-topbar"><a href="#"></a></li>
+</ul>
+<section>
+  <ul class="left"></ul>
+  <ul class="right">
+    <li class="divider" ></li>
+    <li class="has-dropdown"  >
+    <a href="#" id="admin">Settings</a>
+      <ul class="dropdown">
+        <li data-bind="if: current_role().get('can_switch_roles')">
+        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/swap-white.png" />Switch role</a>
+        </li>
+      </ul>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <span data-bind="text: current_role().get('email')"></span>
+      <i data-bind="visible: current_role().assumed_other()">as</i>
+      <i data-bind="text: current_role().as_label()"></i>
+    </li>
+    <li>
+    <a href="#" id="logout">Logout</a>
+    </li>
+  </ul>
+</section>

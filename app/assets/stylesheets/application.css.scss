@@ -103,6 +103,21 @@ ul.nav li {
   li.name b{
     font-family: "OpenSansLight";
   }
+
+  li a img, li img.icon {
+    margin-top: 8px;
+    float: left;
+    margin-right: 10px;
+    height: 28px;
+  }
+
+  li img.icon { margin-left: 10px; margin-right: 0px; }
+
+  li.has-dropdown .dropdown li a img {
+    margin-top: 0px;
+    height: 16px;
+  }
+
 }
 
 header.row{
@@ -172,6 +187,12 @@ fieldset.durations {
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0) !important;
   filter: progid:dximagetransform.microsoft.gradient(enabled=false) !important;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.8) !important;
+  line-height: 20px !important;
+
+  img {
+    height: 20px;
+    float: left;
+  }
 }
 
 
@@ -183,9 +204,10 @@ form{
       line-height: 32px;
       width: 20%;
       float: left;
+      display: none;
     }
     input, select, textarea, .complex-input{
-      width: 70%;
+      width: 100%;
       float: right;
       margin-bottom: 10px;
     }
@@ -384,7 +406,8 @@ circle, text{
 
 
 .hours-minutes{
-  width: 500px !important;
+  width: 540px !important;
+  max-width: 540px !important;
   margin-left: -225px !important;
   clear: both;
   top: -10px;
@@ -776,3 +799,65 @@ table.work_day_table {
   z-index: 9999 !important;
 }
 
+.assume-users-list {
+  list-style-type: none;
+}
+
+.assume-users-list li {
+  background-color: #F4F4F4;
+  padding: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
+
+.top-bar ul > li {
+  float: left;
+  color: #888;
+}
+
+.top-bar ul > li > span {
+  padding-left: 10px;
+}
+
+.reveal-modal {
+  top: 45px !important;
+  display: block; 
+  width: 560px !important;
+  position: absolute; top: -310px; left: 170px;
+  padding: 90px 20px 20px 20px;
+  border: solid 1px #999;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
+  -webkit-box-shadow: 0px 3px 6px rgba(0,0,0,0.25);
+  -webkit-transition: -webkit-transform 0.5s ease-out;
+  -webkit-transform: translateY(-5570px) !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.reveal-modal.open {
+  -webkit-transition: -webkit-transform 0.5s ease-out;
+  -webkit-transform: translateY(0px) !important;
+}
+.top-bar {
+  margin-bottom: 0px !important;
+}
+
+.charts-search, .charts-search:focus {
+  background-image: url(/search-gray.png) !important;
+  background-position: 99% 5px !important;
+  background-repeat: no-repeat !important;
+}
+
+.calendar {
+  background-image: url(/calendar-gray.png) !important;
+  background-position: 99% 5px !important;
+  background-repeat: no-repeat !important;
+}
+input.currency {
+  background-image: url(/wallet-gray.png) !important;
+  background-position: 99% 5px !important;
+  background-repeat: no-repeat !important;
+}

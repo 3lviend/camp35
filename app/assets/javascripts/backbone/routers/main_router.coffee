@@ -8,12 +8,27 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     'work_days/:weeks_from_now': 'work_days'
     'entries/:year/:month/:day': 'work_day'
 
+  initialize: ->
+    @current_role = new TimesheetApp.Models.Role
+    @current_role.url = "/roles/current.json"
+    @on "admin:assume-other", () =>
+      @current_role.fetch()
+      others = new TimesheetApp.Collections.RolesCollection
+      others.url = "/roles/others.json"
+      view = new TimesheetApp.Views.Admin.SwitchUserView(other_roles: others)
+      $(window).oneTime 100, () -> 
+        view.render()
+        others.fetch()
 
   before:
     '^((?!login).)*$': ->
-        console.info "not login route"
-    'login': ->
-        console.info "login route"
+        @render_navigation()
+        @current_role.fetch()
+    'login': =>
+        $(".top-bar").html("")
+
+  render_navigation: ->
+    view = new TimesheetApp.Views.Navigation.TopBarView(role: @current_role)
 
   login: ->
     view = new TimesheetApp.Views.Authentication.LoginView()
@@ -108,41 +123,6 @@ $(document).ajaxStart ->
 
 $(document).oneTime 200, ->
   humane.timeout = 1000
-  $("#today").click ->
-    now = moment.utc(new Date())
-    Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}", true
-    false
-
-  $("#this_month").click ->
-    now = moment.utc(new Date())
-    Backbone.history.navigate "/#calendar/#{now.year()}/#{now.month() + 1}", true
-    false
-
-  $("#new_entry").click ->
-    now = moment.utc(new Date())
-    Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}/new", true
-    false
-
-  $("#admin").click ->
-    window.location.replace "/admin"
-    false
-
-  $("#logout").click ->
-    $.ajax
-      url: "/users/sign_out"
-      type: "DELETE"
-      success: =>
-        humane.log "Goodbye"
-        $("#logout").hide()
-        Backbone.history.navigate "/#", true
-      error: =>
-        # humane.log "Something wrong happened.. Please contact admin"
-        # kinda nasty workaround... TODO: fix
-        humane.log "Goodbye"
-        $("#logout").hide()
-        Backbone.history.navigate "/#", true
-    false
-
 $ ->
   key 'command+n', ->
     date = moment.utc()

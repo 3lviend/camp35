@@ -13,7 +13,7 @@ class TimesheetApp.Views.Home.IndexView extends Backbone.View
       #@collection.each (day) =>
       #  @view.days.push day
       @view.days(@collection.models)
-      ko.applyBindings(@view)
+      # ko.applyBindings(@view, @el)
     @months = @options.months
     @months.on "reset", =>
       @view.work_months(@months.models)
@@ -23,7 +23,8 @@ class TimesheetApp.Views.Home.IndexView extends Backbone.View
     $("#side").html("")
     $("header.row").html(@top_tpl())
     $("#main").html(@el)
-    ko.applyBindings(@view)
+    ko.applyBindings(@view, $("#main")[0])
+    ko.applyBindings(@view, $("header.row")[0])
 
 class TimesheetApp.Views.IndexViewModel
   constructor: (year, month) ->
@@ -40,7 +41,7 @@ class TimesheetApp.Views.IndexViewModel
       grouped = _.groupBy @days(), (day) =>
         date = moment.utc(day.get("date"))
         week = day.week_of_date(date, parseInt(year, 10), parseInt(month,10))
-        console.info "#{date.toDate().toDateString()} week: #{week}"
+        # console.info "#{date.toDate().toDateString()} week: #{week}"
         week
         # all this need serious refactor
       reduceTime = (memo, time) =>

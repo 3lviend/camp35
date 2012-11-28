@@ -10,7 +10,7 @@ class TimesheetApp.Views.WorkDays.IndexView extends Backbone.View
       @render()
       @collection.each (day) =>
         @view.collection.push day
-      ko.applyBindings(@view)
+      ko.applyBindings(@view, @el[0])
 
   render: =>
     $("#main").html(@template())

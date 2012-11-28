@@ -23,8 +23,11 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
 
 
   back: =>
-    date = moment.utc(@model.get("date_performed"), "ddd, YYYY-MM-DD")
+    performed = @model.get("date_performed")
+    format = if performed.length > 10 then "ddd, YYYY-MM-DD" else "YYYY-MM-DD"
+    date = moment.utc(performed, format)
     Backbone.history.navigate "entries/#{date.year()}/#{date.month() + 1}/#{date.date()}", true
+    $("#modal").trigger 'reveal:close'
 
   persist: =>
     @model.set "work_chart_id", @selected_chart.get("id"), silent: true
@@ -295,17 +298,29 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
  
 
   render: =>
-    $("section[role=main]").html("")
+    # $("section[role=main]").html("")
     $(@el).html(@template(@model.toJSON()))
     $("textarea", @el).autoGrow()
     $(".calendar", @el).datepicker
       dateFormat: "DD, yy-mm-dd"
     $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
-    $("#main").html(@el)
-    $("#side").html ""
-    @set_search()
-
-    $("header").html("<h1>Edit entries for #{moment.utc(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
+   # $("#main").html(@el)
+    # $("#side").html ""
+    $("#modal").html(@el).reveal
+      closed: () =>
+        $("#modal").html ""
+        @back()
+    ko.applyBindings(@view, $("#modal")[0])
+    false
+    $(".charts-search").autocomplete
+      source: "/work_charts/search",
+      minLength: 2,
+      select: (e, ul) =>
+        @selected_chart.set("id", ul.item.value, silent: true)
+        @selected_chart.fetch()
+        $(window).oneTime 10, () -> $(".charts-search").val("")
+ 
+        # $("header").html("<h1>Edit entries for #{moment.utc(@model.get('date_performed')).format("LL")}</h1><h4>Edit entry for the work you're doing at End Point</h4>")
     @charts[0].fetch
       data:
         $.param
