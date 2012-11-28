@@ -5,7 +5,7 @@ class WorkEntry < ActiveRecord::Base
   belongs_to :work_entry_status, :foreign_key => :status_code, :primary_key => :code
 
   accepts_nested_attributes_for :work_entry_fees, :work_entry_durations,:allow_destroy => true
-  attr_accessible :work_chart_id, :date_performed, :work_entry_fees_attributes, :description, :work_entry_durations_attributes, :created_by, :modified_by
+  attr_accessible :work_chart_id, :date_performed, :work_entry_fees_attributes, :description, :work_entry_durations_attributes, :created_by, :modified_by, :work_entry_fees_attributes
 
   before_save :sanitize_entry
   validates_presence_of :work_chart
