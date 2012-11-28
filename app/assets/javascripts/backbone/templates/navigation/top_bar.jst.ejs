@@ -23,16 +23,16 @@
 <section>
   <ul class="left"></ul>
   <ul class="right">
-    <li class="divider" data-bind="visible: current_role().get('is_admin')"></li>
+    <li class="divider" ></li>
     <li class="has-dropdown"  >
     <a href="#" id="admin">Settings</a>
       <ul class="dropdown">
-        <li>
-        <a id="assume-other" data-bind="click: assume_other, if: current_role().get('is_admin')" href="#"><img src="/swap-white.png" />Switch role</a>
+        <li data-bind="if: current_role().get('can_switch_roles')">
+        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/swap-white.png" />Switch role</a>
         </li>
       </ul>
     </li>
-    <li class="divider" data-bind="visible: current_role().get('is_admin')"></li>
+    <li class="divider"></li>
     <li>
       <span data-bind="text: current_role().get('email')"></span>
       <i data-bind="visible: current_role().assumed_other()">as</i>

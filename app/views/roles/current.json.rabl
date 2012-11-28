@@ -1,7 +1,7 @@
 object @current_role
 attributes :email
-node :is_admin do
-  @current_role.is_admin?
+node :can_switch_roles do
+ @current_role.others_accessible.count > 0
 end
 node :as do
  if @current_role.assumed_other?

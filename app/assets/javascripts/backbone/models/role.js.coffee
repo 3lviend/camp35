@@ -1,6 +1,9 @@
 
 class TimesheetApp.Models.Role extends Backbone.Model
 
+  defaults:
+    can_switch_roles: false
+
   user_name: =>
     @get('display_label').split(":")[1]
 
