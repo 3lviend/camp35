@@ -16,6 +16,7 @@ class WorkEntriesController < ApplicationController
     fee = params[:work_entry][:work_entry_fees_attributes]["0"]
     params[:work_entry].delete(:work_entry_fees_attributes)
     @work_entry.assign_attributes(params[:work_entry])
+    @work_entry.work_entry_fees.build(:date_created => DateTime.now, :created_by => current_user.email, :last_modified => DateTime.now, :modified_by => current_user.email, :work_entry_id => @work_entry.id) unless @work_entry.work_entry_fees.count > 0
     @work_entry.work_entry_fees.first.fee = fee[:fee].to_f
     @work_entry.work_entry_durations.each {|d| d.work_entry_id = @work_entry.id}
     kinds = params[:work_entry][:work_entry_durations_attributes].values.map {|d| d[:kind_code]}

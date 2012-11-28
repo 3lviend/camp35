@@ -1,6 +1,6 @@
 class WorkEntryFee < ActiveRecord::Base
   belongs_to :work_entry
-  attr_accessible :fee, :created_by, :modified_by
+  attr_accessible :fee, :date_created, :last_modified, :work_entry_id, :modified_by, :created_by
 
   before_save :sanitize_fee
 
