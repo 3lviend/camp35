@@ -204,9 +204,10 @@ form{
       line-height: 32px;
       width: 20%;
       float: left;
+      display: none;
     }
     input, select, textarea, .complex-input{
-      width: 70%;
+      width: 100%;
       float: right;
       margin-bottom: 10px;
     }
@@ -405,7 +406,8 @@ circle, text{
 
 
 .hours-minutes{
-  width: 500px !important;
+  width: 540px !important;
+  max-width: 540px !important;
   margin-left: -225px !important;
   clear: both;
   top: -10px;
@@ -822,21 +824,22 @@ table.work_day_table {
 
 .reveal-modal {
   top: 45px !important;
-  display: block; width: 560px;
+  display: block; 
+  width: 560px !important;
   position: absolute; top: -310px; left: 170px;
   padding: 90px 20px 20px 20px;
   border: solid 1px #999;
   background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
   -webkit-box-shadow: 0px 3px 6px rgba(0,0,0,0.25);
-  -webkit-border-bottom-left-radius: 6px;
-  -webkit-border-bottom-right-radius: 6px;
-  -webkit-transition: -webkit-transform 0.25s ease-out;
-  -webkit-transform: translateY(-570px);
+  -webkit-transition: -webkit-transform 0.5s ease-out;
+  -webkit-transform: translateY(-5570px) !important;
+  visibility: visible !important;
+  display: block !important;
 }
 
 .reveal-modal.open {
-  -webkit-transition: -webkit-transform 0.25s ease-out;
-  -webkit-transform: translateY(0px);
+  -webkit-transition: -webkit-transform 0.5s ease-out;
+  -webkit-transform: translateY(0px) !important;
 }
 .top-bar {
   margin-bottom: 0px !important;
