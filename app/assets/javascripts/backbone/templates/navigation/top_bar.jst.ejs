@@ -25,10 +25,13 @@
   <ul class="right">
     <li class="divider" ></li>
     <li class="has-dropdown"  >
-    <a href="#" id="admin">Settings</a>
+    <a href="#">Settings</a>
       <ul class="dropdown">
         <li data-bind="if: current_role().get('can_switch_roles')">
         <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/swap-white.png" />Switch role</a>
+        </li>
+        <li data-bind="if: current_role().get('is_admin')">
+        <a href="#" data-bind="click: redirect_to_admin" ><img src="/settings-white.png" />Admin</a>
         </li>
       </ul>
     </li>

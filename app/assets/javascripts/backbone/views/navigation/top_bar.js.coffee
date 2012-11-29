@@ -29,10 +29,7 @@ class TimesheetApp.Views.Navigation.TopBarView extends Backbone.View
         Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}/new", true
         false
     
-      $("#admin").click ->
-        window.location.replace "/admin"
-        false
-    
+   
       $("#logout").click ->
         $.ajax
           url: "/users/sign_out"
@@ -57,3 +54,7 @@ class TimesheetApp.Views.Navigation.TopBarViewModel
     @assume_other = () ->
       window.router.trigger "admin:assume-other"
       false
+    @redirect_to_admin = () ->
+      window.open "/admin", "_blank"
+      false
+ 
