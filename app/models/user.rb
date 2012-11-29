@@ -26,14 +26,10 @@ class User < ActiveRecord::Base
   def others_accessible
     role = self.ic_role
     if role.rights.map(&:right_type).uniq.map(&:code).include? "superuser"
-      IC::User.enabled
+      IC::User
         .where("role_id <> ? AND email <> ?", self["system_role_id"], "root@domain.com")
     else
-      rights = (role.rights + role.roles.map(&:rights)).flatten.uniq
-              .select { |r| r.right_type.target_kind_code == "role" }
-      accessible_group_ids = rights.map(&:targets).flatten.uniq.map(&:ref_obj_pk).uniq.map(&:to_i)
-      role_ids = IC::RoleHasRole.where(has_role_id: accessible_group_ids).uniq
-      IC::User.where role_id: role_ids
+      IC::User.includes(:role).all.map(&:role).select { |r| r.has_right_to(IC::RightType::SWITCH_USER, r) }
     end
   end
 
