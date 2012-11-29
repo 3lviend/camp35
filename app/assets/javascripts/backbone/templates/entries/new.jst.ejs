@@ -48,7 +48,7 @@
              for="work_entry_work_entry_fees_attributes_0_fee">
              Fee
       </label>      
-      <div class="row collapse complex-input">
+      <div class="row collapse complex-input fees-input">
         <div class="two mobile-one columns">
           <span class="prefix">$</span>
         </div>
@@ -58,14 +58,9 @@
                  type="text" value="<% if(work_entry_fees.length > 0) {%><%= work_entry_fees[0].fee %><% } %>" >
         </div>
       </div>
-     <div class="panel input">
-       <div class="four columns">
+     <div class="small-buttons">
          <a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" ><img src="/delete-vivid.png" />Cancel</a>
-       </div>
-       <div class="eight columns">
-	 <button class="button" type="submit"><img src="/down-vivid.png" />Save</button>
-       </div>
-       <div class="clearfix"></div>
+	       <button class="button" type="submit"><img src="/down-vivid.png" />Save</button>
      </div>
      <fieldset class="durations">
      

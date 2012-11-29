@@ -48,7 +48,7 @@
              for="work_entry_work_entry_fees_attributes_0_fee">
              Fee
       </label>      
-      <div class="row collapse complex-input">
+      <div class="row collapse complex-input fees-input">
         <div class="two mobile-one columns">
           <span class="prefix">$</span>
         </div>
@@ -58,13 +58,9 @@
                  type="text" value="<% if(work_entry_fees.length > 0) {%><%= work_entry_fees[0].fee %><% } %>" >
         </div>
       </div>
-     <div class="panel input">
-       <div class="four columns">
+     <div class="small-buttons">
          <a href="/work_day_entries/2012/10/10/work_entries/162925" class="button alert" data-confirm="Are you sure?" data-method="delete" rel="nofollow"><img src="/delete-vivid.png" />Delete</a>
-       </div>
-       <div class="eight columns">
-	 <button class="button" type="submit"><img src="/down-vivid.png" />Save</button>
-       </div>
+	       <button class="button" type="submit"><img src="/down-vivid.png" />Save</button>
        <div class="clearfix"></div>
      </div>
      <fieldset class="durations">
