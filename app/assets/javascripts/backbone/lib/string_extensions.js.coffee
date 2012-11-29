@@ -22,3 +22,8 @@ String::to_interval = ->
     throw "Unsupported time interval string: #{@}"
   [hours, minutes] = @.split split_on
   new TimesheetApp.Helpers.TimeInterval(parseInt(hours, 10), parseInt(minutes, 10))
+
+String::pad = (num) ->
+  n = parseInt @, 10
+  to_slice = if @.length > num then @.length else num
+  String(Array(num).join("0") + n).slice(-1 * to_slice)
