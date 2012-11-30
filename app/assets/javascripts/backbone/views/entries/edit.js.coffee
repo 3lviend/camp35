@@ -310,6 +310,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
       closed: () =>
         $("#modal").html ""
         @back()
+    window.scroll_top()
     ko.applyBindings(@view, $("#modal")[0])
     false
     $(".charts-search").autocomplete

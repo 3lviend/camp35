@@ -287,6 +287,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
         $("#modal").html ""
         @back()
       animation: 'none'
+    window.scroll_top()
     ko.applyBindings(@view, $("#modal")[0])
     false
 
