@@ -16,7 +16,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
       others = new TimesheetApp.Collections.RolesCollection
       others.url = "/roles/others.json"
       view = new TimesheetApp.Views.Admin.SwitchUserView(other_roles: others)
-      $(window).oneTime 100, () -> 
+      $(window).oneTime 100, () ->
         view.render()
         others.fetch()
 
@@ -36,7 +36,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
 
   root: ->
     if window.location.pathname != "/users/sign_in"
-      date = moment.utc(new Date())
+      date = moment(new Date())
       window.location.href = "/#calendar/#{date.year()}/#{date.month() + 1}"
 
   home: (year, month) ->
@@ -125,10 +125,10 @@ $(document).oneTime 200, ->
   humane.timeout = 1000
 $ ->
   key 'command+n', ->
-    date = moment.utc()
+    date = moment()
     Backbone.history.navigate "/#entries/#{date.year()}/#{date.month()+1}/#{date.date()}/new", true
   key 'command+t', ->
-    date = moment.utc()
+    date = moment()
     Backbone.history.navigate "/#entries/#{date.year()}/#{date.month()+1}/#{date.date()}"
   key 'command+s', ->
     $("form button[type=submit]").trigger "click"

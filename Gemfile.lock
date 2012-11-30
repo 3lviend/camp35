@@ -145,6 +145,8 @@ GEM
     nested_form (0.2.3)
     nokogiri (1.5.5)
     orm_adapter (0.4.0)
+    pagedown-rails (1.0.0)
+      railties (~> 3.1)
     pg (0.14.1)
     polyglot (0.3.3)
     rabl (0.7.9)
@@ -285,6 +287,7 @@ DEPENDENCIES
   knockoutjs-rails
   momentjs-rails
   msgpack-rpc
+  pagedown-rails
   pg (>= 0.14.1)
   rabl
   rails (= 3.2.8)

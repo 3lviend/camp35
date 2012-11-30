@@ -30,7 +30,7 @@
     </td>
     <td data-bind="text: time_string()">
     </td>
-    <td data-bind="text: get('description')"></td>
+    <td data-bind="html: get('description').pagedown()"></td>
     <td>
       <a data-bind="attr: {href: front_url()}">Edit</a>
       <br>

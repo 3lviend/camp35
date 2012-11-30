@@ -12,8 +12,8 @@ class TimesheetApp.Models.WorkMonth extends Backbone.Model
   nonbillable_string: => @get('nonbillable_total').format_interval()
   month_year_string: => moment.utc([@get('year'), @get('month') - 1, 1]).format("MMMM YYYY")
   front_url: => "/#calendar/#{@get('year')}/#{@get('month')}"
-  month_class: => 
-    date = moment.utc()
+  month_class: =>
+    date = moment()
     if @get('month') > date.month() + 1
       'month-notyet'
     else 
