@@ -11,4 +11,8 @@ class IC::Right < ActiveRecord::Base
   has_many :targets,
     :class_name  => "IC::RightTarget",
     :foreign_key => :right_id
+
+  belongs_to :role,
+    :class_name  => "IC::Role",
+    :foreign_key => :role_id
 end

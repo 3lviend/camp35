@@ -12,7 +12,7 @@ class IC::Role < ActiveRecord::Base
  
   # Equivalent of IC::M::Role.check_right Perl method
   # from old version of system
-  def has_right_to(right_type_code, target)
+  def has_right_to(right_type_code, target = nil)
     roles = [self]
     while roles.count > 0
       
@@ -21,9 +21,14 @@ class IC::Role < ActiveRecord::Base
         unless right
           false
         else
-          targets = right.targets
-          targets.any? do |t| 
-            t.referenced.class.to_s == target.class.to_s && t.referenced.id == target.id rescue false
+          if target
+            targets = right.targets
+            targets.any? do |t| 
+              t.referenced.class.to_s == target.class.to_s && 
+                t.referenced.id == target.id rescue false
+            end
+          else
+            true
           end
         end
       end 
