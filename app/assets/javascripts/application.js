@@ -23,6 +23,8 @@
 //= require moment
 //= require humane
 //= require spin
+//= require markdown.converter
+//= require markdown.sanitizer
 //= require backbone
 //= require backbone_filters
 //= require backbone_rails_sync

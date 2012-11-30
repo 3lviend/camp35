@@ -27,3 +27,7 @@ String::pad = (num) ->
   n = parseInt @, 10
   to_slice = if @.length > num then @.length else num
   String(Array(num).join("0") + n).slice(-1 * to_slice)
+
+String::pagedown = ->
+  converter = Markdown.getSanitizingConverter()
+  converter.makeHtml @
