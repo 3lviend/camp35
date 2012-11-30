@@ -77,7 +77,8 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
     # console.info year
     # # console.info month
     m = parseInt month
-    if (date.month() + 1 < m && date.year() == year) || date.year() < year
+    y = parseInt year
+    if (date.month() + 1 < m && date.year() == y) || date.year() < y
       1
     else
       if date.month() + 1 > m || year < date.year()
