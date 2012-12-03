@@ -122,13 +122,15 @@ ul.nav li {
 
 header.row{
   margin-top: 40px;
-  border-bottom: 1px dotted #BBBBBB;
   margin-bottom: 20px;
+  background: #EEE;
+  padding-left: 20px;
 }
 
 h1{
   font-family: "OpenSansRegular" !important;
   font-weight: normal !important;
+  font-size: 24px !important;
 }
 
 thead{
@@ -141,6 +143,7 @@ h4{
   font-weight: normal !important;
   margin-left: 10px !important;
   margin-top: -15px !important;
+  font-size: 13px !important;
 }
 
 
@@ -609,7 +612,7 @@ div.no-hover {
 }
 
 #calendar {
-  margin-top: -30px;
+  margin-top: -20px;
   li {
     list-style-type: none;
     position: absolute;
@@ -688,7 +691,18 @@ div.no-hover {
     width: 40px;
     text-align: center;
     line-height: 40px;
+    color: transparent;
     margin-right: 2px;
+  }
+  a.left {
+    background: url(/left-black.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  a.right {
+    background: url(/right-black.png);
+    background-repeat: no-repeat;
+    background-position: center center;
   }
   select {
     float: left;

@@ -22,6 +22,7 @@
 //= require knockout
 //= require moment
 //= require humane
+//= require chosen-jquery
 //= require spin
 //= require markdown.converter
 //= require markdown.sanitizer
