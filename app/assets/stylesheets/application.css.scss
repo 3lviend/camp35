@@ -900,3 +900,7 @@ fieldset {
 ul {
   list-style-position: inside !important;
 }
+
+td.entry-description {
+  white-space: pre-wrap;
+}
