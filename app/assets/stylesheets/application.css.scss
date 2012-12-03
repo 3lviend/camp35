@@ -125,6 +125,12 @@ header.row{
   margin-bottom: 20px;
   background: #EEE;
   padding-left: 20px;
+
+  select {
+    font-family: "OpenSansLight" !important;
+    font-weight: normal !important;
+    font-size: 16px;
+  }
 }
 
 h1{
@@ -680,9 +686,11 @@ div.no-hover {
 }
 
 #calendar-controls {
-  margin-top: 10px;
   margin-bottom: 10px;
   height: 40px;
+  float: left;
+  background: whiteSmoke;
+  margin-left: -10px;
   a {
     float: left;
     height: 40px;
@@ -848,9 +856,11 @@ table.work_day_table {
   padding-bottom: 10px !important;
   border: solid 1px #999;
   background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,255,255)), to(rgb(230,230,230)));
-  -webkit-box-shadow: 0px 3px 6px rgba(0,0,0,0.25);
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.25);
   -webkit-transition: -webkit-transform 0.5s ease-out;
+  -moz-transition: -moz-transform 0.5s ease-out;
   -webkit-transform: translateY(-5570px) !important;
+  -moz-transform: translateY(-5570px) !important;
   visibility: visible !important;
   display: block !important;
 
@@ -867,6 +877,8 @@ table.work_day_table {
 .reveal-modal.open {
   -webkit-transition: -webkit-transform 0.5s ease-out;
   -webkit-transform: translateY(0px) !important;
+  -moz-transition: -moz-transform 0.5s ease-out;
+  -moz-transform: translateY(0px) !important;
 }
 .top-bar {
   margin-bottom: 0px !important;
