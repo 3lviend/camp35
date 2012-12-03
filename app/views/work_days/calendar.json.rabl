@@ -1,5 +1,8 @@
 collection @days
-attributes :date, :has_zero
+attributes :has_zero
+node :date do |day|
+  day.date.to_s[0..9]
+end
 node :time do |day|
   "#{'%02d' % day.time.hour}:#{'%02d' % day.time.min}:00"
 end

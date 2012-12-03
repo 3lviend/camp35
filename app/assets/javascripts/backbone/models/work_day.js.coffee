@@ -50,11 +50,11 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
       when 6 then "Saturday"
 
   day: =>
-    moment.utc(@get("date")).local().date()
+    moment(@get("date")).date()
 
   status_class: =>
     return "status-has-zero" if @get("has_zero")
-    date = moment.utc(@get("date")).local()
+    date = moment(@get("date"))
     today = moment(new Date())
     if date.year() == today.year() && date.month() == today.month() && date.date() == today.date()
       "status-today"
@@ -68,7 +68,7 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
           "status-ok"
 
   date_class: (year, month) =>
-    date = moment.utc(@get("date")).local()
+    date = moment(@get("date"))
     today = moment(new Date())
     "day-#{date.day()} week-#{@week_of_date(date, year, month)} #{'today' if date.year() == today.year() && date.month() == today.month() && date.date() == today.date()} #{'weekend' if date.day() == 0 || date.day() == 6} #{'out-of-month' if date.month() + 1 != month} #{@status_class()}"
 
