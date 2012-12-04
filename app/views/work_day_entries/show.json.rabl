@@ -15,3 +15,6 @@ node :total_nonbillable do |e|
   "#{'%02d' % duration.hour}:#{'%02d' % duration.minute}:00"
 end
 
+node :fee_total do |e|
+  e.work_entry_fees.inject(0) {|sum, f| sum = sum + f.fee; sum }.to_f
+end

@@ -28,7 +28,9 @@
       →
       <b data-bind="text: last_label()"></b>
     </td>
-    <td data-bind="text: time_string()">
+    <td>
+      <div data-bind="text: time_string()"></div>
+      <div class="entry_fee" data-bind="text: fee_total_string(), visible: fee_not_empty()"></div>
     </td>
     <td data-bind="text: get('description')"></td>
     <td>

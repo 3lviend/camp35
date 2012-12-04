@@ -44,6 +44,12 @@ class TimesheetApp.Models.WorkEntry extends Backbone.Model
   time_string: =>
     @get("total_duration").format_interval()
 
+  fee_total_string: =>
+    @get("fee_total").format_money()
+
+  fee_not_empty: =>
+    @get("fee_total") > 0
+
   front_url: =>
     "/#entries/#{@get("id")}"
 
