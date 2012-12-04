@@ -9,6 +9,7 @@ class TimesheetApp.Views.Authentication.LoginView extends Backbone.View
     $("#logout, #today, #new_entry, #admin, #this_month").hide()
     $("#side").html ""
     $(".button.login").click @login
+    $("#user_email").focus()
     $("#new_user input").keypress (e) =>
       if e.keyCode == 13 && !e.shiftKey
         @login()

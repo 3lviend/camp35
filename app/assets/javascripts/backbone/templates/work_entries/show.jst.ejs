@@ -32,7 +32,7 @@
       <div data-bind="text: time_string()"></div>
       <div class="entry_fee" data-bind="text: fee_total_string(), visible: fee_not_empty()"></div>
     </td>
-    <td data-bind="text: get('description')"></td>
+    <td class="entry-description" data-bind="html: get('description')"></td>
     <td>
       <a data-bind="attr: {href: front_url()}">Edit</a>
       <br>

@@ -15,6 +15,7 @@ group :assets do
   gem "humane-rails"
   gem 'jquery-cookie-rails'
   gem 'keymaster-rails'
+  gem 'pagedown-rails'
 end
 gem 'jquery-rails'
 gem "pg", ">= 0.14.1"
@@ -39,3 +40,4 @@ gem 'rabl'
 gem 'yajl-ruby'
 gem 'msgpack-rpc'
 gem 'boson'
+gem 'unicorn'

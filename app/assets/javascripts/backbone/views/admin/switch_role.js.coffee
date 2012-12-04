@@ -13,6 +13,7 @@ class TimesheetApp.Views.Admin.SwitchUserView extends Backbone.View
     $("#modal").html(@template()).reveal
       closed: () ->
         $("#modal").html ""
+    $("#modal .close-reveal-modal").click -> $('#modal').trigger('reveal:close')
     ko.applyBindings(@view, $("#modal")[0])
     false
 

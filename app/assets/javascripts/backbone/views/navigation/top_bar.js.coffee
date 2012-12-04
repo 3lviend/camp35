@@ -15,17 +15,17 @@ class TimesheetApp.Views.Navigation.TopBarView extends Backbone.View
       $(".top-bar").html @template()
 
       $("#today").click ->
-        now = moment.utc(new Date())
+        now = moment(new Date())
         Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}", true
         false
     
       $("#this_month").click ->
-        now = moment.utc(new Date())
+        now = moment(new Date())
         Backbone.history.navigate "/#calendar/#{now.year()}/#{now.month() + 1}", true
         false
     
       $("#new_entry").click ->
-        now = moment.utc(new Date())
+        now = moment(new Date())
         Backbone.history.navigate "/#entries/#{now.year()}/#{now.month() + 1}/#{now.date()}/new", true
         false
     

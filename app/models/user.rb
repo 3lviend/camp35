@@ -23,18 +23,24 @@ class User < ActiveRecord::Base
     self.roles.map(&:name).include? "admin"
   end
 
+  def can_switch_roles
+    self.ic_role.has_right_to IC::RightType::SUPERUSER ||
+      self.others_accessible.count > 0
+  end
+
   def others_accessible
-    role = self.ic_role
-    if role.rights.map(&:right_type).uniq.map(&:code).include? "superuser"
-      IC::User.enabled
-        .where("role_id <> ? AND email <> ?", self["system_role_id"], "root@domain.com")
-    else
-      rights = (role.rights + role.roles.map(&:rights)).flatten.uniq
-              .select { |r| r.right_type.target_kind_code == "role" }
-      accessible_group_ids = rights.map(&:targets).flatten.uniq.map(&:ref_obj_pk).uniq.map(&:to_i)
-      role_ids = IC::RoleHasRole.where(has_role_id: accessible_group_ids).uniq
-      IC::User.where role_id: role_ids
+    unless @others_accessible
+      role = self.ic_role
+      @others_accessible = if role.has_right_to IC::RightType::SUPERUSER
+        IC::User
+          .where("role_id <> ? AND email <> ?", self["system_role_id"], "root@domain.com")
+      else
+        IC::User.includes(:role).all.map(&:role).select do |r| 
+          role.has_right_to(IC::RightType::SWITCH_USER, r) 
+        end
+      end
     end
+    @others_accessible
   end
 
   def system_role_id

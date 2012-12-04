@@ -1,8 +1,8 @@
 <div id="calendar-controls">
-  <a href="#" data-bind="click: backMonth">&lt;</a>
+  <a href="#" class="left" data-bind="click: backMonth">&lt;</a>
   <select id="years" data-bind="template: {name: 'year-option', foreach: years()}, value: year"></select>
   <select id="months" data-bind="template: {name: 'month-option', foreach: months()}, value: month"></select>
-  <a href="#" data-bind="click: nextMonth">&gt;</a>
+  <a href="#" class="right" data-bind="click: nextMonth">&gt;</a>
 </div>
 
 <script type="text/html" id="year-option">

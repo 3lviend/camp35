@@ -28,7 +28,7 @@ class TimesheetApp.Views.Home.IndexView extends Backbone.View
 
 class TimesheetApp.Views.IndexViewModel
   constructor: (year, month) ->
-    date = moment.utc("2012-11-01")
+    date = moment("2012-11-01")
     days = []
     @days = ko.observableArray(days)
     @work_months = ko.observableArray([])
@@ -60,7 +60,7 @@ class TimesheetApp.Views.IndexViewModel
         nonbillable_total: (_.reduce (_.map(days, (day) => day.get("nonbillable_time"))), reduceTime, "0h 0m").format_interval()
         total_class: () =>
           date = moment(days[0].get("date"))
-          if date > moment.utc() 
+          if date > moment.utc()
             'total-notyet'
           else if moment.utc(_.last(days).get("date")) > moment.utc() && date < moment.utc()
             'total-thisweek'
@@ -73,7 +73,7 @@ class TimesheetApp.Views.IndexViewModel
               'total-little'
     @year = ko.observable year
     @month = ko.observable month
-    max_year = moment.utc(new Date()).year()
+    max_year = moment(new Date()).year()
     @years = ko.observableArray([2002..(Math.max(max_year, parseInt(year)))].reverse())
     @months = ko.observableArray ($.map ["January", "February", "March", "April", "Mai", "June", "July", "August", "September", "October", "November", "December"], (el, i) -> name: el, value: i + 1 )
     @goto = (e) =>
@@ -85,13 +85,13 @@ class TimesheetApp.Views.IndexViewModel
       if m.toString() != month
         Backbone.history.navigate "/#calendar/#{year}/#{m}", true
     @backMonth = =>
-      date = moment.utc()
+      date = moment()
       date.year(year)
       date.month(parseInt(month) - 1)
       date.subtract('months', 1)
       Backbone.history.navigate "/#calendar/#{date.year()}/#{date.month() + 1}", true
     @nextMonth = =>
-      date = moment.utc()
+      date = moment()
       date.year(year)
       date.month(parseInt(month) - 1)
       date.add('months', 1)
