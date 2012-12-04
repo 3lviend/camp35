@@ -7,6 +7,26 @@ class TimesheetApp.Models.WorkDay extends Backbone.Model
       date = moment.utc (new Date @get("date"))
       "#{date.format('YYYY-MM-DD, dddd')}"
 
+  in_future: =>
+    date = moment(@get("date"))
+    now  = moment(new Date())
+    if date.year() > now.year()
+      true
+    else
+      if date.year() < now.year()
+        false
+      else
+        if date.month() > now.month()
+          true
+        else
+          if date.month() < now.month()
+            false
+          else
+            if date.date() > now.date()
+              true
+            else
+              false
+
   time_string: =>
     if @get("time")
       # [hours, minutes] = @get("time").split(":")

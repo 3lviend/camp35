@@ -18,7 +18,7 @@
 </table>
 
 <script type="text/html" id="day-template">
-  <li data-bind="attr: {class: date_class($root.year(), $root.month()), 'data-href': href()}, click: $root.goto">
+  <li data-bind="attr: {class: date_class($root.year(), $root.month()), 'data-href': href()}, click: $root.goto, visible: !(in_future() && get('time') == '00:00:00' ) ">
     <div data-bind="text: day()"></div>
     <div class="day-totals">
       <div data-bind="text: time_string()" class="total-all"></div>
