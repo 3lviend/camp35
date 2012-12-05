@@ -7,6 +7,7 @@
 #= require ./lib/string_extensions
 #= require ./lib/number_extensions
 #= require ./lib/window_extensions
+#= require ./lib/backbone_extensions
 #= require ./lib/font_helper
 #= require ./lib/table_helper
 

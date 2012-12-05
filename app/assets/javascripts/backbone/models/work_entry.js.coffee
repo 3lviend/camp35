@@ -53,6 +53,14 @@ class TimesheetApp.Models.WorkEntry extends Backbone.Model
   front_url: =>
     "/#entries/#{@get("id")}"
 
+  delete_async: (config = {}) =>
+    date = moment @get('date_performed')
+    $.ajax
+      url: "/work_day_entries/#{date.year()}/#{date.month() + 1}/#{date.date()}/work_entries/#{@get('id')}"
+      type: "DELETE"
+      success: config.success
+      error: (xhr, status, err) -> config.error err
+
 
 class TimesheetApp.Collections.WorkEntriesCollection extends Backbone.Collection
   model: TimesheetApp.Models.WorkEntry

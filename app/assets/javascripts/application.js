@@ -36,4 +36,4 @@ window.router = new TimesheetApp.Routers.MainRouter();
 Backbone.history.start();
 $(document).foundationTopBar()
 $(document).foundationButtons()
-
+$(document).foundationNavigation();

@@ -18,6 +18,7 @@ class TimesheetApp.Views.WorkEntries.IndexView extends Backbone.View
     $("#main").html(@template())
     $("header.row").html "<h1>Work entries for #{@view.day.format('dddd, MMM Do YYYY')}</h1><h4>Take a peek at what you've accomplished</h4>"
     $("#side").html @totals_tpl()
+    $(window).oneTime 100, () -> $(document).foundationNavigation()
 
 class TimesheetApp.Views.WorkEntries.IndexViewModel
 
@@ -43,6 +44,15 @@ class TimesheetApp.Views.WorkEntries.IndexViewModel
       moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm").format_interval()
     @day = moment.utc [year, month-1, day]
     @collection.removeAll()
+    @delete_entry = (entry) =>
+      if confirm("Do you really want to remove work entry?")
+        entry.delete_async
+          success: ->
+            humane.notice "Work entry successfully deleted"
+            Backbone.history.refresh()
+          error: (err) ->
+            humane.error "Error: #{err}"
+
     @
   new_url: =>
     "/#entries/#{@day.year()}/#{@day.month() + 1}/#{@day.date()}/new"
