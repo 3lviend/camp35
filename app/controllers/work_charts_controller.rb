@@ -25,7 +25,7 @@ class WorkChartsController < ApplicationController
 
   def _search(config = {:include_hidden => false})
     render :json => WorkChart.search_for(params[:term], :include_hidden => config[:include_hidden])
-                      .map { |c| {label: c["labels"].join(" - "), value: c["id"]}}
+                      .map { |c| {label: c["labels"].join(" - "), value: c["labels"].join(" - "), id: c["id"]}}
                       .to_json
   end
 

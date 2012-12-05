@@ -983,3 +983,19 @@ ul {
 td.entry-description {
   white-space: pre-wrap;
 }
+
+.ui-menu {
+  border-radius: 0px !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) !important;
+
+  .ui-menu-item {
+    a {
+      border-radius: 0px !important;
+      border: none !important;
+    }
+  }
+
+  .ui-state-hover {
+    background: #eee !important;
+  }
+}
