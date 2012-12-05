@@ -305,13 +305,10 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     $(".calendar", @el).datepicker
       dateFormat: "DD, yy-mm-dd"
     $(".calendar", @el).datepicker "setDate", moment.utc(@model.get('date_performed')).format("dddd, YYYY-MM-DD")
-   # $("#main").html(@el)
-    # $("#side").html ""
-    $("#modal").html(@el).reveal
-      closed: () =>
-        $("#modal").html ""
+    window.router.modal.show
+      content: @el
+      closed: =>
         @back()
-    window.scroll_top()
     ko.applyBindings(@view, $("#modal")[0])
     false
     $(".charts-search").autocomplete

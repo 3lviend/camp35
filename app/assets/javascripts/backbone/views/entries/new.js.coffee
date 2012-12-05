@@ -283,14 +283,12 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
   render: =>
     #  $("section[role=main]").html("")
     $(@el).html(@template(@model.toJSON()))
-    $("#modal").html(@el).reveal
-      closed: () =>
-        $("#modal").html ""
+    window.router.modal.show
+      content: @el
+      closed: =>
         @back()
-      animation: 'none'
-    window.scroll_top()
-    ko.applyBindings(@view, $("#modal")[0])
-    false
+    #ko.applyBindings(@view, $("#modal")[0])
+    #false
 
     $("textarea", @el).autoGrow()
     $(".calendar", @el).datepicker
