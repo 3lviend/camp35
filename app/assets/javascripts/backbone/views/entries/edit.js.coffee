@@ -99,6 +99,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
         new_hours = (parseInt hours, 10) + _.reduce(hours_to_add, ((s, i) -> s + i), 0)
         new_minutes = (parseInt minutes, 10) + _.reduce(minutes_to_add, ((s, i) -> s + i), 0)
         durations[0].duration = "#{new_hours}:#{new_minutes}:00"
+        durations[0].kind_code = _.first(@duration_kinds.models).get('code')
         @model.set("work_entry_durations", durations, silent: true)
         @render_durations()
 
