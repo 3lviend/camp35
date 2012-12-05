@@ -166,7 +166,8 @@ class WorkChart < ActiveRecord::Base
                 parent_id,
                 status,
                 NULL::varchar AS parent_name,
-                display_label::text AS path
+                display_label::text AS path,
+                NULL::varchar AS parent_status
         FROM work_chart
         WHERE parent_id IS NULL
         UNION SELECT f1.display_label,
@@ -174,12 +175,13 @@ class WorkChart < ActiveRecord::Base
                       f1.parent_id,
                       f1.status,
                       tree.display_label AS parent_name,
-                      tree.path || '-' || f1.display_label::text AS path
+                      tree.path || '-' || f1.display_label::text AS path,
+                      CASE WHEN parent_status = 'hidden' THEN 'hidden' ELSE f1.status END AS parent_status
         FROM tree
         JOIN work_chart f1 ON f1.parent_id = tree.id)
       SELECT id,
             parent_id,
-            status,
+            parent_status AS status,
             path
       FROM tree
       WHERE id in (?)
