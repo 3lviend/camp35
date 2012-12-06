@@ -24,6 +24,8 @@
 //= require humane
 //= require chosen-jquery
 //= require spin
+//= require date
+//= require daterangepicker
 //= require markdown.converter
 //= require markdown.sanitizer
 //= require backbone
@@ -37,3 +39,4 @@ Backbone.history.start();
 $(document).foundationTopBar()
 $(document).foundationButtons()
 $(document).foundationNavigation();
+$(document).foundationCustomForms();

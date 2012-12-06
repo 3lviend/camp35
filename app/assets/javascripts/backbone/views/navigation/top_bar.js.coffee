@@ -57,4 +57,8 @@ class TimesheetApp.Views.Navigation.TopBarViewModel
     @redirect_to_admin = () ->
       window.open "/admin", "_blank"
       false
+
+    @redirect_to_reports = () ->
+      Backbone.history.navigate "/#reports", true
+      false
  

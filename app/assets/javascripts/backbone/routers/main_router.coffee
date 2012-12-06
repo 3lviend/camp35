@@ -7,6 +7,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     'entries/:year/:month/:day/new': 'new_entry'
     'work_days/:weeks_from_now': 'work_days'
     'entries/:year/:month/:day': 'work_day'
+    'reports': 'reports'
 
   initialize: ->
     @current_role = new TimesheetApp.Models.Role
@@ -30,6 +31,10 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
 
   render_navigation: ->
     view = new TimesheetApp.Views.Navigation.TopBarView(role: @current_role)
+
+  reports: ->
+    view = new TimesheetApp.Views.Reports.ShowView()
+    $(window).oneTime 100, () -> view.render()
 
   login: ->
     view = new TimesheetApp.Views.Authentication.LoginView()

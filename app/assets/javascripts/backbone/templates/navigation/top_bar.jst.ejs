@@ -27,6 +27,7 @@
     <li class="has-dropdown"  >
     <a href="#">Settings</a>
       <ul class="dropdown">
+        <li><a data-bind="click: redirect_to_reports" href="#">Reports</a></li>
         <li data-bind="if: current_role().get('can_switch_roles')">
         <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/swap-white.png" />Switch role</a>
         </li>

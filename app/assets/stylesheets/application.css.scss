@@ -14,6 +14,7 @@
  *= require foundation_and_overrides
  *= require jquery.ui.all
  *= require spinner
+ *= require daterangepicker
  *= require_tree .
 */
 
@@ -125,6 +126,7 @@ header.row{
   margin-bottom: 20px;
   background: #EEE;
   padding-left: 20px;
+  position: relative;
 
   select {
     font-family: "OpenSansLight" !important;
@@ -999,3 +1001,31 @@ td.entry-description {
     background: #eee !important;
   }
 }
+
+.sub-nav.reports {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.daterangepicker {
+  display: none;
+  box-shadow: #666 0px 0px 20px 0px;
+
+  .calendar {
+    max-width: none !important;
+  }
+}
+
+.report-options {
+float: right;
+margin-top: -35px;
+margin-right: 20px;
+}
+
+.daterange.reports {
+  width: 200px;
+  text-align: center;
+  float: left;
+}
+
+
