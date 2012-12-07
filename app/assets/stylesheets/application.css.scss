@@ -322,41 +322,7 @@ circle, text{
   }
 }
 
-.chzn-container-single .chzn-single{
-  border-radius: 0px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-  border-top: none !important;
-}
 
-.chzn-results{
-  width: 100%;
-}
-
-.chzn-container-single .chzn-search input{
-    -webkit-transition: none !important;
-    transition: none !important;
-    -moz-transition: none !important;
-    width: 100% !important;
-}
-
-
-.chzn-single{
-  border-top: none !important;
-  b{
-    margin-top: 3px;
-  }
-}
-
-.chzn-drop{
-  width: 381px !important;
-}
-
-.chzn-container{
-  float: right;
-  width: 60% !important;
-  margin-bottom: 10px;
-}
 
 .work_chart_selector{
   .chzn-container:nth-child(2) .chzn-single{
@@ -1006,7 +972,6 @@ td.entry-description {
   margin-top: 10px;
   margin-bottom: 5px;
 }
-
 .daterangepicker {
   display: none;
   box-shadow: #666 0px 0px 20px 0px;
@@ -1016,16 +981,44 @@ td.entry-description {
   }
 }
 
-.report-options {
-float: right;
-margin-top: -35px;
-margin-right: 20px;
-}
 
-.daterange.reports {
-  width: 200px;
-  text-align: center;
-  float: left;
-}
+form.report-controls {
+  .report-options {
+    float: right;
+    margin-top: -35px;
+    margin-right: 20px;
+  }
 
+  .daterange.reports {
+    width: 200px;
+    text-align: center;
+    float: left;
+  }
+
+  .button {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px 5px;
+    font-size: 0.8em;
+  }
+
+  label.roles {
+    width: 300px !important;
+    margin-left: 10px;
+    float: left;
+
+    .chzn-container-multi {
+
+      .chzn-choices {
+        border: 1px solid #CCC;
+        border-radius: 2px;
+
+        .search-field input {
+          height: 28px;
+        }
+      }
+    }
+  }
+}
 

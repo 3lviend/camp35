@@ -22,7 +22,7 @@
 //= require knockout
 //= require moment
 //= require humane
-//= require chosen-jquery
+//= require chosen
 //= require spin
 //= require date
 //= require daterangepicker

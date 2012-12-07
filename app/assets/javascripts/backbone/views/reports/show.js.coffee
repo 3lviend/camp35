@@ -18,4 +18,5 @@ class TimesheetApp.Views.Reports.ShowView extends Backbone.View
         'Last 30 Days': [Date.today().add({ days: -29 }), 'today']
         'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()]
         'Last Month': [Date.today().moveToFirstDayOfMonth().add({ months: -1 }), Date.today().moveToFirstDayOfMonth().add({ days: -1 })]
+    $("header .chosen").chosen()
 
