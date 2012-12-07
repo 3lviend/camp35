@@ -49,5 +49,9 @@ class TimesheetApp.Views.Reports.ShowViewModel
         i
       @report_types([])
       @report_types(types)
+   
+    @display_full = ko.observable false
+    @printable    = ko.observable false
+    @open_in_new  = ko.observable false
 
 
