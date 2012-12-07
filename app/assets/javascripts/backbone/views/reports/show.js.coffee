@@ -4,6 +4,9 @@ class TimesheetApp.Views.Reports.ShowView extends Backbone.View
   template: JST["backbone/templates/reports/show"]
   controls_template: JST["backbone/templates/reports/controls"]
 
+  initialize: =>
+    @view = new TimesheetApp.Views.Reports.ShowViewModel()
+
   render: ->
     $(@el).html(@template())
     $("#main").html @el
@@ -19,4 +22,32 @@ class TimesheetApp.Views.Reports.ShowView extends Backbone.View
         'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()]
         'Last Month': [Date.today().moveToFirstDayOfMonth().add({ months: -1 }), Date.today().moveToFirstDayOfMonth().add({ days: -1 })]
     $("header .chosen").chosen()
+    ko.applyBindings @view, $("header")[0]
+
+class TimesheetApp.Views.Reports.ShowViewModel
+  constructor: ->
+    @report_types = ko.observableArray [
+      {
+        value:  "break"
+        label:  "Break"
+        active: true
+      },
+      {
+        value:  "user"
+        label:  "User"
+        active: false
+      },
+      {
+        value:  "category"
+        label:  "Category"
+        active: false
+      }
+    ]
+    @select_type = (item) =>
+      types = _.map @report_types(), (i) ->
+        i.active = i.value == item.value
+        i
+      @report_types([])
+      @report_types(types)
+
 

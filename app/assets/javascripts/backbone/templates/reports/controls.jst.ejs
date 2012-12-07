@@ -1,8 +1,10 @@
 <dl class="sub-nav reports">
   <dt>Report type:</dt>
-  <dd class="active"><a href="#">Simple</a></dd>
-  <dd><a href="#">By user</a></dd>
-  <dd><a href="#">By category</a></dd>
+  <!-- ko foreach: report_types -->
+    <dd data-bind="attr: {class: active ? 'active' : ''}">
+      <a href="#" data-bind="text: label, click: $root.select_type"></a>
+    </dd>
+  <!-- /ko -->
 </dl>
 <form action="#" class="custom report-controls">
   <a href="#" class="button">Generate</a>
