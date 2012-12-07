@@ -9,7 +9,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     if confirm "Are you sure you want to delete this entry?"
       date = moment.utc(@model.get("date_performed"))
       $.ajax
-        url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries/#{@model.get('id')}"
+        url: "/work_entries/#{@model.get('id')}"
         type: "DELETE"
         success: (data) =>
           if data.status == 'OK'
@@ -58,7 +58,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     delete data.work_entry_fees
 
     $.ajax
-      url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries/#{@model.get('id')}"
+      url: "/work_entries/#{@model.get('id')}"
       type: "PUT"
       data:
         work_entry: data
