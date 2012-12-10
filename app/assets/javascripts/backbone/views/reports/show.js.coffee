@@ -5,7 +5,7 @@ class TimesheetApp.Views.Reports.ShowView extends Backbone.View
   controls_template: JST["backbone/templates/reports/controls"]
 
   initialize: =>
-    @view = new TimesheetApp.Views.Reports.ShowViewModel()
+    @view = new TimesheetApp.Views.Reports.ShowViewModel(@options.roles)
 
   render: ->
     $(@el).html(@template())
@@ -21,11 +21,11 @@ class TimesheetApp.Views.Reports.ShowView extends Backbone.View
         'Last 30 Days': [Date.today().add({ days: -29 }), 'today']
         'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()]
         'Last Month': [Date.today().moveToFirstDayOfMonth().add({ months: -1 }), Date.today().moveToFirstDayOfMonth().add({ days: -1 })]
-    $("header .chosen").chosen()
     ko.applyBindings @view, $("header")[0]
+    ko.applyBindings @view, $("#main")[0]
 
 class TimesheetApp.Views.Reports.ShowViewModel
-  constructor: ->
+  constructor: (roles) ->
     @report_types = ko.observableArray [
       {
         value:  "break"
@@ -49,9 +49,34 @@ class TimesheetApp.Views.Reports.ShowViewModel
         i
       @report_types([])
       @report_types(types)
+
+    @selected_type = ko.computed =>
+      if @report_types().length == 0
+        "break"
+      else
+        _.find @report_types(), (t) -> t.active
    
     @display_full = ko.observable false
     @printable    = ko.observable false
     @open_in_new  = ko.observable false
+    @roles = ko.observableArray([])
+    roles.on "reset", =>
+      @roles(roles.models)
+      $(window).oneTime 100, => $(".roles select").chosen()
+    @date_range_string = ko.observable("")
+    @generate_report = =>
+      console.info @date_start()
+     @date_range = ko.computed =>
+       @date_range_string().split(" - ")
+     @date_start = ko.computed =>
+       if @date_range().length == 2
+         moment @date_range()[0]
+       else
+         null
+     @date_end   = ko.computed =>
+       if @date_range().length == 2
+         moment @date_range()[1]
+       else
+         null
 
 

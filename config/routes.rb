@@ -27,6 +27,7 @@ TimesheetApp::Application.routes.draw do
   end
   match "/roles/current" => "roles#current"
   match "/roles/others"  => "roles#others"
+  match "/roles/reportable" => "roles#reportable"
   match "/roles/assume"  => "roles#assume"
 
   devise_for :users, :controllers => {:sessions => 'sessions'}

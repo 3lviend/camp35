@@ -28,6 +28,20 @@ class User < ActiveRecord::Base
       self.others_accessible.count > 0
   end
 
+  def reportable_users
+    unless @reportable_users
+      role = self.ic_role
+      @reportable_users = if role.has_right_to IC::RightType::SUPERUSER
+        IC::User.where("email <> ?", "root@domain.com")
+      else
+        IC::User.includes(:role).all.map(&:role).select do |r|
+          role.has_right_to(IC::RightType::REPORT, r)
+        end
+      end
+    end
+    @reportable_users
+  end
+
   def others_accessible
     unless @others_accessible
       role = self.ic_role

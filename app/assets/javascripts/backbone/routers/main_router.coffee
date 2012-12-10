@@ -17,9 +17,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
       others = new TimesheetApp.Collections.RolesCollection
       others.url = "/roles/others.json"
       view = new TimesheetApp.Views.Admin.SwitchUserView(other_roles: others)
-      $(window).oneTime 100, () ->
-        view.render()
-        others.fetch()
+      others.fetch()
     @modal = new TimesheetApp.Modal("#modal")
 
   before:
@@ -33,8 +31,11 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
     view = new TimesheetApp.Views.Navigation.TopBarView(role: @current_role)
 
   reports: ->
-    view = new TimesheetApp.Views.Reports.ShowView()
-    $(window).oneTime 100, () -> view.render()
+    roles = new TimesheetApp.Collections.RolesCollection
+    roles.url = "/roles/reportable.json"
+    view = new TimesheetApp.Views.Reports.ShowView(roles: roles)
+    roles.fetch()
+    $(window).oneTime 100, => view.render()
 
   login: ->
     view = new TimesheetApp.Views.Authentication.LoginView()

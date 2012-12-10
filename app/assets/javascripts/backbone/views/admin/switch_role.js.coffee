@@ -5,6 +5,7 @@ class TimesheetApp.Views.Admin.SwitchUserView extends Backbone.View
 
   initialize: ->
     @other_roles = @options.other_roles
+    @other_roles.on "reset", => @render()
     @view = new TimesheetApp.Views.Admin.SwitchUserViewModel
     @other_roles.on "reset", () =>
       @view.roles(@other_roles.models)
