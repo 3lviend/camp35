@@ -18,9 +18,9 @@
 </table>
 
 <script type="text/html" id="day-template">
-  <li data-bind="attr: {class: date_class($root.year(), $root.month()), 'data-href': href()}, click: $root.goto, visible: !(in_future() && get('time') == '00:00:00' ) ">
+  <li data-bind="attr: {class: date_class($root.year(), $root.month()), 'data-href': href()}, click: $root.goto">
     <div data-bind="text: day()"></div>
-    <div class="day-totals">
+    <div class="day-totals" data-bind="visible: !(in_future() && get('time') == '00:00:00' ) ">
       <div data-bind="text: time_string()" class="total-all"></div>
       <div data-bind="text: billable_time_string()" class="sub"></div>
       <div data-bind="text: nonbillable_time_string()" class="sub nonbillable"></div></div>

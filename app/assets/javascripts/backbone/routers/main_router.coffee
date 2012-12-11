@@ -19,6 +19,7 @@ class TimesheetApp.Routers.MainRouter extends Backbone.Router
       $(window).oneTime 100, () ->
         view.render()
         others.fetch()
+    @modal = new TimesheetApp.Modal("#modal")
 
   before:
     '^((?!login).)*$': ->

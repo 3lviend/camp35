@@ -1,25 +1,19 @@
 <table cellspacing="0" class="work_day_table">
-<!--  <thead>
-    <tr><th>Work chart</th>
-      <th>Time</th>
-      <th>Description</th>
-      <th></th>
-  </tr></thead> -->
   <col><col><col><col>
   <tbody data-bind="template: {name: 'entry_template', foreach: collection}">
   </tbody>
 </table>
-  <div class="actions">
-    <a data-bind="attr: {href: new_url()}" class="button"><img src="/compose-vivid.png" />New entry</a>
-  </div>
+<div class="actions">
+  <a data-bind="attr: {href: new_url()}" class="button"><img src="/compose-vivid.png" />New entry</a>
+</div>
 
 <script id="middle_label_template" type="text/x-jquery-tmpl">
-  <br>
+<br>
   → <span data-bind="text: $data"></span>
 </script>
 
 <script id="entry_template" type="text/x-jquery-tmpl">
-  <tr>
+<tr>
     <td>
       <span data-bind="text: top_label(), visible: chart_has_many_labels()"></span>
       <span data-bind="template: {name: 'middle_label_template', foreach: middle_labels()}, visible: chart_has_many_labels()">
@@ -34,6 +28,15 @@
     </td>
     <td class="entry-description" data-bind="html: get('description')"></td>
     <td>
+      <ul class="nav-bar">
+        <li class="has-flyout">
+          <a href="#"><img src="/settings-darkgray.png" /></a>
+          <a href="#" class="flyout-toggle"><span></span></a>
+          <ul class="flyout right">
+            <li><img src="/delete-darkgray.png" /><a data-bind="click: $root.delete_entry" href="#">Delete</a></li>
+          </ul>
+        </li>
+      </ul>
       <a data-bind="attr: {href: front_url()}">Edit</a>
       <br>
     </td>

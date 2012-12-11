@@ -275,7 +275,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       source: "/work_charts/search#{if @show_inactive then '_all' else ''}",
       minLength: 2,
       select: (e, ul) =>
-        @selected_chart.set("id", ul.item.value, silent: true)
+        @selected_chart.set("id", ul.item.id, silent: true)
         @selected_chart.fetch()
         $(window).oneTime 10, () -> $(".charts-search").val("")
  
@@ -283,14 +283,12 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
   render: =>
     #  $("section[role=main]").html("")
     $(@el).html(@template(@model.toJSON()))
-    $("#modal").html(@el).reveal
-      closed: () =>
-        $("#modal").html ""
+    window.router.modal.show
+      content: @el
+      closed: =>
         @back()
-      animation: 'none'
-    window.scroll_top()
-    ko.applyBindings(@view, $("#modal")[0])
-    false
+    #ko.applyBindings(@view, $("#modal")[0])
+    #false
 
     $("textarea", @el).autoGrow()
     $(".calendar", @el).datepicker
@@ -301,7 +299,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       source: "/work_charts/search",
       minLength: 2,
       select: (e, ul) =>
-        @selected_chart.set("id", ul.item.value, silent: true)
+        @selected_chart.set("id", ul.item.id, silent: true)
         @selected_chart.fetch()
         $(window).oneTime 10, () -> $(".charts-search").val("")
         # $("#side").html ""

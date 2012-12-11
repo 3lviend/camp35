@@ -820,6 +820,53 @@ table.work_day_table {
     width: 10px;
   }
 
+  .nav-bar {
+    background: transparent;
+    margin-top: 0px;
+    float: right;
+    margin-right: -8px;
+    margin-top: -8px;
+    padding: 3px;
+    width: 26px;
+    height: 26px;
+    margin-bottom: 10px;
+
+    li:hover {
+      background: #ccc;
+    }
+
+    .has-flyout {
+      border: none;
+      line-height: 10px;
+
+      a:first-child {
+        padding: 0px;
+      }
+
+      .flyout-toggle {
+        display: none;
+      }
+
+      .flyout {
+        top: 19px;
+        width: auto;
+
+        li {
+
+          img {
+            float: left;
+            margin-top: 2px;
+            margin-left: 2px;
+          }
+          a {
+            padding: 4px 10px;
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 .ui-menu {
@@ -937,4 +984,20 @@ ul {
 
 td.entry-description {
   white-space: pre-wrap;
+}
+
+.ui-menu {
+  border-radius: 0px !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) !important;
+
+  .ui-menu-item {
+    a {
+      border-radius: 0px !important;
+      border: none !important;
+    }
+  }
+
+  .ui-state-hover {
+    background: #eee !important;
+  }
 }
