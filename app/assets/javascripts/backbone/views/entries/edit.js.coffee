@@ -354,7 +354,7 @@ class TimesheetApp.Views.Entries.EditView extends Backbone.View
     @selected_chart.set("id", @model.get("work_chart_id"), silent: true)
     @selected_chart.fetch()
     $("a.alert", @el).click (e) =>
-      @delete()
+      @back()
       false
     $("button[type=submit]", @el).click (e) =>
       @persist()
