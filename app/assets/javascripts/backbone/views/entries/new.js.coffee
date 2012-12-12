@@ -1,7 +1,7 @@
 TimesheetApp.Views.Entries ||= {}
 
 class TimesheetApp.Views.Entries.NewView extends Backbone.View
-  template: JST["backbone/templates/entries/new"]
+  template: JST["backbone/templates/entries/_form"]
   selects_template: JST["backbone/templates/entries/_selects"]
   durations_template: JST["backbone/templates/entries/_durations"]
 
@@ -33,7 +33,7 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
 
 
     $.ajax
-      url: "/work_day_entries/#{date.year()}/#{date.month()}/#{date.date()}/work_entries"
+      url: "/work_entries"
       type: "POST"
       data:
         work_entry: data

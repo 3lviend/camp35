@@ -4,15 +4,10 @@
       Chart
     </label>      
     <div class="row collapse complex-input">
-      <div class="twelve mobile-four columns" >
+      <div class="nine mobile-four columns">
          <input class="charts-search" type="text" placeholder="Type to search through work charts">
       </div>
-      <div class="chart-selects eight mobile-three columns">
-         <input type="hidden" name="work_entry[work_chart_id]" value="<%= work_chart_id %>" >
-         <select name="work_entry[work_chart_id]_" >
-         </select>
-      </div>
-      <div class="four mobile-three columns">
+      <div class="three mobile-three columns qp-block">
         <div class="small button dropdown">
           Quick pick
           <div class="no-hover" style="top: 31px; ">
@@ -35,6 +30,13 @@
           </div>
         </div>
       </div>
+
+      <div class="chart-selects eight mobile-three">
+         <input type="hidden" name="work_entry[work_chart_id]" value="<%= work_chart_id %>" >
+         <select name="work_entry[work_chart_id]_" >
+         </select>
+      </div>
+
     </div>
     <div class="row"><a class="toggle_charts_filter" href="#">Show inactive</a></div>
     <div class="input string optional">
@@ -59,8 +61,8 @@
         </div>
       </div>
      <div class="small-buttons">
-         <a href="/work_day_entries/2012/10/10/work_entries/162925" class="button alert" data-confirm="Are you sure?" data-method="delete" rel="nofollow"><img src="/delete-vivid.png" />Delete</a>
-	       <button class="button" type="submit"><img src="/tick-vivid.png" />Save</button>
+        <a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" ><img src="/delete-vivid.png" />Cancel</a>
+        <button class="button" type="submit"><img src="/tick-vivid.png" />Save</button>
        <div class="clearfix"></div>
      </div>
      <fieldset class="durations">
@@ -74,7 +76,7 @@
      </div>
      <div class="panel input">
        <div class="four columns">
-	 <a href="/work_day_entries/2012/10/10/work_entries/162925" class="button alert" data-confirm="Are you sure?" data-method="delete" rel="nofollow"><img src="/delete-vivid.png" />Delete</a>
+         <a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" ><img src="/delete-vivid.png" />Cancel</a>
        </div>
        <div class="eight columns">
          <button class="button" type="submit"><img src="/tick-vivid.png" />Save</button>

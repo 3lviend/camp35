@@ -52,6 +52,8 @@ class TimesheetApp.Views.WorkEntries.IndexViewModel
             Backbone.history.refresh()
           error: (err) ->
             humane.error "Error: #{err}"
+    @entry_settings = (entry) =>
+     false
 
     @
   new_url: =>

@@ -183,8 +183,7 @@ fieldset.durations {
     clear: both;
     width: 100%;
     position: relative;
-    top: -5px;
-    margin-bottom: 5px !important;
+    margin-bottom: 10px !important;
 }
 
 .button{
@@ -226,7 +225,7 @@ form{
       margin-bottom: 10px !important;
     }
     .complex-input{
-      input, select, .dropdown { width: 100%; height: 32px; padding: 6px;  }
+      input, select, .dropdown { width: 100%; height: 30px; padding: 2px 6px;  }
       select { margin-bottom: -1px !important; }
       .dropdown { 
         line-height: 18px;
@@ -245,7 +244,7 @@ form{
         }
       }
     }
-    select { height: 32px; }
+    select { height: 30px; padding: 2px 6px; }
     input.interval{
       margin-right: 0px !important;
       width: 100% !important;
@@ -299,6 +298,7 @@ circle, text{
 .panel{
   .button{
     width: 100%;
+    padding: 5px 10px;
   }
 }
 
@@ -451,7 +451,7 @@ div.no-hover {
   background: white;
   color: #444;
   width: 500px;
-  margin-left: -390px;
+  margin-left: -384px;
   z-index: 99999;
   position: absolute;
   box-shadow: #666 0px 0px 20px;
@@ -590,8 +590,9 @@ div.no-hover {
   li {
     list-style-type: none;
     position: absolute;
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
+    padding: 2px;
     background-color: #dfdfdf;
     transition: all 0.5s ease-in-out;
     -webkit-transition: all 0.5s ease-in-out;
@@ -646,8 +647,8 @@ div.no-hover {
   @for $d from 0 through 6 {
     @for $w from 1 through 6 {
       li.day-#{$d}.week-#{$w} {
-        margin-top: (92*($w - 1)) * 1px;
-        margin-left: (92*$d) * 1px;
+        margin-top: (82*($w - 1)) * 1px;
+        margin-left: (82*$d) * 1px;
       }
     }
   }
@@ -696,11 +697,12 @@ div.no-hover {
 #calendar-week-totals {
   list-style-type: none;
   float: left;
-  margin-left: 700px;
+  margin-left: 600px;
    
   li {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
+    padding: 2px;
     font-family: "OpenSansLight";
     position: relative;
     margin-bottom: 2px;
@@ -917,7 +919,6 @@ input.currency {
 }
 
 form div.input .complex-input.fees-input {
-  width: 49% !important;
   float: left !important;
   margin-bottom: 0px !important;
 }
@@ -925,6 +926,7 @@ form div.input .complex-input.fees-input {
 .small-buttons {
   float: right;
   width: 49% !important;
+  margin-bottom: 10px;
 }
 
 .small-buttons .button {
@@ -1042,4 +1044,8 @@ form.report-controls {
       }
     }
   }
+}
+.qp-block {
+ width: 24.6% !important;
+ margin-left: 2px;
 }
