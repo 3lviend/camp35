@@ -64,19 +64,29 @@ class TimesheetApp.Views.Reports.ShowViewModel
       @roles(roles.models)
       $(window).oneTime 100, => $(".roles select").chosen()
     @date_range_string = ko.observable("")
+
     @generate_report = =>
-      console.info @date_start()
-     @date_range = ko.computed =>
-       @date_range_string().split(" - ")
-     @date_start = ko.computed =>
-       if @date_range().length == 2
-         moment @date_range()[0]
-       else
-         null
-     @date_end   = ko.computed =>
-       if @date_range().length == 2
-         moment @date_range()[1]
-       else
-         null
+      $.ajax
+        url: "/reports/#{@selected_type().value}.json"
+        data:
+          start: @date_start().toDate()
+          end:   @date_end().toDate()
+          roles: @selected_roles()
+        success: (items) => @report_items(items)
 
+    @selected_roles = ko.observableArray([])
 
+    @date_range = ko.computed =>
+      @date_range_string().split(" - ")
+    @date_start = ko.computed =>
+      if @date_range().length == 2
+        moment @date_range()[0]
+      else
+        null
+    @date_end   = ko.computed =>
+      if @date_range().length == 2
+        moment @date_range()[1]
+      else
+        null
+
+    @report_items = ko.observable()

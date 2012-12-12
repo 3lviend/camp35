@@ -14,6 +14,10 @@ class WorkEntry < ActiveRecord::Base
     work_chart.labels
   end
 
+  def total
+    Interval.new self.total_duration
+  end
+
   def total_duration
     self.total_for self.work_entry_durations
   end

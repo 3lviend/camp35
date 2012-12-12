@@ -10,7 +10,7 @@
   <a href="#" data-bind="click: generate_report" class="button">Generate</a>
   <input type="text" placeholder="Pick date range" data-bind="value: date_range_string, valueUpdate: 'blur'" class="daterange reports" />
   <label class="roles">
-    <select data-bind="foreach: roles" data-customforms="disabled" 
+    <select data-bind="foreach: roles, selectedOptions: selected_roles" data-customforms="disabled" 
             class="chosen" data-placeholder="Choose roles" multiple>
       <option data-bind="value: get('email'), text: user_name()"></option>
     </select>

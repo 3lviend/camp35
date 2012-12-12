@@ -2,9 +2,18 @@
 
 <script id="break" type="text/html">
   <h4>Summary</h4>
-  <h6>10.00</h6>
+  <h6>Total hours: <span>10.00</span></h6>
+  <ul data-bind="template: {name: 'report_item', foreach: report_items}"></ul>
 </script>
 
 <script id="user" type="text/html"></script>
 
 <script id="category" type="text/html"></script>
+
+<script id="report_item" type="text/html">
+  <li>
+    <span class="name" data-bind="text: name"></span>
+    <span class="total" data-bind="text: total"></span> 
+    <ul data-bind="template: {name: 'report_item', foreach: children}"></ul>
+  </li>
+</script>

@@ -1022,3 +1022,24 @@ form.report-controls {
   }
 }
 
+.report_content {
+  ul {
+    clear: both;
+    list-style-type: none;
+
+    li {
+      background: #EEE;
+      line-height: 200%;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      .name {
+        float: left;
+      }
+
+      .total {
+        float: right;
+      }
+    }
+  }
+}

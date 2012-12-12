@@ -25,10 +25,12 @@ TimesheetApp::Application.routes.draw do
       get 'duration_kinds'
     end
   end
-  match "/roles/current" => "roles#current"
-  match "/roles/others"  => "roles#others"
-  match "/roles/reportable" => "roles#reportable"
-  match "/roles/assume"  => "roles#assume"
+  get "/roles/current" => "roles#current"
+  get "/roles/others"  => "roles#others"
+  get "/roles/reportable" => "roles#reportable"
+  get "/roles/assume"  => "roles#assume"
+
+  get "/reports/break" => "reports#break"
 
   devise_for :users, :controllers => {:sessions => 'sessions'}
 end
