@@ -4,15 +4,10 @@
       Chart
     </label>      
     <div class="row collapse complex-input">
-      <div class="twelve mobile-four columns" >
+      <div class="nine mobile-four columns">
          <input class="charts-search" type="text" placeholder="Type to search through work charts">
       </div>
-      <div class="chart-selects eight mobile-three columns">
-         <input type="hidden" name="work_entry[work_chart_id]" value="<%= work_chart_id %>" >
-         <select name="work_entry[work_chart_id]_" >
-         </select>
-      </div>
-      <div class="four mobile-three columns">
+      <div class="three mobile-three columns qp-block">
         <div class="small button dropdown">
           Quick pick
           <div class="no-hover" style="top: 31px; ">
@@ -35,6 +30,13 @@
           </div>
         </div>
       </div>
+
+      <div class="chart-selects eight mobile-three">
+         <input type="hidden" name="work_entry[work_chart_id]" value="<%= work_chart_id %>" >
+         <select name="work_entry[work_chart_id]_" >
+         </select>
+      </div>
+
     </div>
     <div class="row"><a class="toggle_charts_filter" href="#">Show inactive</a></div>
     <div class="input string optional">

@@ -1,7 +1,7 @@
 TimesheetApp.Views.Entries ||= {}
 
 class TimesheetApp.Views.Entries.EditView extends Backbone.View
-  template: JST["backbone/templates/entries/edit"]
+  template: JST["backbone/templates/entries/_form"]
   selects_template: JST["backbone/templates/entries/_selects"]
   durations_template: JST["backbone/templates/entries/_durations"]
 

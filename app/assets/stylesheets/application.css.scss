@@ -483,7 +483,7 @@ div.no-hover {
   background: white;
   color: #444;
   width: 500px;
-  margin-left: -390px;
+  margin-left: -384px;
   z-index: 99999;
   position: absolute;
   box-shadow: #666 0px 0px 20px;
@@ -951,7 +951,6 @@ input.currency {
 }
 
 form div.input .complex-input.fees-input {
-  width: 49% !important;
   float: left !important;
   margin-bottom: 0px !important;
 }
@@ -959,6 +958,7 @@ form div.input .complex-input.fees-input {
 .small-buttons {
   float: right;
   width: 49% !important;
+  margin-bottom: 10px;
 }
 
 .small-buttons .button {
@@ -1000,4 +1000,8 @@ td.entry-description {
   .ui-state-hover {
     background: #eee !important;
   }
+}
+.qp-block {
+ width: 24.6% !important;
+ margin-left: 2px;
 }
