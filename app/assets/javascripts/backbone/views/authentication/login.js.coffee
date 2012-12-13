@@ -24,14 +24,11 @@ class TimesheetApp.Views.Authentication.LoginView extends Backbone.View
           email: $("#user_email").val()
           password: $("#user_password").val()
           remember_me: 1
-        utf8: "✓"
-        remote: true
       success: (data) =>
         if data.success
           humane.log "Welcome aboard!"
-          $("#today, #new_entry, #logout, #admin").show()
-          window.location.replace "/"
-          #Backbone.history.navigate "/#", true
+          $(window).oneTime 500, =>
+            Backbone.history.navigate "/#", true
         else
           humane.log data.errors
       error: (xhr, status, err) =>

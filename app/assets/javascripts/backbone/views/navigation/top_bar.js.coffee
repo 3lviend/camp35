@@ -37,11 +37,11 @@ class TimesheetApp.Views.Navigation.TopBarView extends Backbone.View
           success: =>
             humane.log "Goodbye"
             $("#logout").hide()
+            window.router.current_role.clear()
             Backbone.history.navigate "/#", true
           error: =>
-            # humane.log "Something wrong happened.. Please contact admin"
-            # kinda nasty workaround... TODO: fix
             humane.log "Goodbye"
+            window.router.current_role.clear()
             $("#logout").hide()
             Backbone.history.navigate "/#", true
         false

@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-
   after_filter :dump_state_log
   before_filter :assume_other_role, :if => Proc.new { !session[:assume_role_id].nil? }
 

@@ -6,7 +6,6 @@
       %meta{:content => content_for?(:description) ? yield(:description) : "Timesheetapp", :name => "description"}
         = stylesheet_link_tag "application", :media => "all"
         = javascript_include_tag "application"
-        = csrf_meta_tags
         = yield(:head)
   - is_week = @work_days.nil?
   - @day = DateTime.now unless @day
