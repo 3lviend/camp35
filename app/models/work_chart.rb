@@ -12,6 +12,7 @@ class WorkChart < ActiveRecord::Base
   belongs_to :work_chart_status, :foreign_key => :status, :primary_key => :status
   has_many :work_entries
   has_many :work_chart_kinds_defaults
+  belongs_to :parent, :class_name => "WorkChart", :foreign_key => :parent_id
 
 
   def self.ensure_data_indexed

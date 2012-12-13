@@ -9,7 +9,7 @@
         = yield(:head)
   - is_week = @work_days.nil?
   - @day = DateTime.now unless @day
-  %body{:"data-is-week" => "#{'1' if is_week}", :"data-today" => @day}
+  %body
     #container.container
       %div.fixed= render 'layouts/navigation'
       %header.row= yield :header
