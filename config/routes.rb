@@ -28,7 +28,7 @@ TimesheetApp::Application.routes.draw do
   get "/roles/current" => "roles#current"
   get "/roles/others"  => "roles#others"
   get "/roles/reportable" => "roles#reportable"
-  get "/roles/assume"  => "roles#assume"
+  post "/roles/assume"  => "roles#assume"
 
   get "/reports/break" => "reports#break"
 
