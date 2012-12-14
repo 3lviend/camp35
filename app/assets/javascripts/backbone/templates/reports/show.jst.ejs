@@ -1,8 +1,6 @@
 <div class="report_content" data-bind="template: {name: $root.selected_type().value}"></div>
 
 <script id="break" type="text/html">
-  <h4>Summary</h4>
-  <h6>Total hours: <span>10.00</span></h6>
   <ul data-bind="template: {name: 'report_item', foreach: report_items}"></ul>
 </script>
 
