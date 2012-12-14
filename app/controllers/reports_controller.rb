@@ -4,5 +4,6 @@ class ReportsController < ApplicationController
 
   def break
     @items = Report.break(params[:start], params[:end], params[:roles])
+    render :json => @items.to_json
   end
 end

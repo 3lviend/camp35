@@ -16,7 +16,7 @@ class ReportItem
     if self.chart.parent_id == 1
       [self]
     else
-      [self, ReportItem.new(self.total, self.chart.parent).explode].flatten
+      [self, ReportItem.new(self.total, self.chart.parent)._explode].flatten
     end
   end
 

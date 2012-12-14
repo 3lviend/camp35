@@ -30,7 +30,14 @@ class Report
   # Takes [ReportItem] and returns [ReportItem]
   # It runs through all items and adds their parents to the list
   def self.flatten_items(items)
-    items.map(&:explode).flatten
+    items.map(&:explode).flatten.inject({}) do |h, i|
+      if h[i.chart.id].nil?
+        h[i.chart.id] = i
+      else
+        h[i.chart.id].total += i.total
+      end
+      h
+    end.values
   end
 
   # Takes Symbol, [ReportItem] and returns Tree (ReportItem)
@@ -42,17 +49,26 @@ class Report
   end
 
   def self._build_tree(items, root = nil)
-    roots, rest = find_roots items
-    roots.map do |item|
-      node = { :name => item.chart.display_label, :children => _build_tree(rest, item) }
+    return [] if items.empty?
+    roots, rest = find_roots items, root
+    rs = roots.map do |item|
+      children = rest.empty? ? [] : _build_tree(rest, item)
+      node = { :name => item.chart.display_label, :total => item.total, :children => children }
     end
+    roots.each {|r| items.delete r}
+    rs
   end
 
   # every item which chart.parent_id isn't equal to any other chart.id
   # in the array
-  def self.find_roots(items)
-    roots = items.select do |item|
-      items.none? { |i| item.chart.parent_id == i.chart.id }
+  def self.find_roots(items, root = nil)
+    roots = []
+    if root.nil?
+      roots = items.select do |item|
+        items.none? { |i| item.chart.parent_id == i.chart.id }
+      end
+    else
+      roots = items.select { |i| i.chart.parent_id == root.chart.id }
     end
     [roots, items - roots]
   end
