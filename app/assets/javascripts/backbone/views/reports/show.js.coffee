@@ -31,18 +31,9 @@ class TimesheetApp.Views.Reports.ShowViewModel
         value:  "break"
         label:  "Break"
         active: true
-      },
-      {
-        value:  "user"
-        label:  "User"
-        active: false
-      },
-      {
-        value:  "category"
-        label:  "Category"
-        active: false
       }
     ]
+
     @select_type = (item) =>
       types = _.map @report_types(), (i) ->
         i.active = i.value == item.value
@@ -62,7 +53,7 @@ class TimesheetApp.Views.Reports.ShowViewModel
     @roles = ko.observableArray([])
     roles.on "reset", =>
       @roles(roles.models)
-      $(window).oneTime 100, => $(".roles select").chosen()
+      $(window).oneTime 50, => $(".roles select").chosen()
     @date_range_string = ko.observable("")
 
     @generate_report = =>
@@ -90,3 +81,13 @@ class TimesheetApp.Views.Reports.ShowViewModel
         null
 
     @report_items = ko.observable()
+
+    @ready_to_generate = ko.computed =>
+      @date_range_string().trim() != "" && @selected_roles().length > 0
+
+    @generate_status_class = ko.computed =>
+      if @ready_to_generate()
+        "button"
+      else
+        "button disabled"
+

@@ -7,7 +7,7 @@
   <!-- /ko -->
 </dl>
 <form action="#" class="custom report-controls">
-  <a href="#" data-bind="click: generate_report" class="button">Generate</a>
+  <a href="#" data-bind="click: generate_report, attr: {class: generate_status_class}">Generate</a>
   <input type="text" placeholder="Pick date range" data-bind="value: date_range_string, valueUpdate: 'blur'" class="daterange reports" />
   <label class="roles">
     <select data-bind="foreach: roles, selectedOptions: selected_roles" data-customforms="disabled" 
@@ -15,7 +15,7 @@
       <option data-bind="value: get('email'), text: user_name()"></option>
     </select>
   </label>
-  <div class="report-options">
+<!--  <div class="report-options">
     <label>
       <input type="checkbox" data-bind="checked: display_full" style="display: none;">
       <span class="custom checkbox"></span> Display full descriptions
@@ -28,6 +28,6 @@
       <input type="checkbox" data-bind="checked: open_in_new" style="display: none">
       <span class="custom checkbox"></span> Open in new window
     </label>
-  </div>
+  </div> -->
 </form>
 
