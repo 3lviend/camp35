@@ -319,8 +319,8 @@ class TimesheetApp.Views.Entries.NewView extends Backbone.View
       @show_inactive = not @show_inactive
       @render_charts()
       @set_search()
-      label = if @show_inactive then "Hide inactive" else "Show inactive"
-      $(e.currentTarget).html label
+      src = if @show_inactive then '/show-inactive.png' else '/hide-inactive.png'
+      $('#chart_toggle').attr 'src', src
       false
     $("input.charts-search", @el).focus (e) =>
       $(".search-results", @el).show()
