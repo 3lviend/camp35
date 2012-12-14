@@ -9,7 +9,7 @@
 
 <script id="middle_label_template" type="text/x-jquery-tmpl">
 <br>
-  → <span data-bind="text: $data"></span>
+    <span data-bind="text: $data"></span>
 </script>
 
 <script id="entry_template" type="text/x-jquery-tmpl">
@@ -19,7 +19,7 @@
       <span data-bind="template: {name: 'middle_label_template', foreach: middle_labels()}, visible: chart_has_many_labels()">
       </span>
       <br data-bind="visible: chart_has_many_labels()">
-      →
+      
       <b data-bind="text: last_label()"></b>
     </td>
     <td>
@@ -28,6 +28,7 @@
     </td>
     <td class="entry-description" data-bind="html: get('description')"></td>
     <td>
+      <a data-bind="attr: {href: front_url()}">Edit</a>
       <ul class="nav-bar">
         <li class="has-flyout">
           <a href="#" data-bind="click: $root.entry_settings"><img src="/settings-darkgray.png" /></a>
@@ -37,7 +38,6 @@
           </ul>
         </li>
       </ul>
-      <a data-bind="attr: {href: front_url()}">Edit</a>
       <br>
     </td>
   </tr>
