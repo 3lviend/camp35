@@ -1,0 +1,17 @@
+<input type="hidden" name="work_entry[work_chart_id]" value="<%= @entry.work_chart_id %>" >
+
+<% i = 0 %>
+<% for _charts in @charts: %>
+
+  <% if _charts.length > 0: %>
+    <select data-level="<%= i %>" name="work_entry[work_chart_id]_" >
+      <option></option>
+      <% j = 0 %>
+      <% for chart in _charts: %>
+        <option <% if chart.selected == true: %>selected='selected'<% end %> value="<%= chart.id %>"><%= chart.display_label %></option>
+      <% end %>
+    </select>
+    <% j += 1 %>
+  <% end %>
+  <% i += 1 %>
+<% end %>

@@ -1,0 +1,33 @@
+<dl class="sub-nav reports">
+  <dt>Report type:</dt>
+  <!-- ko foreach: report_types -->
+    <dd data-bind="attr: {class: active ? 'active' : ''}">
+      <a href="#" data-bind="text: label, click: $root.select_type"></a>
+    </dd>
+  <!-- /ko -->
+</dl>
+<form action="#" class="custom report-controls">
+  <a href="#" data-bind="click: generate_report, attr: {class: generate_status_class}">Generate</a>
+  <input type="text" placeholder="Pick date range" data-bind="value: date_range_string, valueUpdate: 'blur'" class="daterange reports" />
+  <label class="roles">
+    <select data-bind="foreach: roles, selectedOptions: selected_roles" data-customforms="disabled" 
+            class="chosen" data-placeholder="Choose roles" multiple>
+      <option data-bind="value: get('email'), text: user_name()"></option>
+    </select>
+  </label>
+<!--  <div class="report-options">
+    <label>
+      <input type="checkbox" data-bind="checked: display_full" style="display: none;">
+      <span class="custom checkbox"></span> Display full descriptions
+    </label>
+    <label>
+      <input type="checkbox" data-bind="checked: printable" style="display: none;">
+      <span class="custom checkbox"></span> Printable
+    </label>
+    <label>
+      <input type="checkbox" data-bind="checked: open_in_new" style="display: none">
+      <span class="custom checkbox"></span> Open in new window
+    </label>
+  </div> -->
+</form>
+

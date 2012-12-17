@@ -1,0 +1,48 @@
+<ul id="calendar" data-bind="template: {foreach: days(), name: 'day-template'}">
+</ul>
+
+<ul id="calendar-week-totals" data-bind="template: {foreach: week_totals(), name: 'week-total-template'}">
+</ul>
+
+<table cellpadding="0" cellspacing="0" id="calendar-month-totals">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Available</th>
+      <th>Billable </th>
+      <th>Nonbillable </th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody data-bind="template: {foreach: work_months(), name: 'month-template'}"></tbody>
+</table>
+
+<script type="text/html" id="day-template">
+  <li data-bind="attr: {class: date_class($root.year(), $root.month()), 'data-href': href()}, click: $root.goto">
+    <div data-bind="text: day()"></div>
+    <div class="day-totals" data-bind="visible: !(in_future() && get('time') == '00:00:00' ) ">
+      <div data-bind="text: time_string()" class="total-all"></div>
+      <div data-bind="text: billable_time_string()" class="sub"></div>
+      <div data-bind="text: nonbillable_time_string()" class="sub nonbillable"></div></div>
+  </li>
+</script>
+
+<script id="week-total-template" type="text/html">
+  <li data-bind="attr: {class: total_class()}">
+    <div class="day-totals">
+      <div data-bind="text: total" class="total-all"></div>
+      <div data-bind="text: billable_total" class="sub"></div>
+      <div data-bind="text: nonbillable_total" class="sub nonbillable"></div>
+    </div>
+  </li>
+</script>
+
+<script type="text/html" id="month-template">
+  <tr >
+    <td><a data-bind="text: month_year_string(), attr: {href: front_url()}"></a></td>
+    <td data-bind="text: available_string()"></td>
+    <td data-bind="text: billable_string()"></td>
+    <td data-bind="text: nonbillable_string()"></td>
+    <td data-bind="text: total_string(), attr: {class: month_class()}"></td>
+  </tr>
+</script>

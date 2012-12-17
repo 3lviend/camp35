@@ -1,0 +1,17 @@
+<div class="report_content" data-bind="template: {name: $root.selected_type().value}"></div>
+
+<script id="break" type="text/html">
+  <ul data-bind="template: {name: 'report_item', foreach: report_items}"></ul>
+</script>
+
+<script id="user" type="text/html"></script>
+
+<script id="category" type="text/html"></script>
+
+<script id="report_item" type="text/html">
+  <li>
+    <span class="name" data-bind="text: name"></span>
+    <span class="total" data-bind="text: total"></span> 
+    <ul data-bind="template: {name: 'report_item', foreach: children}"></ul>
+  </li>
+</script>

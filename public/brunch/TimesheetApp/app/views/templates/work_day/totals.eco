@@ -1,0 +1,16 @@
+<div class="">
+  <table class="day_totals">
+    <tr>
+      <td>Billable:</td>
+      <td data-bind="text: billable"></td>
+    </tr>
+    <tr>
+      <td>Non-billable:</td>
+      <td data-bind="text: nonbillable"></td>
+    </tr>
+    <tr>
+      <td><b>Total:</b></td>
+      <td><b data-bind="text: total"></b></td>
+    </tr>
+  </table>
+</div>

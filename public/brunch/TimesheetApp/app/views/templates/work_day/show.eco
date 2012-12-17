@@ -1,0 +1,44 @@
+<table cellspacing="0" class="work_day_table">
+  <col><col><col><col>
+  <tbody data-bind="template: {name: 'entry_template', foreach: collection}">
+  </tbody>
+</table>
+<div class="actions">
+  <a data-bind="click: redirect_to_new" class="button"><img src="/compose-vivid.png" />New entry</a>
+</div>
+
+<script id="middle_label_template" type="text/x-jquery-tmpl">
+<br>
+    <span data-bind="text: $data"></span>
+</script>
+
+<script id="entry_template" type="text/x-jquery-tmpl">
+<tr>
+    <td>
+      <span data-bind="text: top_label(), visible: chart_has_many_labels()"></span>
+      <span data-bind="template: {name: 'middle_label_template', foreach: middle_labels()}, visible: chart_has_many_labels()">
+      </span>
+      <br data-bind="visible: chart_has_many_labels()">
+      
+      <b data-bind="text: last_label()"></b>
+    </td>
+    <td>
+      <div data-bind="text: time_string()"></div>
+      <div class="entry_fee" data-bind="text: fee_total_string(), visible: fee_not_empty()"></div>
+    </td>
+    <td class="entry-description" data-bind="html: get('description')"></td>
+    <td>
+      <a data-bind="click: $root.redirect_to_entry" href="#">Edit</a>
+      <ul class="nav-bar">
+        <li class="has-flyout">
+          <a href="#" data-bind="click: $root.entry_settings"><img src="/settings-darkgray.png" /></a>
+          <a href="#" class="flyout-toggle"><span></span></a>
+          <ul class="flyout right">
+            <li><img src="/delete-darkgray.png" /><a data-bind="click: $root.delete_entry" href="#">Delete</a></li>
+          </ul>
+        </li>
+      </ul>
+      <br>
+    </td>
+  </tr>
+</script>

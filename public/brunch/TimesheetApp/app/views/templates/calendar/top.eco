@@ -1,0 +1,14 @@
+<div id="calendar-controls">
+  <a href="#" class="left" data-bind="click: backMonth">&lt;</a>
+  <select id="years" data-bind="template: {name: 'year-option', foreach: years()}, value: year"></select>
+  <select id="months" data-bind="template: {name: 'month-option', foreach: months()}, value: month"></select>
+  <a href="#" class="right" data-bind="click: nextMonth">&gt;</a>
+</div>
+
+<script type="text/html" id="year-option">
+  <option data-bind="text: $data, value: $data"></option>
+</script>
+
+<script type="text/html" id="month-option">
+  <option data-bind="text: $data.name, value: $data.value"></option>
+</script>
