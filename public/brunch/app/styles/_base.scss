@@ -1,25 +1,3 @@
-
-
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
- *= require_self
- *= require chosen
- *= require bigbox
- *= require foundation_and_overrides
- *= require jquery.ui.all
- *= require spinner
- *= require daterangepicker
- *= require_tree .
-*/
-
 body {
   background: whiteSmoke !important;
 }
@@ -55,11 +33,11 @@ ul.nav li {
 
 @font-face {
     font-family: 'OpenSansRegular';
-    src: url('/assets/OpenSans-Regular-webfont.eot');
-    src: url('/assets/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/assets/OpenSans-Regular-webfont.woff') format('woff'),
-         url('/assets/OpenSans-Regular-webfont.ttf') format('truetype'),
-         url('/assets/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
+    src: url('/fonts/OpenSans-Regular-webfont.eot');
+    src: url('/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('/fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('/fonts/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -67,11 +45,11 @@ ul.nav li {
 
 @font-face {
     font-family: 'OpenSansBold';
-    src: url('/assets/OpenSans-Bold-webfont.eot');
-    src: url('/assets/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/assets/OpenSans-Bold-webfont.woff') format('woff'),
-         url('/assets/OpenSans-Bold-webfont.ttf') format('truetype'),
-         url('/assets/OpenSans-Bold-webfont.svg#OpenSansBold') format('svg');
+    src: url('/fonts/OpenSans-Bold-webfont.eot');
+    src: url('/fonts/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/OpenSans-Bold-webfont.woff') format('woff'),
+         url('/fonts/OpenSans-Bold-webfont.ttf') format('truetype'),
+         url('/fonts/OpenSans-Bold-webfont.svg#OpenSansBold') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -79,11 +57,11 @@ ul.nav li {
 
 @font-face {
     font-family: 'OpenSansExtrabold';
-    src: url('/assets/OpenSans-ExtraBold-webfont.eot');
-    src: url('/assets/OpenSans-ExtraBold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/assets/OpenSans-ExtraBold-webfont.woff') format('woff'),
-         url('/assets/OpenSans-ExtraBold-webfont.ttf') format('truetype'),
-         url('/assets/OpenSans-ExtraBold-webfont.svg#OpenSansExtrabold') format('svg');
+    src: url('/fonts/OpenSans-ExtraBold-webfont.eot');
+    src: url('/fonts/OpenSans-ExtraBold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/OpenSans-ExtraBold-webfont.woff') format('woff'),
+         url('/fonts/OpenSans-ExtraBold-webfont.ttf') format('truetype'),
+         url('/fonts/OpenSans-ExtraBold-webfont.svg#OpenSansExtrabold') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -91,11 +69,11 @@ ul.nav li {
 
 @font-face {
     font-family: 'OpenSansLight';
-    src: url('/assets/OpenSans-Light-webfont.eot');
-    src: url('/assets/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/assets/OpenSans-Light-webfont.woff') format('woff'),
-         url('/assets/OpenSans-Light-webfont.ttf') format('truetype'),
-         url('/assets/OpenSans-Light-webfont.svg#OpenSansLight') format('svg');
+    src: url('/fonts/OpenSans-Light-webfont.eot');
+    src: url('/fonts/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/OpenSans-Light-webfont.woff') format('woff'),
+         url('/fonts/OpenSans-Light-webfont.ttf') format('truetype'),
+         url('/fonts/OpenSans-Light-webfont.svg#OpenSansLight') format('svg');
     font-weight: normal;  
     font-style: normal;   
 
@@ -677,12 +655,12 @@ div.no-hover {
     margin-right: 2px;
   }
   a.left {
-    background: url(/left-black.png);
+    background: url(/images/left-black.png);
     background-repeat: no-repeat;
     background-position: center center;
   }
   a.right {
-    background: url(/right-black.png);
+    background: url(/images/right-black.png);
     background-repeat: no-repeat;
     background-position: center center;
   }
@@ -907,7 +885,7 @@ table.work_day_table {
 }
 
 .charts-search, .charts-search:focus {
-  background-image: url(/search-gray.png) !important;
+  background-image: url(/images/search-gray.png) !important;
   background-position: 99% 5px !important;
   background-repeat: no-repeat !important;
 }
@@ -917,12 +895,12 @@ table.work_day_table {
 }
 
 .calendar {
-  background-image: url(/calendar-gray.png) !important;
+  background-image: url(/images/calendar-gray.png) !important;
   background-position: 99% 5px !important;
   background-repeat: no-repeat !important;
 }
 input.currency {
-  background-image: url(/wallet-gray.png) !important;
+  background-image: url(/images/wallet-gray.png) !important;
   background-position: 99% 5px !important;
   background-repeat: no-repeat !important;
 }

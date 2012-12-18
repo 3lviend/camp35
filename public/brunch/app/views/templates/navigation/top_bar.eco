@@ -6,17 +6,17 @@
   <li class="divider"></li>
   <li>
     <a href="#" id="this_month">
-      <img src="/calendar-white.png" />
+      <img src="/images/calendar-white.png" />
       Calendar
     </a>
   </li>
   <li class="divider"></li>
   <li>
-  <a href="#" id="today"><img src="/notes-white.png" />Today</a>
+  <a href="#" id="today"><img src="/images/notes-white.png" />Today</a>
   </li>
   <li class="divider"></li>
   <li>
-  <a href="#" id="new_entry"><img src="/compose-white.png" />New entry</a>
+  <a href="#" id="new_entry"><img src="/images/compose-white.png" />New entry</a>
   </li>
   <li class="toggle-topbar"><a href="#"></a></li>
 </ul>
@@ -29,10 +29,10 @@
       <ul class="dropdown">
         <li><a data-bind="click: redirect_to_reports" href="#">Reports</a></li>
         <li data-bind="if: current_role().get('can_switch_roles')">
-        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/swap-white.png" />Switch role</a>
+        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/images/swap-white.png" />Switch role</a>
         </li>
         <li data-bind="if: current_role().get('is_admin')">
-        <a href="#" data-bind="click: redirect_to_admin" ><img src="/settings-white.png" />Admin</a>
+        <a href="#" data-bind="click: redirect_to_admin" ><img src="/images/settings-white.png" />Admin</a>
         </li>
       </ul>
     </li>

@@ -78,6 +78,8 @@ class CalendarViewModel
     @month.subscribe (m) ->
       if m.toString() != month
         Backbone.history.navigate "/#calendar/#{year}/#{m}", true
+    @redirect_to_month = (month) =>
+      window.app.router.navigate month.front_url(), trigger:true
     @backMonth = =>
       date = moment()
       date.year(year)

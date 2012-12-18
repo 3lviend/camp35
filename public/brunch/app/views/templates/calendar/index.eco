@@ -39,7 +39,7 @@
 
 <script type="text/html" id="month-template">
   <tr >
-    <td><a data-bind="text: month_year_string(), attr: {href: front_url()}"></a></td>
+    <td><a data-bind="text: month_year_string(), click: $root.redirect_to_month" href="#"></a></td>
     <td data-bind="text: available_string()"></td>
     <td data-bind="text: billable_string()"></td>
     <td data-bind="text: nonbillable_string()"></td>

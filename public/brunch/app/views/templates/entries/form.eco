@@ -40,7 +40,7 @@
       </div>
 
       <div class="three columns">
-	 <a href="#" class="toggle_charts_filter" ><img id='chart_toggle' src="/hide-inactive.png" /></a>
+	 <a href="#" class="toggle_charts_filter" ><img id='chart_toggle' src="/images/hide-inactive.png" /></a>
 	  </div>
 
     </div>
@@ -76,7 +76,7 @@
 		</div>
         <div class="six columns">
 		  <div class="small-buttons">
-			<button class="button" type="submit"><img src="/tick-vivid.png" /></button>
+			<button class="button" type="submit"><img src="/images/tick-vivid.png" /></button>
 		  </div>
 		</div>
      </div>
@@ -100,12 +100,12 @@
 
      <div class="panel input">
        <div class="four columns">
-	 <a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" ><img src="/delete-vivid.png" />Cancel</a>
+	 <a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" ><img src="/images/delete-vivid.png" />Cancel</a>
        </div>
        <div class="one columns">
        </div>
        <div class="seven columns">
-	 <button class="button" type="submit"><img src="/tick-vivid.png" />Save</button>
+	 <button class="button" type="submit"><img src="/images/tick-vivid.png" />Save</button>
        </div>
        <div class="clearfix"></div>
      </div>
