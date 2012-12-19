@@ -7753,6 +7753,15 @@ ul.nav li {
   .top-bar li.has-dropdown .dropdown li a img {
     margin-top: 0px;
     height: 16px; }
+  .top-bar a.button {
+    background: #222222 !important;
+    width: 0px;
+    box-shadow: 0 0px 0;
+    text-align: left;
+    border: 0px;
+    padding: 0px;
+    margin-right: 15px;
+    font-weight: normal; }
 
 header.row {
   margin-top: 40px;
@@ -7954,7 +7963,7 @@ circle, text {
 .hours-minutes {
   width: 540px !important;
   max-width: 540px !important;
-  margin-left: -225px !important;
+  margin-left: -150px !important;
   clear: both;
   top: -10px;
   margin-bottom: 10px !important; }
@@ -8290,11 +8299,11 @@ div.no-hover {
     color: transparent;
     margin-right: 2px; }
   #calendar-controls a.left {
-    background: url(/images/left-black.png);
+    background: url(/images/arrow-left.png);
     background-repeat: no-repeat;
     background-position: center center; }
   #calendar-controls a.right {
-    background: url(/images/right-black.png);
+    background: url(/images/arrow-right.png);
     background-repeat: no-repeat;
     background-position: center center; }
   #calendar-controls select {
@@ -8303,7 +8312,7 @@ div.no-hover {
     background-color: transparent;
     width: auto;
     height: 40px;
-    text-align: center;
+    text-align: left;
     line-height: 40px;
     margin: 0px;
     margin-right: 2px; }

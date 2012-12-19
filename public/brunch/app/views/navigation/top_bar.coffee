@@ -56,6 +56,15 @@ class TopBarViewModel
       window.open "/admin", "_blank"
       false
 
+    @reset_role = () ->
+      window.app.current_role.assume_async
+        success: (data) =>
+          Backbone.history.fragment = null
+          Backbone.history.navigate(document.location.hash, true)
+          window.router.current_role.fetch()
+        error: (data) =>
+          console.info "implement me"
+
     @redirect_to_reports = () ->
       Backbone.history.navigate "/#reports", true
       false

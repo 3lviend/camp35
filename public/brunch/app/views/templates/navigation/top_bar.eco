@@ -41,6 +41,7 @@
       <span data-bind="text: current_role().get('email')"></span>
       <i data-bind="visible: current_role().assumed_other()">as</i>
       <i data-bind="text: current_role().as_label()"></i>
+      <a href="#" data-bind="visible: current_role().assumed_other(), click: reset_role" class="button">[x]</a>
     </li>
     <li>
     <a href="#" id="logout">Logout</a>

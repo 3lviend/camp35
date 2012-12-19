@@ -2850,6 +2850,19 @@ window.require.define({"views/navigation/top_bar": function(exports, require, mo
         window.open("/admin", "_blank");
         return false;
       };
+      this.reset_role = function() {
+        var _this = this;
+        return window.app.current_role.assume_async({
+          success: function(data) {
+            Backbone.history.fragment = null;
+            Backbone.history.navigate(document.location.hash, true);
+            return window.router.current_role.fetch();
+          },
+          error: function(data) {
+            return console.info("implement me");
+          }
+        });
+      };
       this.redirect_to_reports = function() {
         Backbone.history.navigate("/#reports", true);
         return false;
@@ -3659,7 +3672,7 @@ window.require.define({"views/templates/navigation/top_bar": function(exports, r
     (function() {
       (function() {
       
-        __out.push('<ul>\n  <li class="name">\n  <a href="/#" style="visibility: visible;"><b>End Point&nbsp;</b><span>App</span>\n  </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n    <a href="#" id="this_month">\n      <img src="/images/calendar-white.png" />\n      Calendar\n    </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="today"><img src="/images/notes-white.png" />Today</a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="new_entry"><img src="/images/compose-white.png" />New entry</a>\n  </li>\n  <li class="toggle-topbar"><a href="#"></a></li>\n</ul>\n<section>\n  <ul class="left"></ul>\n  <ul class="right">\n    <li class="divider" ></li>\n    <li class="has-dropdown"  >\n    <a href="#">Settings</a>\n      <ul class="dropdown">\n        <li><a data-bind="click: redirect_to_reports" href="#">Reports</a></li>\n        <li data-bind="if: current_role().get(\'can_switch_roles\')">\n        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/images/swap-white.png" />Switch role</a>\n        </li>\n        <li data-bind="if: current_role().get(\'is_admin\')">\n        <a href="#" data-bind="click: redirect_to_admin" ><img src="/images/settings-white.png" />Admin</a>\n        </li>\n      </ul>\n    </li>\n    <li class="divider"></li>\n    <li>\n      <span data-bind="text: current_role().get(\'email\')"></span>\n      <i data-bind="visible: current_role().assumed_other()">as</i>\n      <i data-bind="text: current_role().as_label()"></i>\n    </li>\n    <li>\n    <a href="#" id="logout">Logout</a>\n    </li>\n  </ul>\n</section>\n');
+        __out.push('<ul>\n  <li class="name">\n  <a href="/#" style="visibility: visible;"><b>End Point&nbsp;</b><span>App</span>\n  </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n    <a href="#" id="this_month">\n      <img src="/images/calendar-white.png" />\n      Calendar\n    </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="today"><img src="/images/notes-white.png" />Today</a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="new_entry"><img src="/images/compose-white.png" />New entry</a>\n  </li>\n  <li class="toggle-topbar"><a href="#"></a></li>\n</ul>\n<section>\n  <ul class="left"></ul>\n  <ul class="right">\n    <li class="divider" ></li>\n    <li class="has-dropdown"  >\n    <a href="#">Settings</a>\n      <ul class="dropdown">\n        <li><a data-bind="click: redirect_to_reports" href="#">Reports</a></li>\n        <li data-bind="if: current_role().get(\'can_switch_roles\')">\n        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/images/swap-white.png" />Switch role</a>\n        </li>\n        <li data-bind="if: current_role().get(\'is_admin\')">\n        <a href="#" data-bind="click: redirect_to_admin" ><img src="/images/settings-white.png" />Admin</a>\n        </li>\n      </ul>\n    </li>\n    <li class="divider"></li>\n    <li>\n      <span data-bind="text: current_role().get(\'email\')"></span>\n      <i data-bind="visible: current_role().assumed_other()">as</i>\n      <i data-bind="text: current_role().as_label()"></i>\n      <a href="#" data-bind="visible: current_role().assumed_other(), click: reset_role" class="button">[x]</a>\n    </li>\n    <li>\n    <a href="#" id="logout">Logout</a>\n    </li>\n  </ul>\n</section>\n');
       
       }).call(this);
       
@@ -3822,6 +3835,57 @@ window.require.define({"views/templates/work_day/show": function(exports, requir
   }
 }});
 
+window.require.define({"views/templates/work_day/top": function(exports, require, module) {
+  module.exports = function (__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<div id="calendar-controls">\n  <a href="#" class="left" data-bind="click: backDay">&lt;</a>\n  <select id="years" data-bind="template: {name: \'year-option\', foreach: years()}, value: year"></select>\n  <select id="months" data-bind="template: {name: \'month-option\', foreach: months()}, value: month"></select>\n  <select id="days" data-bind="template: {name: \'day-option\', foreach: days()}, value: day"></select>\n  <a href="#" class="right" data-bind="click: nextDay">&gt;</a>\n</div>\n\n<script type="text/html" id="year-option">\n  <option data-bind="text: $data, value: $data"></option>\n</script>\n\n<script type="text/html" id="month-option">\n  <option data-bind="text: $data.name, value: $data.value"></option>\n</script>\n\n<script type="text/html" id="day-option">\n  <option data-bind="text: $data, value: $data"></option>\n</script>\n\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  }
+}});
+
 window.require.define({"views/templates/work_day/totals": function(exports, require, module) {
   module.exports = function (__obj) {
     if (!__obj) __obj = {};
@@ -3890,6 +3954,8 @@ window.require.define({"views/work_day": function(exports, require, module) {
       return WorkDayView.__super__.constructor.apply(this, arguments);
     }
 
+    WorkDayView.prototype.top_tpl = require("./templates/work_day/top");
+
     WorkDayView.prototype.template = require("./templates/work_day/show");
 
     WorkDayView.prototype.totals_tpl = require("./templates/work_day/totals");
@@ -3904,13 +3970,14 @@ window.require.define({"views/work_day": function(exports, require, module) {
           return _this.view.collection.push(entry);
         });
         ko.applyBindings(_this.view, $("#main")[0]);
-        return ko.applyBindings(_this.view, $("#side")[0]);
+        ko.applyBindings(_this.view, $("#side")[0]);
+        return ko.applyBindings(_this.view, $("header.row")[0]);
       });
     };
 
     WorkDayView.prototype.render = function() {
       $("#main").html(this.template());
-      $("header.row").html("<h1>Work entries for " + (this.view.day.format('dddd, MMM Do YYYY')) + "</h1><h4>Take a peek at what you've accomplished</h4>");
+      $("header.row").html(this.top_tpl());
       $("#side").html(this.totals_tpl());
       return $(window).oneTime(100, function() {
         return $(document).foundationNavigation();
@@ -3928,8 +3995,72 @@ window.require.define({"views/work_day": function(exports, require, module) {
 
       this.redirect_to_new = __bind(this.redirect_to_new, this);
 
-      var _this = this;
+      var last_day, max_year, _i, _j, _ref, _results, _results1,
+        _this = this;
       this.collection = ko.observableArray();
+      last_day = new Date(year, month, 0).getDate();
+      this.day = ko.observable(day);
+      this.days = ko.observableArray((function() {
+        _results = [];
+        for (var _i = 1; 1 <= last_day ? _i <= last_day : _i >= last_day; 1 <= last_day ? _i++ : _i--){ _results.push(_i); }
+        return _results;
+      }).apply(this));
+      this.year = ko.observable(year);
+      this.month = ko.observable(month);
+      max_year = moment(new Date()).year();
+      this.years = ko.observableArray((function() {
+        _results1 = [];
+        for (var _j = 2002, _ref = Math.max(max_year, parseInt(year)); 2002 <= _ref ? _j <= _ref : _j >= _ref; 2002 <= _ref ? _j++ : _j--){ _results1.push(_j); }
+        return _results1;
+      }).apply(this).reverse());
+      this.months = ko.observableArray($.map(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], function(el, i) {
+        return {
+          name: el,
+          value: i + 1
+        };
+      }));
+      this.backDay = function() {
+        var date;
+        date = moment();
+        date.year(year);
+        date.date(day);
+        date.month(parseInt(month) - 1);
+        date.subtract('days', 1);
+        return Backbone.history.navigate("/#entries/" + (date.year()) + "/" + (date.month() + 1) + "/" + (date.date()), true);
+      };
+      this.nextDay = function() {
+        var date;
+        date = moment();
+        date.year(year);
+        date.date(day);
+        date.add('days', 1);
+        date.month(parseInt(month) - 1);
+        return Backbone.history.navigate("/#entries/" + (date.year()) + "/" + (date.month() + 1) + "/" + (date.date()), true);
+      };
+      this.year.subscribe(function(y) {
+        if (y.toString() !== year) {
+          return Backbone.history.navigate("/#entries/" + y + "/" + month + "/" + day, true);
+        }
+      });
+      this.month.subscribe(function(m) {
+        var date, jump_day;
+        if (m.toString() !== month) {
+          date = moment();
+          date.year(year);
+          date.month(parseInt(m) - 1);
+          date.date(day);
+          jump_day = day;
+          if (date.month() !== (parseInt(m) - 1)) {
+            jump_day = new Date(year, parseInt(m), 0).getDate();
+          }
+          return Backbone.history.navigate("/#entries/" + year + "/" + m + "/" + jump_day, true);
+        }
+      });
+      this.day.subscribe(function(d) {
+        if (d.toString() !== day) {
+          return Backbone.history.navigate("/#entries/" + year + "/" + month + "/" + d, true);
+        }
+      });
       this.billable = ko.computed(function() {
         var hours, minutes;
         hours = _.reduce(_this.collection(), (function(memo, e) {
@@ -3960,7 +4091,7 @@ window.require.define({"views/work_day": function(exports, require, module) {
         }), 0);
         return moment.utc("00:00:00", "HH:mm:ss").add('hours', hours).add('minutes', minutes).format("HH:mm").format_interval();
       });
-      this.day = moment.utc([year, month - 1, day]);
+      this.new_day = moment.utc([year, month - 1, day]);
       this.collection.removeAll();
       this.redirect_to_entry = function(entry) {
         window.app.router.navigate(entry.front_url(), {
@@ -3995,7 +4126,7 @@ window.require.define({"views/work_day": function(exports, require, module) {
     };
 
     WorkDayViewModel.prototype.new_url = function() {
-      return "/#entries/" + (this.day.year()) + "/" + (this.day.month() + 1) + "/" + (this.day.date()) + "/new";
+      return "/#entries/" + (this.new_day.year()) + "/" + (this.new_day.month() + 1) + "/" + (this.new_day.date()) + "/new";
     };
 
     return WorkDayViewModel;
