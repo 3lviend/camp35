@@ -1,3 +1,5 @@
+WorkChartsCollection = require "collections/work_charts"
+
 module.exports = class ReportsView extends Backbone.View
   template: require "./templates/reports/show"
   controls_template: require "./templates/reports/controls"
@@ -44,6 +46,13 @@ class ReportsViewModel
         "break"
       else
         _.find @report_types(), (t) -> t.active
+
+    @chart_levels = ko.observableArray([])
+    first_level = new WorkChartsCollection
+    first_level.on "reset", =>
+      @chart_levels.push first_level.models
+    first_level.url = "/work_charts.json?parent_id=2"
+    first_level.fetch()
    
     @display_full = ko.observable false
     @printable    = ko.observable false
