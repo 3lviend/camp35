@@ -2,14 +2,15 @@
 class Report
 
   # returns one tree of report items
-  def self.break(_from, _to, roles)
+  def self.break(_from, _to, roles, root_id)
     from      = DateTime.parse(_from)
     to        = DateTime.parse(_to)
     role_ids  = IC::User.where(email: roles).select(:role_id).map(&:role_id)
     entries   = entries_for(from, to, role_ids)
     items     = items_for entries
     flattened = flatten_items items
-    tree      = build_tree :break, flattened
+    root      = flattened.find { |i| i.chart.id == root_id.to_i }
+    tree      = build_tree :break, flattened, root
     
     return tree
   end
@@ -41,10 +42,10 @@ class Report
   end
 
   # Takes Symbol, [ReportItem] and returns Tree (ReportItem)
-  def self.build_tree(type, items)
+  def self.build_tree(type, items, root = nil)
     case type
     when :break
-      _build_tree items
+      _build_tree items, root
     end
   end
 
