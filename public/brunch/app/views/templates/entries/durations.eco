@@ -16,7 +16,7 @@
          <div class="row collapse complex-input single-select">
            <div class="five mobile-three columns">
              <select data-index="<%= i %>" class="hour-select" name="durations[0][hours]">
-               <% for j in [1..25]: %>
+               <% for j in [0..24]: %>
                  <option <% if j == hours: %> <%= "selected='selected'" %> <% end %> value="<%= j %>"><%= j %></option>
                <% end %>
              </select>
@@ -26,7 +26,7 @@
            </div>
            <div class="five mobile-three columns single-select">
              <select data-index="<%= i %>" class="minutes-select" name="durations[0][minutes]">
-               <% for j in [1..4]: %>
+               <% for j in [0..3]: %>
                  <option 
                    <% if 15*j == minutes: %> 
                      <%= "selected='selected'" %> 
@@ -40,14 +40,14 @@
            </div>
          </div>
          <div class="row collapse hours-minutes">
-           <% for j in [1..9]: %>
+           <% for j in [0..8]: %>
              <a href="#" data-index="<%= i %>" data-hour="<%= j %>" 
                 class="button hour-button <% if j == hours: %> <%= "selected" %> <% end %>">
                 <%= j %>
             </a>
            <% end %>
            <span>&nbsp;</span>         
-           <% for j in [1..4]: %>
+           <% for j in [0..3]: %>
              <a href="#" data-index="<%= i %>" data-minute="<%= j*15 %>" 
                 class="button minute-button <% if j*15 == minutes: %> <%= "selected" %> <% end %>">
                 <%= (j*15).toString().pad(2) %>

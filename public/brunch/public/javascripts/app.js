@@ -3305,7 +3305,7 @@ window.require.define({"views/templates/entries/durations": function(exports, re
           __out.push('\n       <div class="input interval optional">\n           <label class="interval optional control-label" \n                  for="work_entry_work_entry_durations_attributes_0_duration">Duration</label>      \n         <div class="row collapse complex-input single-select">\n           <div class="five mobile-three columns">\n             <select data-index="');
           __out.push(__sanitize(i));
           __out.push('" class="hour-select" name="durations[0][hours]">\n               ');
-          for (j = _j = 1; _j <= 25; j = ++_j) {
+          for (j = _j = 0; _j <= 24; j = ++_j) {
             __out.push('\n                 <option ');
             if (j === hours) {
               __out.push(' ');
@@ -3321,7 +3321,7 @@ window.require.define({"views/templates/entries/durations": function(exports, re
           __out.push('\n             </select>\n           </div>\n           <div class="one mobile-one columns">\n             <span class="postfix">h</span>\n           </div>\n           <div class="five mobile-three columns single-select">\n             <select data-index="');
           __out.push(__sanitize(i));
           __out.push('" class="minutes-select" name="durations[0][minutes]">\n               ');
-          for (j = _k = 1; _k <= 4; j = ++_k) {
+          for (j = _k = 0; _k <= 3; j = ++_k) {
             __out.push('\n                 <option \n                   ');
             if (15 * j === minutes) {
               __out.push(' \n                     ');
@@ -3335,7 +3335,7 @@ window.require.define({"views/templates/entries/durations": function(exports, re
             __out.push('</option>\n               ');
           }
           __out.push('\n             </select>\n           </div>\n           <div class="one mobile-one columns">\n             <span class="postfix">m</span>\n           </div>\n         </div>\n         <div class="row collapse hours-minutes">\n           ');
-          for (j = _l = 1; _l <= 9; j = ++_l) {
+          for (j = _l = 0; _l <= 8; j = ++_l) {
             __out.push('\n             <a href="#" data-index="');
             __out.push(__sanitize(i));
             __out.push('" data-hour="');
@@ -3351,7 +3351,7 @@ window.require.define({"views/templates/entries/durations": function(exports, re
             __out.push('\n            </a>\n           ');
           }
           __out.push('\n           <span>&nbsp;</span>         \n           ');
-          for (j = _m = 1; _m <= 4; j = ++_m) {
+          for (j = _m = 0; _m <= 3; j = ++_m) {
             __out.push('\n             <a href="#" data-index="');
             __out.push(__sanitize(i));
             __out.push('" data-minute="');
@@ -3467,7 +3467,7 @@ window.require.define({"views/templates/entries/form": function(exports, require
       
         __out.push(__sanitize(Backbone.history.fragment.replace("/new", "")));
       
-        __out.push('" class="button alert" ><img src="/delete-vivid.png" /></a>\n\t\t  </div>\n\t\t</div>\n        <div class="six columns">\n\t\t  <div class="small-buttons">\n\t\t\t<button class="button" type="submit"><img src="/images/tick-vivid.png" /></button>\n\t\t  </div>\n\t\t</div>\n     </div>\n\n    </div>\n\n\n\n\n    <div class="input">\n     <fieldset class="durations">\n     \n     </fieldset>\n\n     <div class="input text optional">\n       <label class="text optional control-label" for="work_entry_description">Description</label>\n       <textarea class="text optional" cols="40" id="work_entry_description" \n                 name="work_entry[description]" rows="3" >');
+        __out.push('" class="button alert" ><img src="/images/delete-vivid.png" /></a>\n\t\t  </div>\n\t\t</div>\n        <div class="six columns">\n\t\t  <div class="small-buttons">\n\t\t\t<button class="button" type="submit"><img src="/images/tick-vivid.png" /></button>\n\t\t  </div>\n\t\t</div>\n     </div>\n\n    </div>\n\n\n\n\n    <div class="input">\n     <fieldset class="durations">\n     \n     </fieldset>\n\n     <div class="input text optional">\n       <label class="text optional control-label" for="work_entry_description">Description</label>\n       <textarea class="text optional" cols="40" id="work_entry_description" \n                 name="work_entry[description]" rows="3" >');
       
         __out.push(__sanitize(this.description));
       

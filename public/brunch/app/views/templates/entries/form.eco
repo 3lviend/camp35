@@ -71,7 +71,7 @@
      <div class="two columns">
         <div class="six columns">
 		  <div class="small-buttons">
-			<a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" ><img src="/delete-vivid.png" /></a>
+			<a href="/#<%= Backbone.history.fragment.replace("/new", "") %>" class="button alert" ><img src="/images/delete-vivid.png" /></a>
 		  </div>
 		</div>
         <div class="six columns">
