@@ -7108,7 +7108,7 @@ body {
   background: -webkit-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
   background: -ms-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
   background: -o-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
-  background: linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
+  background: linear-gradient(top, #000000 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
   *background-color: #000;
   color: #fff;
   -moz-border-radius: 15px;
@@ -7154,7 +7154,7 @@ body {
   background: -webkit-linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
   background: -ms-linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
   background: -o-linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
-  background: linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
+  background: linear-gradient(top, #006400 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
   *background-color: #030; }
 
 .humane.humane-bigbox-error,
@@ -7232,7 +7232,7 @@ body {
   background-image: -webkit-linear-gradient(top, white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   background-image: -moz-linear-gradient(top, white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   background-image: -o-linear-gradient(top, white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
-  background-image: linear-gradient(white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+  background-image: linear-gradient(#ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -7317,7 +7317,7 @@ body {
   background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, -webkit-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, -moz-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, -o-linear-gradient(top, #eeeeee 1%, white 15%);
-  background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, linear-gradient(#eeeeee 1%, white 15%);
+  background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   margin: 1px 0;
   padding: 4px 20px 4px 5px;
   outline: 0;
@@ -7348,7 +7348,7 @@ body {
   background-image: -webkit-linear-gradient(top, #eeeeee 1%, white 15%);
   background-image: -moz-linear-gradient(top, #eeeeee 1%, white 15%);
   background-image: -o-linear-gradient(top, #eeeeee 1%, white 15%);
-  background-image: linear-gradient(#eeeeee 1%, white 15%);
+  background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
   border: 1px solid #aaaaaa;
   margin: 0;
   padding: 0;
@@ -7570,7 +7570,7 @@ body {
   background-image: -webkit-linear-gradient(top, #eeeeee 20%, white 80%);
   background-image: -moz-linear-gradient(top, #eeeeee 20%, white 80%);
   background-image: -o-linear-gradient(top, #eeeeee 20%, white 80%);
-  background-image: linear-gradient(#eeeeee 20%, white 80%);
+  background-image: linear-gradient(#eeeeee 20%, #ffffff 80%);
   -webkit-border-bottom-left-radius: 0;
   -webkit-border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft: 0;
@@ -7675,7 +7675,7 @@ body {
   background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, -webkit-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, -moz-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, -o-linear-gradient(top, #eeeeee 1%, white 15%);
-  background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, linear-gradient(#eeeeee 1%, white 15%);
+  background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   padding: 4px 5px 4px 20px;
   direction: rtl; }
 
@@ -8584,6 +8584,9 @@ form.report-controls label.roles {
 .qp-block {
   width: 24.6% !important;
   margin-left: 2px; }
+
+.charts select {
+  width: auto !important; }
 html,
 body {
   min-height: 100%; }
@@ -8617,7 +8620,7 @@ body {
   background: -webkit-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
   background: -ms-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
   background: -o-linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
-  background: linear-gradient(top, black 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
+  background: linear-gradient(top, #000000 0%, rgba(0, 0, 0, 0.9) 100%) no-repeat;
   *background-color: #000;
   color: #fff;
   -moz-border-radius: 15px;
@@ -8663,7 +8666,7 @@ body {
   background: -webkit-linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
   background: -ms-linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
   background: -o-linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
-  background: linear-gradient(top, darkgreen 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
+  background: linear-gradient(top, #006400 0%, rgba(0, 100, 0, 0.9) 100%) no-repeat;
   *background-color: #030; }
 
 .humane.humane-bigbox-error,
@@ -8740,7 +8743,7 @@ body {
   background-image: -webkit-linear-gradient(top, white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   background-image: -moz-linear-gradient(top, white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   background-image: -o-linear-gradient(top, white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
-  background-image: linear-gradient(white 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+  background-image: linear-gradient(#ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -8825,7 +8828,7 @@ body {
   background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, -webkit-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, -moz-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, -o-linear-gradient(top, #eeeeee 1%, white 15%);
-  background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, linear-gradient(#eeeeee 1%, white 15%);
+  background: url(/assets/chosen-sprite.png) no-repeat 100% -22px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   margin: 1px 0;
   padding: 4px 20px 4px 5px;
   outline: 0;
@@ -8856,7 +8859,7 @@ body {
   background-image: -webkit-linear-gradient(top, #eeeeee 1%, white 15%);
   background-image: -moz-linear-gradient(top, #eeeeee 1%, white 15%);
   background-image: -o-linear-gradient(top, #eeeeee 1%, white 15%);
-  background-image: linear-gradient(#eeeeee 1%, white 15%);
+  background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
   border: 1px solid #aaaaaa;
   margin: 0;
   padding: 0;
@@ -9078,7 +9081,7 @@ body {
   background-image: -webkit-linear-gradient(top, #eeeeee 20%, white 80%);
   background-image: -moz-linear-gradient(top, #eeeeee 20%, white 80%);
   background-image: -o-linear-gradient(top, #eeeeee 20%, white 80%);
-  background-image: linear-gradient(#eeeeee 20%, white 80%);
+  background-image: linear-gradient(#eeeeee 20%, #ffffff 80%);
   -webkit-border-bottom-left-radius: 0;
   -webkit-border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft: 0;
@@ -9183,7 +9186,7 @@ body {
   background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, -webkit-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, -moz-linear-gradient(top, #eeeeee 1%, white 15%);
   background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, -o-linear-gradient(top, #eeeeee 1%, white 15%);
-  background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, linear-gradient(#eeeeee 1%, white 15%);
+  background: url(/assets/chosen-sprite.png) no-repeat -38px -22px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   padding: 4px 5px 4px 20px;
   direction: rtl; }
 

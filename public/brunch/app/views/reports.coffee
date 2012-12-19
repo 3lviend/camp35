@@ -48,11 +48,40 @@ class ReportsViewModel
         _.find @report_types(), (t) -> t.active
 
     @chart_levels = ko.observableArray([])
+
+    @push_level = (level) =>
+      return if level.models.length == 0
+      @chart_levels.push
+        charts: level.toJSON()
+        selected: ko.observable()
+        subscribed: false
+
+    @chart_levels.subscribe (levels) =>
+      _.each levels, (level) =>
+        return if level.subscribed
+        level.selected.subscribe (selected) =>
+          # remove levels we don't need here:
+          index = _.indexOf levels, level
+          if index != -1
+            @chart_levels levels[0..index]
+          return unless selected
+          # fetch possible next level:
+          next_level = new WorkChartsCollection
+          next_level.url = "/work_charts.json?parent_id=#{selected.id}"
+          next_level.on "reset", => @push_level next_level
+          next_level.fetch()
+        level.subscribed = true
     first_level = new WorkChartsCollection
-    first_level.on "reset", =>
-      @chart_levels.push first_level.models
+    first_level.on "reset", => @push_level first_level
     first_level.url = "/work_charts.json?parent_id=2"
     first_level.fetch()
+
+    @root_work_chart_id = ko.computed =>
+      find_func = (selected, level) =>
+        return selected if selected
+        s = level.selected()
+        if s then s.id else null
+      _.foldr @chart_levels(), find_func, null
    
     @display_full = ko.observable false
     @printable    = ko.observable false
@@ -70,6 +99,7 @@ class ReportsViewModel
           start: @date_start().toDate()
           end:   @date_end().toDate()
           roles: @selected_roles()
+          root:  @root_work_chart_id()
         success: (items) => @report_items(items)
 
     @selected_roles = ko.observableArray([])

@@ -19,7 +19,7 @@ module.exports = class Application
   constructor: ->
     $ =>
       @initialize()
-      Backbone.history.start pushState:true
+      Backbone.history.start()
 
   initialize: ->
     @current_role = new Role

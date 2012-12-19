@@ -9,8 +9,8 @@
 <form action="#" class="custom report-controls">
   <a href="#" data-bind="click: generate_report, attr: {class: generate_status_class}">Generate</a>
   <div class="charts" data-bind="foreach: chart_levels">
-    <select class="chosen" data-bind="foreach: $data">
-      <option data-bind="value: get('id'), text: get('display_label')"></option>
+    <select class="chosen" 
+            data-bind="options: $data.charts, optionsText: 'display_label', value: $data.selected, optionsCaption: 'Select work chart...'">
     </select>
   </div>
   <input type="text" placeholder="Pick date range" data-bind="value: date_range_string, valueUpdate: 'blur'" class="daterange reports" />

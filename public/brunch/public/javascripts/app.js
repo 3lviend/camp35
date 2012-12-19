@@ -107,9 +107,7 @@ window.require.define({"application": function(exports, require, module) {
       var _this = this;
       $(function() {
         _this.initialize();
-        return Backbone.history.start({
-          pushState: true
-        });
+        return Backbone.history.start();
       });
     }
 
@@ -2967,12 +2965,62 @@ window.require.define({"views/reports": function(exports, require, module) {
         }
       });
       this.chart_levels = ko.observableArray([]);
+      this.push_level = function(level) {
+        if (level.models.length === 0) {
+          return;
+        }
+        return _this.chart_levels.push({
+          charts: level.toJSON(),
+          selected: ko.observable(),
+          subscribed: false
+        });
+      };
+      this.chart_levels.subscribe(function(levels) {
+        return _.each(levels, function(level) {
+          if (level.subscribed) {
+            return;
+          }
+          level.selected.subscribe(function(selected) {
+            var index, next_level;
+            index = _.indexOf(levels, level);
+            if (index !== -1) {
+              _this.chart_levels(levels.slice(0, index + 1 || 9e9));
+            }
+            if (!selected) {
+              return;
+            }
+            next_level = new WorkChartsCollection;
+            next_level.url = "/work_charts.json?parent_id=" + selected.id;
+            next_level.on("reset", function() {
+              return _this.push_level(next_level);
+            });
+            return next_level.fetch();
+          });
+          return level.subscribed = true;
+        });
+      });
       first_level = new WorkChartsCollection;
       first_level.on("reset", function() {
-        return _this.chart_levels.push(first_level.models);
+        return _this.push_level(first_level);
       });
       first_level.url = "/work_charts.json?parent_id=2";
       first_level.fetch();
+      this.root_work_chart_id = ko.computed(function() {
+        var find_func;
+        find_func = function(selected, level) {
+          var s;
+          if (selected) {
+            return selected;
+          }
+          s = level.selected();
+          if (s) {
+            return s.id;
+          } else {
+            return null;
+          }
+        };
+        return _.foldr(_this.chart_levels(), find_func, null);
+      });
       this.display_full = ko.observable(false);
       this.printable = ko.observable(false);
       this.open_in_new = ko.observable(false);
@@ -2990,7 +3038,8 @@ window.require.define({"views/reports": function(exports, require, module) {
           data: {
             start: _this.date_start().toDate(),
             end: _this.date_end().toDate(),
-            roles: _this.selected_roles()
+            roles: _this.selected_roles(),
+            root: _this.root_work_chart_id()
           },
           success: function(items) {
             return _this.report_items(items);
@@ -3723,7 +3772,7 @@ window.require.define({"views/templates/reports/controls": function(exports, req
     (function() {
       (function() {
       
-        __out.push('<dl class="sub-nav reports">\n  <dt>Report type:</dt>\n  <!-- ko foreach: report_types -->\n    <dd data-bind="attr: {class: active ? \'active\' : \'\'}">\n      <a href="#" data-bind="text: label, click: $root.select_type"></a>\n    </dd>\n  <!-- /ko -->\n</dl>\n<form action="#" class="custom report-controls">\n  <a href="#" data-bind="click: generate_report, attr: {class: generate_status_class}">Generate</a>\n  <div class="charts" data-bind="foreach: chart_levels">\n    <select class="chosen" data-bind="foreach: $data">\n      <option data-bind="value: get(\'id\'), text: get(\'display_label\')"></option>\n    </select>\n  </div>\n  <input type="text" placeholder="Pick date range" data-bind="value: date_range_string, valueUpdate: \'blur\'" class="daterange reports" />\n  <label class="roles">\n    <select data-bind="foreach: roles, selectedOptions: selected_roles" data-customforms="disabled" \n            class="chosen" data-placeholder="Choose roles" multiple>\n      <option data-bind="value: get(\'email\'), text: user_name()"></option>\n    </select>\n  </label>\n<!--  <div class="report-options">\n    <label>\n      <input type="checkbox" data-bind="checked: display_full" style="display: none;">\n      <span class="custom checkbox"></span> Display full descriptions\n    </label>\n    <label>\n      <input type="checkbox" data-bind="checked: printable" style="display: none;">\n      <span class="custom checkbox"></span> Printable\n    </label>\n    <label>\n      <input type="checkbox" data-bind="checked: open_in_new" style="display: none">\n      <span class="custom checkbox"></span> Open in new window\n    </label>\n  </div> -->\n</form>\n\n');
+        __out.push('<dl class="sub-nav reports">\n  <dt>Report type:</dt>\n  <!-- ko foreach: report_types -->\n    <dd data-bind="attr: {class: active ? \'active\' : \'\'}">\n      <a href="#" data-bind="text: label, click: $root.select_type"></a>\n    </dd>\n  <!-- /ko -->\n</dl>\n<form action="#" class="custom report-controls">\n  <a href="#" data-bind="click: generate_report, attr: {class: generate_status_class}">Generate</a>\n  <div class="charts" data-bind="foreach: chart_levels">\n    <select class="chosen" \n            data-bind="options: $data.charts, optionsText: \'display_label\', value: $data.selected, optionsCaption: \'Select work chart...\'">\n    </select>\n  </div>\n  <input type="text" placeholder="Pick date range" data-bind="value: date_range_string, valueUpdate: \'blur\'" class="daterange reports" />\n  <label class="roles">\n    <select data-bind="foreach: roles, selectedOptions: selected_roles" data-customforms="disabled" \n            class="chosen" data-placeholder="Choose roles" multiple>\n      <option data-bind="value: get(\'email\'), text: user_name()"></option>\n    </select>\n  </label>\n<!--  <div class="report-options">\n    <label>\n      <input type="checkbox" data-bind="checked: display_full" style="display: none;">\n      <span class="custom checkbox"></span> Display full descriptions\n    </label>\n    <label>\n      <input type="checkbox" data-bind="checked: printable" style="display: none;">\n      <span class="custom checkbox"></span> Printable\n    </label>\n    <label>\n      <input type="checkbox" data-bind="checked: open_in_new" style="display: none">\n      <span class="custom checkbox"></span> Open in new window\n    </label>\n  </div> -->\n</form>\n\n');
       
       }).call(this);
       
