@@ -1047,8 +1047,9 @@ form.report-controls {
 }
 
 .charts {
-  select {
-    width: auto !important;
-  }
+  width: 300px !important;
+  margin-right: 10px;
+  float: left;
+  margin-bottom: 10px;
 }
 
