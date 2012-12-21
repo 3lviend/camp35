@@ -419,11 +419,12 @@ window.require.define({"lib/modal_window.js": function(exports, require, module)
 
 window.require.define({"lib/number_extensions.js": function(exports, require, module) {
   
-  Number.prototype.format_money = function() {
-    var fractionals, integers;
+  Number.prototype.format_money = function(prefix) {
+    var fractionals, integers, symbol;
     integers = Math.floor(this);
     fractionals = this * 100 % 100;
-    return "$" + integers + "." + (fractionals.toString().pad(2));
+    symbol = prefix === false ? '' : '$';
+    return "" + symbol + integers + "." + (fractionals.toString().pad(2));
   };
   
 }});
@@ -1603,7 +1604,7 @@ window.require.define({"views/calendar": function(exports, require, module) {
 }});
 
 window.require.define({"views/entries/edit": function(exports, require, module) {
-  var DurationKindsCollection, EntryEditView, WorkChart, WorkChartsCollection,
+  var DurationKindsCollection, EntryEditView, WorkChart, WorkChartsCollection, WorkEntriesCollection,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1611,6 +1612,8 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
   WorkChart = require("models/work_chart");
 
   WorkChartsCollection = require("collections/work_charts");
+
+  WorkEntriesCollection = require("collections/work_entries");
 
   DurationKindsCollection = require("collections/duration_kinds");
 
@@ -1629,6 +1632,8 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
 
       this.handle_quick_pick_option = __bind(this.handle_quick_pick_option, this);
 
+      this.render_prev_next = __bind(this.render_prev_next, this);
+
       this.render_durations = __bind(this.render_durations, this);
 
       this.render_recents = __bind(this.render_recents, this);
@@ -1640,8 +1645,6 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
       this.set_duration_minutes = __bind(this.set_duration_minutes, this);
 
       this.set_duration_hour = __bind(this.set_duration_hour, this);
-
-      this.persist = __bind(this.persist, this);
 
       this.back = __bind(this.back, this);
 
@@ -1688,7 +1691,7 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
       return $("#modal").trigger('reveal:close');
     };
 
-    EntryEditView.prototype.persist = function() {
+    EntryEditView.prototype.persist = function(back) {
       var data, date, durations, fees, s_fee,
         _this = this;
       this.model.set("work_chart_id", this.selected_chart.get("id"), {
@@ -1739,7 +1742,9 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
         },
         success: function() {
           humane.log("Entry saved");
-          return _this.back();
+          if (back) {
+            return _this.back();
+          }
         },
         error: function(xhr, status, err) {
           return humane.log(err);
@@ -1750,6 +1755,7 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
 
     EntryEditView.prototype.initialize = function() {
       var _this = this;
+      this.model = this.options.model;
       this.model.bind("change", this.render);
       this.charts = [];
       this.charts[0] = new WorkChartsCollection();
@@ -1761,6 +1767,9 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
       this.recents = new WorkChartsCollection();
       this.recents.url = "/work_charts/recent.json";
       this.recents.on("reset", this.render_recents);
+      this.work_entry_handler = new WorkEntriesCollection();
+      this.work_entry_handler.url = "/work_entries/" + (this.model.get('id')) + "/previous_next.json";
+      this.work_entry_handler.on("reset", this.render_prev_next);
       this.searches = new WorkChartsCollection();
       this.duration_kinds = new DurationKindsCollection();
       this.duration_kinds.on("reset", function() {
@@ -1835,6 +1844,9 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
 
     EntryEditView.prototype.render_frequents = function() {
       var clients, clis, olis, others;
+      if (this.frequents.size() > 0) {
+        $(".qp-block", this.el).show();
+      }
       clients = this.frequents.filter(function(chart) {
         return chart.get('labels').length > 3 && chart.get('labels')[1] === "Clients";
       });
@@ -1858,6 +1870,9 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
 
     EntryEditView.prototype.render_recents = function() {
       var clients, clis, olis, others;
+      if (this.recents.size() > 0) {
+        $(".qp-block", this.el).show();
+      }
       clients = this.recents.filter(function(chart) {
         return chart.get('labels').length > 3 && chart.get('labels')[1] === "Clients";
       });
@@ -1975,6 +1990,26 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
       });
     };
 
+    EntryEditView.prototype.render_prev_next = function() {
+      var work_entry;
+      $(".go-previous", this.el).hide();
+      $(".go-next", this.el).hide();
+      return work_entry = this.work_entry_handler.filter(function(entry) {
+        if (entry.get('prev_id') !== null) {
+          $(".go-previous a", this.el).attr("href", "/#entry/" + (entry.get('prev_id')));
+          $(".go-previous", this.el).show();
+        } else {
+          $(".go-previous", this.el).hide();
+        }
+        if (entry.get('next_id') !== null) {
+          $(".go-next a", this.el).attr("href", "/#entry/" + (entry.get('next_id')));
+          return $(".go-next", this.el).show();
+        } else {
+          return $(".go-next", this.el).hide();
+        }
+      });
+    };
+
     EntryEditView.prototype.handle_quick_pick_option = function(e) {
       var chart, chart_id,
         _this = this;
@@ -2025,11 +2060,12 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
     };
 
     EntryEditView.prototype.render_charts = function() {
-      var data, last_selected,
+      var data, last_selected, _charts,
         _this = this;
-      last_selected = _.last(_.filter(this.charts, function(arr) {
+      _charts = _.last(_.filter(this.charts, function(arr) {
         return arr.length > 0;
-      })).find(function(chart) {
+      }));
+      last_selected = !_charts ? null : _charts.find(function(chart) {
         return chart.get("selected") === true;
       });
       if (last_selected) {
@@ -2164,13 +2200,28 @@ window.require.define({"views/entries/edit": function(exports, require, module) 
         silent: true
       });
       this.selected_chart.fetch();
+      this.work_entry_handler.fetch();
       $("a.alert", this.el).click(function(e) {
         _this.back();
         return false;
       });
       $("button[type=submit]", this.el).click(function(e) {
-        _this.persist();
+        _this.persist(true);
         return e.preventDefault();
+      });
+      $(".go-previous a", this.el).click(function(e) {
+        _this.persist(false);
+        window.app.router.navigate($(e.currentTarget).attr("href"), {
+          trigger: true
+        });
+        return true;
+      });
+      $(".go-next a", this.el).click(function(e) {
+        _this.persist(false);
+        window.app.router.navigate($(e.currentTarget).attr("href"), {
+          trigger: true
+        });
+        return true;
       });
       return this;
     };
@@ -2390,6 +2441,9 @@ window.require.define({"views/entries/new": function(exports, require, module) {
 
     EntryNewView.prototype.render_frequents = function() {
       var clients, clis, olis, others;
+      if (this.frequents.size() > 0) {
+        $(".qp-block", this.el).show();
+      }
       clients = this.frequents.filter(function(chart) {
         return chart.get('labels').length > 2 && chart.get('labels')[0] === "Clients";
       });
@@ -2413,6 +2467,9 @@ window.require.define({"views/entries/new": function(exports, require, module) {
 
     EntryNewView.prototype.render_recents = function() {
       var clients, clis, olis, others;
+      if (this.recents.size() > 0) {
+        $(".qp-block", this.el).show();
+      }
       clients = this.recents.filter(function(chart) {
         return chart.get('labels').length > 2 && chart.get('labels')[0] === "Clients";
       });
@@ -3498,7 +3555,7 @@ window.require.define({"views/templates/entries/form": function(exports, require
     (function() {
       (function() {
       
-        __out.push('<form accept-charset="UTF-8" action="" class="simple_form edit_work_entry" method="post">\n  <div class="input work_chart_selector optional">\n    <label class="work_chart_selector optional control-label" for="work_entry_work_chart_id">\n      Chart\n      (  )\n    </label>      \n    <div class="row collapse complex-input">\n      <div class="nine mobile-four columns" >\n         <input class="charts-search" type="text" placeholder="Type to search through work charts">\n      </div>\n      <div class="three mobile-three columns qp-block">\n        <div class="small button dropdown">\n          Quick pick\n          <div class="no-hover" style="top: 31px; ">\n            <div class="frequent">\n              <span>Frequent</span>\n              <h4>Clients:</h4>\n              <ul class="clients">\n              </ul>\n              <h4>Other:</h4>\n              <ul class="other"></ul>\n            </div>\n            <div class="recent">\n              <span>Recent</span>\n              <h4>Clients:</h4>\n              <ul class="clients">\n              </ul>\n              <h4>Other:</h4>\n              <ul class="other"></ul>\n            </div>\n          </div>\n        </div>\n      </div>\n    <div class="row collapse complex-input">\n\n      <div class="chart-selects nine mobile-three columns">\n         <input type="hidden" name="work_entry[work_chart_id]" value="');
+        __out.push('<span class="work-entry-action go-previous">\n <a class="button" title="Previous Work Entry">&laquo; Previous</a>\n</span>\n<form accept-charset="UTF-8" action="" class="simple_form edit_work_entry" method="post">\n  <div class="input work_chart_selector optional">\n    <label class="work_chart_selector optional control-label" for="work_entry_work_chart_id">\n      Chart\n      (  )\n    </label>      \n    <div class="row collapse complex-input">\n      <div class="nine mobile-four columns" >\n         <input class="charts-search" type="text" placeholder="Type to search through work charts">\n      </div>\n      <div class="three mobile-three columns qp-block">\n        <div class="small button dropdown">\n          Quick pick\n          <div class="no-hover" style="top: 31px; ">\n            <div class="frequent">\n              <span>Frequent</span>\n              <h4>Clients:</h4>\n              <ul class="clients">\n              </ul>\n              <h4>Other:</h4>\n              <ul class="other"></ul>\n            </div>\n            <div class="recent">\n              <span>Recent</span>\n              <h4>Clients:</h4>\n              <ul class="clients">\n              </ul>\n              <h4>Other:</h4>\n              <ul class="other"></ul>\n            </div>\n          </div>\n        </div>\n      </div>\n    <div class="row collapse complex-input">\n\n      <div class="chart-selects nine mobile-three columns">\n         <input type="hidden" name="work_entry[work_chart_id]" value="');
       
         __out.push(__sanitize(this.work_chart_id));
       
@@ -3524,7 +3581,7 @@ window.require.define({"views/templates/entries/form": function(exports, require
       
         __out.push(__sanitize(Backbone.history.fragment.replace("/new", "")));
       
-        __out.push('" class="button alert" ><img src="/images/delete-vivid.png" />Cancel</a>\n       </div>\n       <div class="one columns">\n       </div>\n       <div class="seven columns">\n\t <button class="button" type="submit"><img src="/images/tick-vivid.png" />Save</button>\n       </div>\n       <div class="clearfix"></div>\n     </div>\n</div>\n\n</form>\n');
+        __out.push('" class="button alert" ><img src="/images/delete-vivid.png" />Cancel</a>\n       </div>\n       <div class="one columns">\n       </div>\n       <div class="seven columns">\n\t <button class="button" type="submit"><img src="/images/tick-vivid.png" />Save</button>\n       </div>\n       <div class="clearfix"></div>\n     </div>\n  </div>\n</div>\n</div>\n\n</form>\n<span class="work-entry-action go-next">\n <a class="button" title="Next Work Entry">Next &raquo;</a>\n</span>\n');
       
       }).call(this);
       
@@ -3721,7 +3778,7 @@ window.require.define({"views/templates/navigation/top_bar": function(exports, r
     (function() {
       (function() {
       
-        __out.push('<ul>\n  <li class="name">\n  <a href="/#" style="visibility: visible;"><b>End Point&nbsp;</b><span>App</span>\n  </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n    <a href="#" id="this_month">\n      <img src="/images/calendar-white.png" />\n      Calendar\n    </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="today"><img src="/images/notes-white.png" />Today</a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="new_entry"><img src="/images/compose-white.png" />New entry</a>\n  </li>\n  <li class="toggle-topbar"><a href="#"></a></li>\n</ul>\n<section>\n  <ul class="left"></ul>\n  <ul class="right">\n    <li class="divider" ></li>\n    <li class="has-dropdown"  >\n    <a href="#">Settings</a>\n      <ul class="dropdown">\n        <li><a data-bind="click: redirect_to_reports" href="#"><img src="/images/report-vivid.png" />Reports</a></li>\n        <li data-bind="if: current_role().get(\'can_switch_roles\')">\n        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/images/swap-white.png" />Switch role</a>\n        </li>\n        <li data-bind="if: current_role().get(\'is_admin\')">\n        <a href="#" data-bind="click: redirect_to_admin" ><img src="/images/settings-white.png" />Admin</a>\n        </li>\n      </ul>\n    </li>\n    <li class="divider"></li>\n    <li>\n      <span data-bind="text: current_role().get(\'email\')"></span>\n      <i data-bind="visible: current_role().assumed_other()">as</i>\n      <i data-bind="text: current_role().as_label()"></i>\n      <a href="#" data-bind="visible: current_role().assumed_other(), click: reset_role" class="button">[x]</a>\n    </li>\n    <li>\n    <a href="#" id="logout">Logout</a>\n    </li>\n  </ul>\n</section>\n');
+        __out.push('<ul>\n  <li class="name">\n  <a href="/#" style="visibility: visible;"><b>Timesheet</b><span>App</span>\n  </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n    <a href="#" id="this_month">\n      <img src="/images/calendar-white.png" />\n      Calendar\n    </a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="today"><img src="/images/notes-white.png" />Today</a>\n  </li>\n  <li class="divider"></li>\n  <li>\n  <a href="#" id="new_entry"><img src="/images/compose-white.png" />New entry</a>\n  </li>\n  <li class="toggle-topbar"><a href="#"></a></li>\n</ul>\n<section>\n  <ul class="left"></ul>\n  <ul class="right">\n    <li class="divider" ></li>\n    <li class="has-dropdown"  >\n    <a href="#">Settings</a>\n      <ul class="dropdown">\n        <li><a data-bind="click: redirect_to_reports" href="#"><img src="/images/report-vivid.png" />Reports</a></li>\n        <li data-bind="if: current_role().get(\'can_switch_roles\')">\n        <a id="assume-other" data-bind="click: assume_other" href="#"><img src="/images/swap-white.png" />Switch role</a>\n        </li>\n        <li data-bind="if: current_role().get(\'is_admin\')">\n        <a href="#" data-bind="click: redirect_to_admin" ><img src="/images/settings-white.png" />Admin</a>\n        </li>\n      </ul>\n    </li>\n    <li class="divider"></li>\n    <li>\n      <span data-bind="text: current_role().get(\'email\')"></span>\n      <i data-bind="visible: current_role().assumed_other()">as</i>\n      <i data-bind="text: current_role().as_label()"></i>\n      <a href="#" data-bind="visible: current_role().assumed_other(), click: reset_role" class="button">[x]</a>\n    </li>\n    <li>\n    <a href="#" id="logout">Logout</a>\n    </li>\n  </ul>\n</section>\n');
       
       }).call(this);
       

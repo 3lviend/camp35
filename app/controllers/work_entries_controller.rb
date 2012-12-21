@@ -64,6 +64,25 @@ class WorkEntriesController < ApplicationController
     @work_entry.date_performed = @day
   end
 
+  def previous_next
+    base    = WorkEntry.find params[:id]
+    date    = base.date_performed.to_s(:db)
+    role_id = current_user.system_role_id
+    prev_id = WorkEntry.where(:role_id => role_id)
+                       .where("date_performed < DATE(?) OR (date_performed = DATE(?) AND id < ?)", 
+                              date, date, base.id)
+                       .select([:id, :date_performed])
+                       .order("date_performed DESC")
+                       .first.id rescue nil
+    next_id = WorkEntry.where(:role_id => role_id)
+                       .where("date_performed > DATE(?) OR (date_performed = DATE(?) AND id > ?)", 
+                              date, date, base.id)
+                       .select([:id, :date_performed])
+                       .order("date_performed ASC")
+                       .first.id rescue nil
+    render :json => {:prev_id => prev_id, :next_id => next_id}.to_json
+  end
+
   private
   def get_day
     @day = "#{params[:year]}-#{params[:month]}-#{params[:day]}".to_datetime

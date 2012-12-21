@@ -1,3 +1,6 @@
+<span class="work-entry-action go-previous">
+ <a class="button" title="Previous Work Entry">&laquo; Previous</a>
+</span>
 <form accept-charset="UTF-8" action="" class="simple_form edit_work_entry" method="post">
   <div class="input work_chart_selector optional">
     <label class="work_chart_selector optional control-label" for="work_entry_work_chart_id">
@@ -109,6 +112,11 @@
        </div>
        <div class="clearfix"></div>
      </div>
+  </div>
+</div>
 </div>
 
 </form>
+<span class="work-entry-action go-next">
+ <a class="button" title="Next Work Entry">Next &raquo;</a>
+</span>

@@ -115,6 +115,7 @@ module.exports = class EntryNewView extends Backbone.View
     $(".search-results ul li").click @handle_quick_pick_option
 
   render_frequents: =>
+    $(".qp-block", @el).show() if @frequents.size() > 0
     clients = @frequents.filter (chart) ->
       chart.get('labels').length > 2 && chart.get('labels')[0] == "Clients"
     others = @frequents.filter (chart) ->
@@ -128,6 +129,7 @@ module.exports = class EntryNewView extends Backbone.View
     $(".frequent ul li").click @handle_quick_pick_option
 
   render_recents: =>
+    $(".qp-block", @el).show() if @recents.size() > 0
     clients = @recents.filter (chart) ->
       chart.get('labels').length > 2 && chart.get('labels')[0] == "Clients"
     others = @recents.filter (chart) ->

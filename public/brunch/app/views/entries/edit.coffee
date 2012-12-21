@@ -1,5 +1,6 @@
 WorkChart = require "models/work_chart"
 WorkChartsCollection = require "collections/work_charts"
+WorkEntriesCollection = require "collections/work_entries"
 DurationKindsCollection = require "collections/duration_kinds"
 
 module.exports = class EntryEditView extends Backbone.View
@@ -31,7 +32,7 @@ module.exports = class EntryEditView extends Backbone.View
     Backbone.history.navigate "entries/#{date.year()}/#{date.month() + 1}/#{date.date()}", true
     $("#modal").trigger 'reveal:close'
 
-  persist: =>
+  persist: (back) ->
     @model.set "work_chart_id", @selected_chart.get("id"), silent: true
     @model.set "date_performed", $("#work_entry_date_performed").val(), silent: true
     @model.set "description", $("#work_entry_description").val(), silent: true
@@ -66,12 +67,13 @@ module.exports = class EntryEditView extends Backbone.View
         work_entry: data
       success: =>
         humane.log "Entry saved"
-        @back()
+        @back() if back
       error: (xhr, status, err)  =>
         humane.log err
     false
  
   initialize: () ->
+    @model = @options.model
     @model.bind "change", @render
     @charts = []
     @charts[0] = new WorkChartsCollection()
@@ -83,6 +85,9 @@ module.exports = class EntryEditView extends Backbone.View
     @recents = new WorkChartsCollection()
     @recents.url = "/work_charts/recent.json"
     @recents.on "reset", @render_recents
+    @work_entry_handler = new WorkEntriesCollection()
+    @work_entry_handler.url = "/work_entries/#{@model.get('id')}/previous_next.json"
+    @work_entry_handler.on "reset", @render_prev_next
     @searches = new WorkChartsCollection()
     # @searches.on "reset", @render_searches
     @duration_kinds = new DurationKindsCollection()
@@ -134,6 +139,7 @@ module.exports = class EntryEditView extends Backbone.View
 
 
   render_frequents: =>
+    $(".qp-block", @el).show() if @frequents.size() > 0
     clients = @frequents.filter (chart) ->
       chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
     others = @frequents.filter (chart) ->
@@ -147,6 +153,7 @@ module.exports = class EntryEditView extends Backbone.View
     $(".frequent ul li").click @handle_quick_pick_option
 
   render_recents: =>
+    $(".qp-block", @el).show() if @recents.size() > 0
     clients = @recents.filter (chart) ->
       chart.get('labels').length > 3 && chart.get('labels')[1] == "Clients"
     others = @recents.filter (chart) ->
@@ -229,6 +236,22 @@ module.exports = class EntryEditView extends Backbone.View
       @render_durations()
       false
 
+  render_prev_next: =>
+    $(".go-previous", @el).hide()
+    $(".go-next", @el).hide()
+    work_entry = @work_entry_handler.filter (entry) ->
+      unless entry.get('prev_id') == null
+        $(".go-previous a", @el).attr("href", "/#entry/#{entry.get('prev_id')}")
+        $(".go-previous", @el).show()
+      else
+        $(".go-previous", @el).hide()
+
+      unless entry.get('next_id') == null
+        $(".go-next a", @el).attr("href", "/#entry/#{entry.get('next_id')}")
+        $(".go-next", @el).show()
+      else
+        $(".go-next", @el).hide()
+
   handle_quick_pick_option: (e) =>
     chart_id = $(e.currentTarget).attr("data-id")
     chart = new WorkChart(id: chart_id)
@@ -261,7 +284,8 @@ module.exports = class EntryEditView extends Backbone.View
     _rebuild_array chart
 
   render_charts: =>
-    last_selected = _.last(_.filter(@charts, (arr) -> arr.length > 0)).find (chart) =>
+    _charts =  _.last(_.filter(@charts, (arr) -> arr.length > 0))
+    last_selected = unless _charts then null else _charts.find (chart) =>
       chart.get("selected") == true
     if last_selected
       @selected_chart.set("id", last_selected.get("id"), silent: true)
@@ -352,10 +376,19 @@ module.exports = class EntryEditView extends Backbone.View
     @render_durations()
     @selected_chart.set("id", @model.get("work_chart_id"), silent: true)
     @selected_chart.fetch()
+    @work_entry_handler.fetch()
     $("a.alert", @el).click (e) =>
       @back()
       false
     $("button[type=submit]", @el).click (e) =>
-      @persist()
+      @persist(true)
       e.preventDefault()
+    $(".go-previous a", @el).click (e) =>
+      @persist(false)
+      window.app.router.navigate $(e.currentTarget).attr("href"), trigger:true
+      true
+    $(".go-next a", @el).click (e) =>
+      @persist(false)
+      window.app.router.navigate $(e.currentTarget).attr("href"), trigger:true
+      true
     return this

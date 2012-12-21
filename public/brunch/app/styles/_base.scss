@@ -409,7 +409,7 @@ circle, text{
     height: 30px;
     margin-bottom: 5px;
     font-size: 10px;
-    padding: 6px !important;
+    padding: 3px !important;
     padding-right: 8px !important;
     padding-left: 8px !important;
     background: #BBB !important;
@@ -445,6 +445,8 @@ div.no-hover {
   background: white;
   color: #444;
   width: 500px;
+  max-height: 470px;
+  overflow: auto;
   margin-left: -384px;
   z-index: 99999;
   position: absolute;
@@ -1044,7 +1046,27 @@ form.report-controls {
 .qp-block {
  width: 24.6% !important;
  margin-left: 2px;
+ display: none;
 }
+
+.work-entry-action {
+ display: none;
+ position: absolute;
+ top: 200px;
+
+ a { width: 120px; }
+
+ &.go-previous {
+  left: -120px;
+  position: fixed;
+  top: 20px;
+ }
+
+ &.go-next {
+  right: -120px;
+  position: fixed;
+  top: 20px;
+ }
 
 .charts {
   width: 300px !important;
@@ -1052,4 +1074,4 @@ form.report-controls {
   float: left;
   margin-bottom: 10px;
 }
-
+}
