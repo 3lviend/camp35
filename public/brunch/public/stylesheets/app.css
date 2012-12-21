@@ -8602,11 +8602,12 @@ form.report-controls label.roles {
     right: -120px;
     position: fixed;
     top: 20px; }
-  .work-entry-action .charts {
-    width: 300px !important;
-    margin-right: 10px;
-    float: left;
-    margin-bottom: 10px; }
+
+.charts {
+  width: 300px !important;
+  margin-right: 10px;
+  float: left;
+  margin-bottom: 10px; }
 html,
 body {
   min-height: 100%; }
