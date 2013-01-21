@@ -7,9 +7,11 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_logged_in
-    unless current_user
-       render :nothing => true, :status => 401
-    end
+    return_401 unless current_user
+  end
+
+  def return_401
+    render :nothing => true, :status => 401
   end
 
   def assume_other_role

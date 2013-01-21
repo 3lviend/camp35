@@ -1,5 +1,6 @@
 class WorkMonthsController < ApplicationController
   before_filter :ensure_logged_in
+  
   respond_to :json
   
   def index

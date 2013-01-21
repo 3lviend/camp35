@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
   respond_to :json
 
   def break
-    @items = Report.break(params[:start], params[:end], params[:roles], params[:root])
+    @items = Report.break(start: params[:start], end: params[:end], roles: params[:roles], root: params[:root], option: params[:option])
     render :json => @items.to_json
   end
 end

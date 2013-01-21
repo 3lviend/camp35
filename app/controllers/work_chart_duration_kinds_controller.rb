@@ -1,4 +1,6 @@
 class WorkChartDurationKindsController < ApplicationController
+  before_filter :ensure_logged_in
+  
   respond_to :json
   # caches_page :index
   def index

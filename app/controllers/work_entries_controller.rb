@@ -1,24 +1,29 @@
 class WorkEntriesController < ApplicationController
+  before_filter :ensure_logged_in
+  
   respond_to :json
+  before_filter :build_work_entry, :only => [:show, :update, :destroy]
+  before_filter :check_user_allowed, :only => [:show, :update, :destroy]
 
   def show
-    @work_entry = WorkEntry.includes(:work_entry_fees).find(params[:id])
     respond_with(@work_entry)
   end
 
-  def edit
-    @work_entry = WorkEntry.find params[:id]
-    @work_entry.work_entry_fees.build if @work_entry.work_entry_fees.count == 0
-  end
-
   def update
-    @work_entry = WorkEntry.includes(:work_entry_durations, :work_entry_fees).find params[:id]
     fee = params[:work_entry][:work_entry_fees_attributes]["0"]
     params[:work_entry].delete(:work_entry_fees_attributes)
     @work_entry.assign_attributes(params[:work_entry])
-    @work_entry.work_entry_fees.build(:date_created => DateTime.now, :created_by => current_user.email, :last_modified => DateTime.now, :modified_by => current_user.email, :work_entry_id => @work_entry.id) unless @work_entry.work_entry_fees.count > 0
+    @work_entry.work_entry_fees.build(:date_created => DateTime.now, 
+                                      :created_by => current_user.email, 
+                                      :last_modified => DateTime.now, 
+                                      :modified_by => current_user.email, 
+                                      :work_entry_id => @work_entry.id) unless @work_entry.work_entry_fees.count > 0
     @work_entry.work_entry_fees.first.fee = fee[:fee].to_f
-    @work_entry.work_entry_durations.each {|d| d.work_entry_id = @work_entry.id}
+    @work_entry.work_entry_durations.each do |d| 
+      d.work_entry_id = @work_entry.id
+      d.created_by = current_user.email unless d.created_by
+      d.modified_by = current_user.email unless d.modified_by
+    end
     kinds = params[:work_entry][:work_entry_durations_attributes].values.map {|d| d[:kind_code]}
     @work_entry.work_entry_durations.select {|d| not kinds.include?(d.kind_code)}.each(&:delete)
     if @work_entry.save
@@ -29,7 +34,6 @@ class WorkEntriesController < ApplicationController
   end
 
   def destroy
-    @work_entry = WorkEntry.find params[:id]
     @work_entry.destroy
     log_state @work_entry
     render :json => {:status => 'OK'}.to_json
@@ -57,13 +61,6 @@ class WorkEntriesController < ApplicationController
     end
   end
 
-  def new
-    @work_entry = WorkEntry.new
-    @work_entry.work_entry_fees.build
-    @work_entry.work_entry_durations.build
-    @work_entry.date_performed = @day
-  end
-
   def previous_next
     base    = WorkEntry.find params[:id]
     date    = base.date_performed.to_s(:db)
@@ -84,11 +81,12 @@ class WorkEntriesController < ApplicationController
   end
 
   private
-  def get_day
-    @day = "#{params[:year]}-#{params[:month]}-#{params[:day]}".to_datetime
+  def build_work_entry
+    @work_entry = WorkEntry.includes(:work_entry_durations, :work_entry_fees)
+                           .find params[:id]
   end
 
-  def fetch_quicks
-    @quicks = WorkChart.frequently_used(current_user)
+  def check_user_allowed
+    return_401 unless @work_entry.role_id == current_user.system_role_id
   end
 end

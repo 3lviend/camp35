@@ -12,7 +12,7 @@ class SessionsController < Devise::SessionsController
   end
 
   def failure
-    render :json => {:success => false, :errors => "Login failed."} and return
+    render :status => 401, :json => {:success => false, :errors => "Login failed."} and return
   end
 
 end

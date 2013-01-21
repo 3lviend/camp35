@@ -3,11 +3,9 @@ class WorkChartsController < ApplicationController
   respond_to :json
 
   def index
-    # key = "work_charts_#{params[:include_inactive]}_#{params[:parent_id]}"
-    # @charts = Rails.cache.read key
-    # unless @charts
-      base = params[:include_inactive] ? WorkChart.where({}) : WorkChart.where(status: "active")
-      @charts = base.where(parent_id: params[:parent_id]).order(:display_label)
+    base = params[:include_inactive] ? WorkChart.where({}) : WorkChart.where(status: "active")
+    base = base.where(parent_id: params[:parent_id]) if params[:parent_id]
+    @charts = base.order(:display_label)
       # Rails.cache.write key, @charts, :expires_in => 2.days
     # end
     respond_with @charts
@@ -58,7 +56,63 @@ class WorkChartsController < ApplicationController
   end
 
   def duration_kinds
-    respond_with WorkChart.find(params[:id]).duration_kinds 
+    respond_with WorkChart.find(params[:id]).duration_kinds
+  end
+
+  def kinds
+    @kinds = params[:default_kinds] ? WorkChart.find(params[:id]).work_chart_kinds_defaults : WorkChart.find(params[:id]).work_chart_kinds
+    respond_with @kinds
+  end
+  
+  def assigned_work_entries_count
+    render :json => {:count => WorkEntry.find_all_by_work_chart_id(params[:id]).count}.to_json
+  end
+
+  def create
+    @work_chart = WorkChart.new params[:work_chart]
+    @work_chart.created_by = @work_chart.modified_by = current_user.email
+    @work_chart.date_created = DateTime.now
+    if @work_chart.save
+      log_state @work_chart
+      render :json => {:status => 'OK'}.to_json
+    else
+      render :json => {:status => 'ERROR', :errors => @work_chart.errors.full_messages}.to_json
+    end
+  end
+  
+  def update
+    @work_chart = WorkChart.find params[:id]
+    @work_chart.assign_attributes(params[:work_chart]) if params[:work_chart]
+    save_durations if params[:save_durations]
+    if @work_chart.save
+      render :json => {:status => 'OK'}.to_json
+    else
+      render :json => {:status => 'ERROR', :errors => @work_chart.errors.full_messages}.to_json
+    end
+  end
+
+  def destroy
+    @work_chart = WorkChart.find params[:id]
+    @work_chart.destroy
+    log_state @work_chart
+    render :json => {:status => 'OK'}.to_json
+  end
+
+  private
+
+  def save_durations
+    WorkChartKindSet.find_by_work_chart_id(@work_chart.id).destroy rescue nil
+    @work_chart.work_chart_kind_sets.create()
+    @work_chart.work_chart_kinds.destroy rescue nil
+    @work_chart.work_chart_kinds_defaults.destroy rescue nil
+    if params[:work_chart_kinds].present?
+      params[:work_chart_kinds].each do |kind|
+        @work_chart.work_chart_kinds.create(:kind_code => kind)
+      end
+    end
+    if params[:work_chart_kinds_defaults].present?
+      @work_chart.work_chart_kinds_defaults.create(:kind_code => params[:work_chart_kinds_defaults])
+    end
   end
 
 end

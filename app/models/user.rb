@@ -24,8 +24,9 @@ class User < ActiveRecord::Base
   end
 
   def can_switch_roles
-    self.ic_role.has_right_to IC::RightType::SUPERUSER ||
-      self.others_accessible.count > 0
+    #self.ic_role.has_right_to IC::RightType::SUPERUSER ||
+     # self.others_accessible.count > 0
+     true
   end
 
   def reportable_users
@@ -43,6 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def others_accessible
+    return []
     unless @others_accessible
       role = self.ic_role
       @others_accessible = if role.has_right_to IC::RightType::SUPERUSER
